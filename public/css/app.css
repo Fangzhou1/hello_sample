@@ -8401,6 +8401,17 @@ p {
 
 /* header */
 
+form.navbar-form.navbar-left {
+  margin-left: 20%;
+}
+
+.navbar-default .navbar-brand {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* forms */
+
 /* footer */
 
 footer {
@@ -8418,18 +8429,14 @@ footer a:hover {
   color: #222;
 }
 
-footer .slogon {
-  float: left;
-}
-
-footer .about {
+footer #about {
   float: right;
   list-style: none;
 }
 
-footer .about li {
+footer #about li {
   float: left;
-  margin-left: 0px;
+  margin-left: 15px;
 }
 
 footer img.brand-icon {
@@ -8438,6 +8445,7 @@ footer img.brand-icon {
 }
 
 footer .slogon {
+  float: left;
   font-size: 13px;
   font-weight: bold;
 }

@@ -7,11 +7,11 @@
 <body>
   @include('layouts._header')
 
-  <div class="container">
+  <div class="container-fluid">
+  @include('shared._messages')
   @yield('content')
-
   @include('layouts._footer')
-</div>
+  </div>
 
 </body>
 </html>

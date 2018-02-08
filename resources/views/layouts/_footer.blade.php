@@ -7,7 +7,7 @@
       </a>
     </small>
     <nav>
-      <ul class="about">
+      <ul id="about">
         <li><a href="/about">关于</a></li>
       </ul>
     </nav>
