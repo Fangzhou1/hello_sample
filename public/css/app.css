@@ -8410,6 +8410,14 @@ form.navbar-form.navbar-left {
   font-weight: bold;
 }
 
+#logout {
+  cursor: default;
+}
+
+#logout:hover {
+  background-color: transparent;
+}
+
 /* forms */
 
 /* footer */
