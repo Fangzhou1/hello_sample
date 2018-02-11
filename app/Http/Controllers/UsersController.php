@@ -9,7 +9,7 @@ class UsersController extends Controller
   public function __construct()
   {
       $this->middleware('auth', [
-          'except' => ['create', 'store']
+          'except' => ['create', 'store','destroy']
       ]);
       $this->middleware('guest', [
         'only' => ['create','store']
@@ -18,8 +18,9 @@ class UsersController extends Controller
 
   public function index()
     {
-        $users = User::paginate(3);
-        return view('users.index', compact('users'));
+        $page=10;
+        $users = User::paginate($page);
+        return view('users.index', compact('users','page'));
     }
 
   public function create()
@@ -74,4 +75,12 @@ class UsersController extends Controller
 
         return redirect()->route('users.show', $user->id);
     }
+
+    public function destroy(User $user)
+      {
+          $this->authorize('destroy', $user);
+          $user->delete();
+          session()->flash('success', '成功删除用户！');
+          return back();
+      }
 }
