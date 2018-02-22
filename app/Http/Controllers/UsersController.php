@@ -62,15 +62,26 @@ class UsersController extends Controller
 
    public function update(User $user, Request $request)
     {
-dd($request->file('avatar'));
+
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6',
             'introduction'=>'max:80',
         ]);
         $this->authorize('update', $user);
+        //文件头像上传
+        $extension = strtolower($request->file('avatar')->getClientOriginalExtension()) ?: 'png';
+        $allowed_ext = ["png", "jpg", "gif", 'jpeg'];
+        if (!in_array($extension, $allowed_ext)) {
+              session()->flash('danger', '上传文件不是图片，请重新上传');
+            return redirect()->back();;
+        }
+        $path = $request->file('avatar')->store('avatars'.'/'.date("Ym", time()).'/'.date("d", time()));
+
         $data = [];
+        $data['avatar'] = $path;
         $data['name'] = $request->name;
+        $data['introduction'] =$request->introduction;
         if ($request->password) {
             $data['password'] = bcrypt($request->password);
         }
