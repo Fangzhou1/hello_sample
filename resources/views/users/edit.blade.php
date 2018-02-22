@@ -13,9 +13,11 @@
         @include('shared._messages')
 
 
-        <form method="POST" action="{{ route('users.update', $user->id )}}">
+        <form method="POST" action="{{ route('users.update', $user->id )}}" enctype="multipart/form-data">
             {{ method_field('PATCH') }}
             {{ csrf_field() }}
+
+
 
             <div class="form-group">
               <label for="name">名称：</label>
@@ -26,6 +28,18 @@
               <label for="email">邮箱：</label>
               <input type="text" name="email" class="form-control" value="{{ $user->email }}" disabled>
             </div>
+
+
+            <div class="form-group">
+              <label for="introduction">简介：</label>
+              <textarea class="form-control" rows="3" value="{{ $user->introduction }}" name="introduction"></textarea>
+              </div>
+
+              <div class="form-group">
+                 <label for="avatar">头像：</label>
+                 <input type="file" id="exampleInputFile" name="avatar">
+                 <p class="help-block">点击选择图片上传头像</p>
+               </div>
 
             <div class="form-group">
               <label for="password">密码：</label>
