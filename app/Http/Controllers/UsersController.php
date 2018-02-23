@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Mail;
+use App\Handlers\ImageUploadHandler;
+
+
 class UsersController extends Controller
 {
   public function __construct()
@@ -42,6 +45,7 @@ class UsersController extends Controller
       'password' => 'required|confirmed|min:6'
   ]);
 
+
   $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -60,26 +64,26 @@ class UsersController extends Controller
        return view('users.edit', compact('user'));
    }
 
-   public function update(User $user, Request $request)
+   public function update(User $user, Request $request,ImageUploadHandler $uploader)
     {
 
-        $this->validate($request, [
+        $messages = [
+      'avatar.dimensions' => '尺寸不能在200px*200px以下'
+        ];
+         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6',
             'introduction'=>'max:80',
-        ]);
+            'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=200,min_height=200',
+        ],$messages);
+
+
         $this->authorize('update', $user);
         //文件头像上传
-        $extension = strtolower($request->file('avatar')->getClientOriginalExtension()) ?: 'png';
-        $allowed_ext = ["png", "jpg", "gif", 'jpeg'];
-        if (!in_array($extension, $allowed_ext)) {
-              session()->flash('danger', '上传文件不是图片，请重新上传');
-            return redirect()->back();;
-        }
-        $path = $request->file('avatar')->store('avatars'.'/'.date("Ym", time()).'/'.date("d", time()));
+        $path=$uploader->save($request->file('avatar'),'avatars',362);
 
         $data = [];
-        $data['avatar'] = $path;
+        $data['avatar'] = $path['path'];
         $data['name'] = $request->name;
         $data['introduction'] =$request->introduction;
         if ($request->password) {

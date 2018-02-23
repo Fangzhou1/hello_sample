@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div class="media">
                     <div align="center">
-                        <img class="thumbnail img-responsive" src={{storage_path().'/app/'.$user->avatar}} width="300px" height="300px">
+                        <img class="thumbnail img-responsive" src={{$user->avatar}} width="300px" height="300px">
                     </div>
                     <div class="media-body">
                         <hr>
