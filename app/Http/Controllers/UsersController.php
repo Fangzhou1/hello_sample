@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Mail;
 use App\Handlers\ImageUploadHandler;
+use Auth;
 
 
 class UsersController extends Controller
