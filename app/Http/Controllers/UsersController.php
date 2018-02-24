@@ -42,8 +42,11 @@ class UsersController extends Controller
    $this->validate($request, [
       'name' => 'required|max:50',
       'email' => 'required|email|unique:users|max:255',
-      'password' => 'required|confirmed|min:6'
-  ]);
+      'password' => 'required|confirmed|min:6',
+      'captcha' => 'required|captcha',
+  ],['captcha.required' => '验证码不能为空',
+     'captcha.captcha' => '请输入正确的验证码',
+        ]);
 
 
   $user = User::create([
@@ -79,11 +82,13 @@ class UsersController extends Controller
 
 
         $this->authorize('update', $user);
-        //文件头像上传
-        $path=$uploader->save($request->file('avatar'),'avatars',362);
-
         $data = [];
-        $data['avatar'] = $path['path'];
+        if($request->file('avatar'))
+        {
+        //文件头像上传
+          $path=$uploader->save($request->file('avatar'),'avatars',362);
+          $data['avatar'] = $path['path'];
+        }
         $data['name'] = $request->name;
         $data['introduction'] =$request->introduction;
         if ($request->password) {
