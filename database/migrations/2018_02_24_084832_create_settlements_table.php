@@ -13,7 +13,7 @@ class CreateSettlementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Settlements', function (Blueprint $table) {
+        Schema::create('settlements', function (Blueprint $table) {
             $table->increments('id')->index();
             $table->string('order_number')->index();
             $table->string('vendor_name')->index();
@@ -28,11 +28,11 @@ class CreateSettlementsTable extends Migration
             $table->string('order_description')->index();
             $table->string('contract_number')->index();
             $table->string('audit_number')->index();
-            $table->decimal('cost',15, 4);
-            $table->decimal('paid_cost',15, 4);
-            $table->decimal('mis_cost',15, 4);
-            $table->decimal('submit_cost',15, 4);
-            $table->decimal('validation_cost',15, 4);
+            $table->string('cost');
+            $table->string('paid_cost');
+            $table->string('mis_cost');
+            $table->string('submit_cost');
+            $table->string('validation_cost');
 
             $table->timestamps();
         });
@@ -45,6 +45,6 @@ class CreateSettlementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Settlements');
+        Schema::dropIfExists('settlements');
     }
 }

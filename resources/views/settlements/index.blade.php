@@ -12,32 +12,27 @@
   <table class="table table-hover table-striped ">
         <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>{{ $settlements['title']->id }}</th>
+            <th>{{ $settlements['title']->order_number }}</th>
+            <th>{{ $settlements['title']->vendor_name }}</th>
+            <th>{{ $settlements['title']->material_name }}</th>
+            <th>{{ $settlements['title']->material_type }}</th>
           </tr>
         </thead>
         <tbody>
+          @foreach ($settlements['data'] as $data)
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope="row">{{$data->id}}</th>
+            <td>{{$data->order_number}}</td>
+            <td>{{$data->vendor_name}}</td>
+            <td>{{$data->material_name}}</td>
+            <td>{{$data->material_type}}</td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+            @endforeach
+
         </tbody>
       </table>
+
+      {!! $settlements['data']->links() !!}
 </div>
 @stop

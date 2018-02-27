@@ -14,12 +14,13 @@
 </div>
 <div class="col-md-6">
   <div class="jumbotron">
-<form class="inline">
+<form method="post" class="inline" action="{{route('import')}}" enctype="multipart/form-data">
+{{ csrf_field() }}
 <h1>导入EXCEL文件</h1>
   <div class="form-group">
-    <input type="file" id="exampleInputFile" style="margin-left:33%">
+    <input type="file" name='excel' id="exampleInputFile" style="margin-left:33%">
   </div>
-  <p><a class="btn btn-primary btn-lg btn-block" href="#" role="button">导入EXCEL</a></p>
+  <p><input class="btn btn-primary btn-lg btn-block" type="submit" value="导入EXCEL"></p>
 </div>
 </form>
 </div>
