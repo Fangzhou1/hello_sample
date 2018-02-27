@@ -42,7 +42,7 @@ class SettlementController extends Controller
           $upload=new ExcelUploadHandler;
           $data=$upload->save($file);
           //dd($data);
-          DB::table('Settlements')->insert($data);
+          DB::table('settlements')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
           return redirect()->back();
 
