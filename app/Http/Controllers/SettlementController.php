@@ -45,9 +45,10 @@ class SettlementController extends Controller
           DB::table('settlements')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
           return redirect()->back();
-
-
       }
-
+      public function rowupdatecancel()
+      {
+        return redirect()->back();
+      }
 
 }

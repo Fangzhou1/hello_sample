@@ -35,4 +35,7 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
 Route::get('settlements/importpage', 'SettlementController@importpage')->name('importpage');
 Route::post('settlements/import', 'SettlementController@import')->name('import');
+Route::post('settlements/rowupdate', 'SettlementController@rowupdate')->name('rowupdate');
+Route::get('settlements/rowupdatecancel', 'SettlementController@rowupdatecancel')->name('rowupdatecancel');
+
 Route::resource('settlements', 'SettlementController');
