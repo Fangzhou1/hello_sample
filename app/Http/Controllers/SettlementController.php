@@ -51,4 +51,22 @@ class SettlementController extends Controller
         return redirect()->back();
       }
 
+      public function rowupdate(Settlement $settlement)
+      {
+        //dd($this->request->all());
+        Settlement::where('id',$settlement->id)->update($this->request->except('_token'));
+        session()->flash('success', '恭喜你，更新数据成功！');
+        return redirect()->back();
+      }
+
+      public function destroy(Settlement $settlement)
+      {
+        //dd($settlement->id);
+        $settlement->delete();
+        session()->flash('success', '恭喜你，删除成功！');
+        return redirect()->back();
+
+      }
+
+
 }
