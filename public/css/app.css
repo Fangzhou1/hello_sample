@@ -8433,7 +8433,12 @@ li.users-list {
   line-height: 45px;
 }
 
-/* forms */
+/* table td&th */
+
+.table-responsive td,
+th {
+  min-width: 100px;
+}
 
 /* footer */
 

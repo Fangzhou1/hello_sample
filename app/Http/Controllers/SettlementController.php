@@ -46,10 +46,7 @@ class SettlementController extends Controller
           session()->flash('success', '恭喜你，导入数据成功！');
           return redirect()->back();
       }
-      public function rowupdatecancel()
-      {
-        return redirect()->back();
-      }
+
 
       public function rowupdate(Settlement $settlement)
       {
@@ -67,6 +64,21 @@ class SettlementController extends Controller
         return redirect()->back();
 
       }
+
+      public function create()
+        {
+
+            return view('settlements.create');
+        }
+
+      public function store()
+        {
+        $data=$this->request->except('_token');
+        Settlement::create($data);
+        session()->flash('success', '恭喜你，添加数据成功！');
+        return redirect()->route('settlements.index');
+        }
+
 
 
 }

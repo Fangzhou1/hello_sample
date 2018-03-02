@@ -79,20 +79,10 @@ li.users-list {
     line-height: 45px;
 }
 
-/* forms */
-
-// input, textarea, select, .uneditable-input {
-//   border: 1px solid #bbb;
-//   margin-bottom: 15px;
-// }
-//
-// input {
-//   height: auto !important;
-// }
-//
-// .panel {
-//   margin-top: 50px;
-// }
+/* table td&th */
+.table-responsive td,th{
+min-width: 100px;
+}
 
 /* footer */
 
