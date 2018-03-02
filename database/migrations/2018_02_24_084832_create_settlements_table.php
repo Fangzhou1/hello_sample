@@ -15,7 +15,7 @@ class CreateSettlementsTable extends Migration
     {
         Schema::create('settlements', function (Blueprint $table) {
             $table->increments('id')->index();
-            $table->string('order_number')->index();
+            $table->string('order_number')->index()->nullable();
             $table->string('vendor_name')->index()->nullable();
             $table->string('material_name')->index()->nullable();
             $table->string('material_type')->nullable();

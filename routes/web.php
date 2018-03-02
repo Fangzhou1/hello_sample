@@ -38,6 +38,6 @@ Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('conf
 Route::get('settlements/importpage', 'SettlementController@importpage')->name('importpage');
 Route::post('settlements/import', 'SettlementController@import')->name('import');
 Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdate')->name('rowupdate');
-
+Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlements.smsmail');
 
 Route::resource('settlements', 'SettlementController');
