@@ -86,22 +86,31 @@ class SettlementController extends Controller
       public function smsmail()
         {
 
-
-          $data=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as num,count(DISTINCT project_number) as project_num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
+//以项目经理和审计进度分组查询，带上项目经理的订单和项目数信息
+          $data=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
           $data2=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as order_num,count(DISTINCT project_number) as project_num,project_manager'))->groupBy('project_manager')->get();
 
           foreach ($data2 as $value) {
             $newdata2[$value->project_manager]['order_num']=  $value->order_num;
             $newdata2[$value->project_manager]['project_num']=  $value->project_num;
           }
-          //dd($newdata2);
-
           foreach ($data as $value) {
             $newdata[$value->project_manager][$value->audit_progress]=$value->num;
           }
-          //dd(array_merge_recursive($newdata,$newdata2));
 
-          return view('settlements.smsmail',['current_url'=>$this->request->url(),'datas'=>array_merge_recursive($newdata,$newdata2)]);
+//以审计单位和审计进度分组查询，带上审计单位的订单数信息
+          $data3=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as num,audit_company,audit_progress'))->groupBy('audit_company','audit_progress')->get();
+          $data4=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as order_num,count(DISTINCT project_number) as project_num,audit_company'))->groupBy('audit_company')->get();
+
+          foreach ($data4 as $value) {
+            $newdata4[$value->audit_company]['order_num']=  $value->order_num;
+            $newdata4[$value->audit_company]['project_num']=  $value->project_num;
+          }
+          foreach ($data3 as $value) {
+            $newdata3[$value->audit_company][$value->audit_progress]=$value->num;
+          }
+
+          return view('settlements.smsmail',['current_url'=>$this->request->url(),'datas'=>array_merge_recursive($newdata,$newdata2),'datas2'=>array_merge_recursive($newdata3,$newdata4)]);
         }
 
         public function smsmaildetail()
@@ -115,29 +124,34 @@ class SettlementController extends Controller
               $name=$this->request->query('name');
               $page=10;
               $settlements['title'] = Settlement::first();
+              if($querytoarray['type']==1)
               $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('project_manager',$name)->orderBy($order,'desc')->paginate($page);
-              //dd($this->request->url());
+              elseif($querytoarray['type']==2)
+              $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('audit_company',$name)->orderBy($order,'desc')->paginate($page);
+              //dd($settlements['data']);
               return view('settlements.smsmaildetail',['current_url'=>$this->request->url(),'settlements'=>$settlements,'querytoarray'=>$querytoarray]);
           }
 
           protected function sendEmailReminderTo($emailinfo,$username)
         {
 
-      //  dd($emailinfo);
-        dd($username);
-            parse_str($query,$querytoarray);
-            $user=User::where('name',$username)->get();
-            dd($user);
+        //dd($emailinfo);
+      //dd($username);
+            parse_str($emailinfo,$querytoarray);
+            $user=User::where('name',$username)->first();
+            //dd($user);
             $view = 'emails.settlementmail';
-            $data = compact('user');
+            $data = compact('querytoarray');
             $from = '253251551@qq.com';
             $name = 'sample';
             $to = $user->email;
-            $subject = "感谢注册 工程部审计 应用！请确认你的邮箱。";
+            $subject = "请抓紧完成结算审计！";
 
             Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
                 $message->from($from, $name)->to($to)->subject($subject);
             });
+            session()->flash('success', '发送成功！');
+            return redirect()->back();
         }
 
 }

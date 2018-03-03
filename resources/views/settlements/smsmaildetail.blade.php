@@ -14,8 +14,8 @@
 
     <div class="col-md-8">
   <div class="btn-group" role="group">
-    <a class="btn btn-default {{!isset($querytoarray['order'])||$querytoarray['order']==1?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&order=1" role="button">按审计进度排序</a>
-    <a class="btn btn-default {{isset($querytoarray['order'])&&$querytoarray['order']==2?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&order=2" role="button">按工程项目排序</a>
+    <a class="btn btn-default {{!isset($querytoarray['order'])||$querytoarray['order']==1?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&type={{$querytoarray['type']}}&order=1" role="button">按审计进度排序</a>
+    <a class="btn btn-default {{isset($querytoarray['order'])&&$querytoarray['order']==2?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&type={{$querytoarray['type']}}&order=2" role="button">按工程项目排序</a>
   </div>&nbsp;&nbsp;
   <a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
   <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$settlements['data']->total()}} 行数据</span>
