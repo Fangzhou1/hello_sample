@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Auth;
 use App\Models\Settlement;
+use App\Models\User;
 use App\Handlers\ExcelUploadHandler;
+use Mail;
+use Auth;
 
 
 
@@ -102,6 +104,40 @@ class SettlementController extends Controller
           return view('settlements.smsmail',['current_url'=>$this->request->url(),'datas'=>array_merge_recursive($newdata,$newdata2)]);
         }
 
+        public function smsmaildetail()
+          {
 
+            $query=$this->request->getQueryString();
+            parse_str($query,$querytoarray);
+            $order=(isset($querytoarray['order'])&&$querytoarray['order']==2)?'project_number':'audit_progress';
+
+            //dd($querytoarray);
+              $name=$this->request->query('name');
+              $page=10;
+              $settlements['title'] = Settlement::first();
+              $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('project_manager',$name)->orderBy($order,'desc')->paginate($page);
+              //dd($this->request->url());
+              return view('settlements.smsmaildetail',['current_url'=>$this->request->url(),'settlements'=>$settlements,'querytoarray'=>$querytoarray]);
+          }
+
+          protected function sendEmailReminderTo($emailinfo,$username)
+        {
+
+      //  dd($emailinfo);
+        dd($username);
+            parse_str($query,$querytoarray);
+            $user=User::where('name',$username)->get();
+            dd($user);
+            $view = 'emails.settlementmail';
+            $data = compact('user');
+            $from = '253251551@qq.com';
+            $name = 'sample';
+            $to = $user->email;
+            $subject = "感谢注册 工程部审计 应用！请确认你的邮箱。";
+
+            Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
+                $message->from($from, $name)->to($to)->subject($subject);
+            });
+        }
 
 }

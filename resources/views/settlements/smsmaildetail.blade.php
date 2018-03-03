@@ -7,8 +7,21 @@
 @include('settlements.left')
 </div>
 <div class="col-md-10">
-<a class="btn btn-primary" href="{{route('settlements.create')}}" role="button">添加&nbsp;<b>+</b></a>
-<span  class="pull-right" style="font-size: 18px;">总共查询到 {{$settlements['data']->total()}} 行数据</span>
+<div class=row>
+  <div class="col-md-4">
+<a class="btn btn-primary" href="{{route('settlements.smsmail')}}" role="button">返回</a>
+  </div>
+
+    <div class="col-md-8">
+  <div class="btn-group" role="group">
+    <a class="btn btn-default {{!isset($querytoarray['order'])||$querytoarray['order']==1?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&order=1" role="button">按审计进度排序</a>
+    <a class="btn btn-default {{isset($querytoarray['order'])&&$querytoarray['order']==2?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&order=2" role="button">按工程项目排序</a>
+  </div>&nbsp;&nbsp;
+  <a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
+  <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$settlements['data']->total()}} 行数据</span>
+    </div>
+</div>
+
 <div class="table-responsive">
   <table class="table table-hover table-striped">
         <thead>
@@ -20,7 +33,7 @@
             <th>{{ $settlements['title']->material_type }}</th>
             <th>{{ $settlements['title']->project_number }}</th>
             <th style="min-width:200px">{{ $settlements['title']->project_name }}</th>
-            <th style="min-width:300px">{{ $settlements['title']->project_manager }}</th>
+            <th style="min-width:100px">{{ $settlements['title']->project_manager }}</th>
             <th>{{ $settlements['title']->audit_progress }}</th>
             <th>{{ $settlements['title']->audit_document_number }}</th>
             <th>{{ $settlements['title']->audit_company }}</th>
@@ -67,7 +80,7 @@
       </table>
 </div>
 
-{!! $settlements['data']->links() !!}
+{!! $settlements['data']->appends($querytoarray)->links() !!}
 </div>
 
 
@@ -93,9 +106,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 <script type="text/javascript">
 window.tem={};

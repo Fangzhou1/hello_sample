@@ -11,7 +11,7 @@
       <div class="list-group">
         <a class="list-group-item {{($current_url==route('settlements.index'))?"active":""}}" href="{{route('settlements.index')}}">审计主页</a>
         <a class="list-group-item {{($current_url==route('importpage'))?"active":""}}" href="{{route('importpage')}}">导入Excel表</a>
-        <a class="list-group-item {{($current_url==route('settlements.smsmail'))?"active":""}}" href="{{route('settlements.smsmail')}}">邮件短信催办</a>
+        <a class="list-group-item {{($current_url==route('settlements.smsmail'))||($current_url==route('settlements.smsmaildetail'))?"active":""}}" href="{{route('settlements.smsmail')}}">邮件短信催办</a>
         <a class="list-group-item {{($current_url==route('settlements.index'))?"active":""}}">详细统计信息</a>
       </div>
 
