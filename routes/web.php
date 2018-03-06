@@ -41,5 +41,6 @@ Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdat
 Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlements.smsmail');
 Route::get('settlements/smsmaildetail', 'SettlementController@smsmaildetail')->name('settlements.smsmaildetail');
 Route::get('settlements/sendemail/{emailinfo}/{username}', 'SettlementController@sendEmailReminderTo')->name('settlements.sendemail');
+Route::get('settlements/statistics', 'SettlementController@statistics')->name('settlements.statistics');
 
 Route::resource('settlements', 'SettlementController');

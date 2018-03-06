@@ -132,7 +132,7 @@ class SettlementController extends Controller
               return view('settlements.smsmaildetail',['current_url'=>$this->request->url(),'settlements'=>$settlements,'querytoarray'=>$querytoarray]);
           }
 
-          protected function sendEmailReminderTo($emailinfo,$username)
+          public function sendEmailReminderTo($emailinfo,$username)
         {
 
         //dd($emailinfo);
@@ -153,5 +153,38 @@ class SettlementController extends Controller
             session()->flash('success', '发送成功！');
             return redirect()->back();
         }
+
+        public function statistics()
+      {
+
+        //结算审计订单情况统计
+        $data1=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as ordernum,audit_progress'))->groupBy('audit_progress')->get();
+        foreach ($data1 as $value) {
+          $newdata1[$value->audit_progress]=$value->ordernum;
+        }
+        //结算审计项目情况统计
+        $data3=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as ordernum,audit_progress,project_number'))->groupBy('project_number','audit_progress')->get();
+        //dd($data3);
+        foreach ($data3 as $value) {
+          $newdata_tem[$value->project_number][$value->audit_progress]=$value->ordernum;
+        }
+        //dd($newdata_tem);
+
+        $newdata3=['未送审'=>0,'审计中'=>0,'已完成'=>0];
+        foreach ($newdata_tem as $value) {
+          if(!(isset($value['审计中'])||isset($value['已出报告'])||isset($value['被退回'])))
+            $newdata3['未送审']+=1;
+          elseif(isset($value['审计中'])||isset($value['被退回']))
+            $newdata3['审计中']+=1;
+          else
+            $newdata3['已完成']+=1;
+
+        }
+
+
+      //  dd($newdata3);
+        return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>$newdata1,'newdata3'=>$newdata3]);
+      }
+
 
 }
