@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Settlement;
+use App\Models\Settlementtime;
 use App\Models\User;
 use App\Handlers\ExcelUploadHandler;
 use Mail;
@@ -180,10 +179,17 @@ class SettlementController extends Controller
             $newdata3['已完成']+=1;
 
         }
+        $newdata_tem=Settlementtime::orderBy('created_at', 'asc')->get()->toArray();
+        foreach ($newdata_tem as $value) {
 
+          $newdata2['xdata'][]=$value['created_at'];
+          $newdata2['ydata_ordernum'][]=$value['finished_ordernum'];
+          $newdata2['ydata_projectnum'][]=$value['finished_projectnum'];
 
-      //  dd($newdata3);
-        return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>$newdata1,'newdata3'=>$newdata3]);
+        }
+//dd($newdata2);
+
+        return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>$newdata1,'newdata3'=>$newdata3,'newdata2'=>$newdata2]);
       }
 
 
