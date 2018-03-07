@@ -94,7 +94,11 @@
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['周一','周二','周三','周四','周五','周六','周日']
+        //data: [1,2,3,4,5,6,7]
+        data: ["{{$newdata2['xdata'][0]}}","{{$newdata2['xdata'][1]}}","{{$newdata2['xdata'][2]}}","{{$newdata2['xdata'][3]}}","{{$newdata2['xdata'][4]}}","{{$newdata2['xdata'][5]}}","{{$newdata2['xdata'][6]}}"]
+      //  data: [2018-02-27,2018-02-27,2018-02-28,2018-03-01,2018-03-03,2018-03-04,2018-03-06]
+
+       //data: [{{implode(",",$newdata2['xdata'])}}]
     },
     yAxis: {
         type: 'value'

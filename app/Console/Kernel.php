@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Console;
-use Models\Settlementtime;
-use Models\Settlement;
+use \App\Models\Settlementtime;
+use \App\Models\Settlement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,9 +29,9 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
 
           $data=$this->readSettlementProgress();
-          App\Models\Settlementtime::create($data);
+          Settlementtime::create($data);
 
-        })->daily();
+        })->everyMinute();
     }
 
     /**
@@ -45,6 +45,9 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+
+
 
     protected function readSettlementProgress()
     {

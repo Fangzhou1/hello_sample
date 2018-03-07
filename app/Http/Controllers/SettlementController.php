@@ -6,6 +6,7 @@ use App\Models\Settlement;
 use App\Models\Settlementtime;
 use App\Models\User;
 use App\Handlers\ExcelUploadHandler;
+use Carbon\Carbon;
 use Mail;
 use Auth;
 
@@ -179,18 +180,42 @@ class SettlementController extends Controller
             $newdata3['已完成']+=1;
 
         }
-        $newdata_tem=Settlementtime::orderBy('created_at', 'asc')->get()->toArray();
+
+        //结算审计项目随时间进度统计
+        $newdata_tem=Settlementtime::orderBy('created_at', 'desc')->take(7)->get()->toArray();
+        //dd($newdata_tem);
+        $newdata_tem=$this->my_sort($newdata_tem,'created_at',SORT_ASC,SORT_REGULAR );
+        //dd($newdata_tem);
         foreach ($newdata_tem as $value) {
 
-          $newdata2['xdata'][]=$value['created_at'];
+          $newdata2['xdata'][]=substr($value['created_at'],0,10);
           $newdata2['ydata_ordernum'][]=$value['finished_ordernum'];
           $newdata2['ydata_projectnum'][]=$value['finished_projectnum'];
-
+        //  $newdata21=array_multisort($newdata2['xdata'],SORT_ASC,$newdata2);
         }
-//dd($newdata2);
+
+
 
         return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>$newdata1,'newdata3'=>$newdata3,'newdata2'=>$newdata2]);
       }
+
+
+
+      protected function my_sort($arrays,$sort_key,$sort_order=SORT_ASC,$sort_type=SORT_NUMERIC ){
+        if(is_array($arrays)){
+            foreach ($arrays as $array){
+                if(is_array($array)){
+                    $key_arrays[] = $array[$sort_key];
+                }else{
+                    return false;
+                }
+            }
+        }else{
+            return false;
+        }
+        array_multisort($key_arrays,$sort_order,$sort_type,$arrays);
+        return $arrays;
+    }
 
 
 }

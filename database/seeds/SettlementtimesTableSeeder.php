@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Settlementtime;
 
-class DatabaseSeeder extends Seeder
+class SettlementtimesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
-        $this->call(SettlementtimesTableSeeder::class);
+      factory(Settlementtime::class,20)->create();
+
     }
 }
