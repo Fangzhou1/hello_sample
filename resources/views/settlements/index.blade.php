@@ -118,7 +118,16 @@
 
 
 <script type="text/javascript">
+
+
 window.tem={};
+window.Echo.channel('all')
+    .listen('ChangeOrder', (e) => {
+        console.log(e.name);
+    });
+
+
+
 function update(obj)
 {
     if(!$.isEmptyObject(tem))
@@ -225,11 +234,16 @@ function update(obj)
   }
 
 $(document).ready(function(){
+
+
+
   $('#myModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data('whatever'); // Extract info from data-* attributes
     $(this).find("#iputwrap").wrapAll('<form method="POST" action="/settlements/'+recipient+'" style="display:inline-block">');
 });
+
+
 });
 </script>
 @stop

@@ -7,6 +7,7 @@ use App\Models\Settlementtime;
 use App\Models\User;
 use App\Handlers\ExcelUploadHandler;
 use Carbon\Carbon;
+use App\Events\ChangeOrder;
 use Mail;
 use Auth;
 
@@ -48,6 +49,7 @@ class SettlementController extends Controller
           //dd($data);
           DB::table('settlements')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
+          broadcast(new ChangeOrder(Auth::user(),$settlement));
           return redirect()->back();
       }
 
@@ -57,6 +59,7 @@ class SettlementController extends Controller
         //dd($this->request->all());
         Settlement::where('id',$settlement->id)->update($this->request->except('_token'));
         session()->flash('success', '恭喜你，更新数据成功！');
+        broadcast(new ChangeOrder(Auth::user(),$settlement));
         return redirect()->back();
       }
 
@@ -65,6 +68,7 @@ class SettlementController extends Controller
         //dd($settlement->id);
         $settlement->delete();
         session()->flash('success', '恭喜你，删除成功！');
+        broadcast(new ChangeOrder(Auth::id(),$settlement->id));
         return redirect()->back();
 
       }
@@ -80,6 +84,7 @@ class SettlementController extends Controller
         $data=$this->request->except('_token');
         Settlement::create($data);
         session()->flash('success', '恭喜你，添加数据成功！');
+        broadcast(new ChangeOrder(Auth::id(),$settlement->id));
         return redirect()->route('settlements.index');
         }
 
