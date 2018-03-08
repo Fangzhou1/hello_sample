@@ -7,10 +7,15 @@
 @include('settlements.left')
 </div>
 <div class="col-md-10">
-
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">审计列表</a></li>
+    <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab" data-toggle="tab">列表修改痕迹</a></li>
+  </ul>
+<div class="tab-content">
+<br />
+<div id="tab1" role="tabpanel" class="tab-pane active">
 <a class="btn btn-primary" href="{{route('settlements.create')}}" role="button">添加&nbsp;<b>+</b></a>
 <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$settlements['data']->total()}} 行数据</span>
-
 <div class="table-responsive">
   <table class="table table-hover table-striped">
         <thead>
@@ -68,8 +73,21 @@
         </tbody>
       </table>
 </div>
-
 {!! $settlements['data']->links() !!}
+</div>
+
+
+<div id="tab2" role="tabpane1" class="tab-pane">
+<button class="btn btn-primary center-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Button with data-target
+</button>
+<div class="collapse" id="collapseExample">
+  <div class="well">
+    dsadsadasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  </div>
+</div>
+</div>
+</div>
 </div>
 
 

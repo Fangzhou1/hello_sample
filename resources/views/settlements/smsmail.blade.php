@@ -5,9 +5,9 @@
 <div class="col-md-2">
 @include('settlements.left')
 </div>
-<div class="col-md-10">
-<div class="page-header">
-  <h1><small>按项目经理统计</small></h1>
+<div class="col-md-10" >
+<div class="col-md-12 page-header" style="margin-top: 0px;">
+  <h1><small><b>按项目经理统计</b></small></h1>
 </div>
 
 @foreach ($datas as $key=>$data)
@@ -31,8 +31,8 @@
 @endforeach
 
 
-<div class="page-header">
-  <h1><small>按审计单位统计</small></h1>
+<div class="col-md-12 page-header" style="margin-top: 0px;">
+  <h1><small><b>按审计单位统计</b></small></h1>
 </div>
 @foreach ($datas2 as $key=>$data2)
 <div class="col-md-3">

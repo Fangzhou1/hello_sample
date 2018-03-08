@@ -63,7 +63,7 @@
              {
                name: '项目数',
                type: 'bar',
-               barWidth: '50%',
+               barWidth: '40%',
                data: [{{$newdata3['未送审']}}, {{$newdata3['审计中']}}, {{$newdata3['已完成']}}]
            }]
        };
@@ -75,7 +75,13 @@
         text: '结算审计进度'
     },
     tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        axisPointer: {
+        type: 'cross',
+        label: {
+            backgroundColor: '#6a7985'
+        }
+    }
     },
     legend: {
         data:['完成审计订单数','完成审计项目数']
@@ -107,14 +113,13 @@
         {
             name:'完成审计订单数',
             type:'line',
-            stack: '总量',
             data:[{{implode(",",$newdata2['ydata_ordernum'])}}]
         },
         {
             name:'完成审计项目数',
             type:'line',
-            stack: '总量',
             data: [{{implode(",",$newdata2['ydata_projectnum'])}}]
+            //data: ['1','1','1','1','1','2','2']
         },
 
     ]
