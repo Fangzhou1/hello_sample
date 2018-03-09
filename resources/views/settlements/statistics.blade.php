@@ -39,7 +39,7 @@
                name: '订单数',
                type: 'bar',
                barWidth: '50%',
-               data: [{{$newdata1['未送审']}}, {{$newdata1['被退回']}}, {{$newdata1['审计中']}}, {{$newdata1['已出报告']}}]
+               data: [{{$newdata1['未送审'] or 0}}, {{$newdata1['被退回'] or 0}}, {{$newdata1['审计中'] or 0}}, {{$newdata1['已出报告'] or 0}}]
            }]
        };
 
@@ -64,7 +64,7 @@
                name: '项目数',
                type: 'bar',
                barWidth: '40%',
-               data: [{{$newdata3['未送审']}}, {{$newdata3['审计中']}}, {{$newdata3['已完成']}}]
+               data: [{{$newdata3['未送审'] or 0}}, {{$newdata3['审计中'] or 0}}, {{$newdata3['已完成'] or 0}}]
            }]
        };
 
@@ -101,10 +101,8 @@
         type: 'category',
         boundaryGap: false,
         //data: [1,2,3,4,5,6,7]
-        data: ["{{$newdata2['xdata'][0]}}","{{$newdata2['xdata'][1]}}","{{$newdata2['xdata'][2]}}","{{$newdata2['xdata'][3]}}","{{$newdata2['xdata'][4]}}","{{$newdata2['xdata'][5]}}","{{$newdata2['xdata'][6]}}"]
-      //  data: [2018-02-27,2018-02-27,2018-02-28,2018-03-01,2018-03-03,2018-03-04,2018-03-06]
+        data: ["{{$newdata2['xdata'][0] or 0}}","{{$newdata2['xdata'][1] or 0}}","{{$newdata2['xdata'][2] or 0}}","{{$newdata2['xdata'][3] or 0}}","{{$newdata2['xdata'][4] or 0}}","{{$newdata2['xdata'][5] or 0}}","{{$newdata2['xdata'][6] or 0}}"]
 
-       //data: [{{implode(",",$newdata2['xdata'])}}]
     },
     yAxis: {
         type: 'value'
@@ -113,12 +111,12 @@
         {
             name:'完成审计订单数',
             type:'line',
-            data:[{{implode(",",$newdata2['ydata_ordernum'])}}]
-        },
+            data:[{{$newdata2['ydata_ordernum'] or ""}}]
+          },
         {
             name:'完成审计项目数',
             type:'line',
-            data: [{{implode(",",$newdata2['ydata_projectnum'])}}]
+            data: [{{$newdata2['ydata_projectnum'] or ""}}]
             //data: ['1','1','1','1','1','2','2']
         },
 

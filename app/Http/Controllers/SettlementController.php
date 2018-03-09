@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Settlement;
 use App\Models\Settlementtime;
 use App\Models\User;
+use App\Models\Trace;
 use App\Handlers\ExcelUploadHandler;
 use Carbon\Carbon;
 use App\Events\ChangeOrder;
+use App\Events\ModifyDates;
 use Mail;
 use Auth;
 
@@ -27,8 +29,16 @@ class SettlementController extends Controller
         $page=10;
         $settlements['title'] = Settlement::first();
         $settlements['data'] = Settlement::where('order_number','<>','订单编号')->paginate($page);
+
+        $tracesdata=Trace::where('type','结算')->orderBy('created_at','desc')->get();
+        //dd($traces);
         //dd($settlements);
-        return view('settlements.index',['current_url'=>$this->request->url(),'settlements'=>$settlements]);
+        foreach ($tracesdata as $value) {
+          $traces[$value->year.'年'.$value->month.'月'][]=$value;
+        }
+
+        //dd($traces);
+        return view('settlements.index',['current_url'=>$this->request->url(),'settlements'=>$settlements,'traces'=>$traces]);
     }
 
   public function importpage()
@@ -59,6 +69,11 @@ class SettlementController extends Controller
         //dd($this->request->all());
         Settlement::where('id',$settlement->id)->update($this->request->except('_token'));
         session()->flash('success', '恭喜你，更新数据成功！');
+        $data['name']=Auth::user()->name;
+        $data['order_number']=$settlement->order_number;
+        $data['type']='结算';
+        $mes='修改了';
+        event(new ModifyDates($data,$mes));
         broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚修改了订单编号为"));
         return redirect()->back();
       }
@@ -68,6 +83,11 @@ class SettlementController extends Controller
         //dd($settlement->id);
         $Settlementodn=$settlement->order_number;
         $settlement->delete();
+        $data['name']=Auth::user()->name;
+        $data['order_number']=$Settlementodn;
+        $data['type']='结算';
+        $mes='删除了';
+        event(new ModifyDates($data,$mes));
         broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为"));
         session()->flash('success', '恭喜你，删除成功！');
         return redirect()->back();
@@ -82,8 +102,13 @@ class SettlementController extends Controller
 
       public function store()
         {
-        $data=$this->request->except('_token');
-        $settlement=Settlement::create($data);
+        $datarequest=$this->request->except('_token');
+        $settlement=Settlement::create($datarequest);
+        $data['name']=Auth::user()->name;
+        $data['order_number']=$settlement->order_number;
+        $data['type']='结算';
+        $mes='新建了';
+        event(new ModifyDates($data,$mes));
         session()->flash('success', '恭喜你，添加数据成功！');
         broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚新增了订单编号为"));
         return redirect()->route('settlements.index');
@@ -95,6 +120,11 @@ class SettlementController extends Controller
 //以项目经理和审计进度分组查询，带上项目经理的订单和项目数信息
           $data=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
           $data2=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as order_num,count(DISTINCT project_number) as project_num,project_manager'))->groupBy('project_manager')->get();
+//如果没有数据返回空数组
+          if($data->isEmpty()||$data2->isEmpty())
+          {
+            return view('settlements.smsmail',['current_url'=>$this->request->url(),'datas'=>[],'datas2'=>[]]);
+          }
 
           foreach ($data2 as $value) {
             $newdata2[$value->project_manager]['order_num']=  $value->order_num;
@@ -165,6 +195,12 @@ class SettlementController extends Controller
 
         //结算审计订单情况统计
         $data1=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as ordernum,audit_progress'))->groupBy('audit_progress')->get();
+        //如果没有数据返回空数组
+        if($data1->isEmpty())
+        {
+          return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>[],'newdata2'=>[],'newdata3'=>[]]);
+        }
+
         foreach ($data1 as $value) {
           $newdata1[$value->audit_progress]=$value->ordernum;
         }
@@ -199,8 +235,8 @@ class SettlementController extends Controller
           $newdata2['ydata_projectnum'][]=$value['finished_projectnum'];
         //  $newdata21=array_multisort($newdata2['xdata'],SORT_ASC,$newdata2);
         }
-
-
+        $newdata2['ydata_ordernum']=implode(",",$newdata2['ydata_ordernum']);
+        $newdata2['ydata_projectnum']=implode(",",$newdata2['ydata_projectnum']);
 
         return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>$newdata1,'newdata3'=>$newdata3,'newdata2'=>$newdata2]);
       }
