@@ -14,7 +14,7 @@ class CreateSettlementtimesTable extends Migration
     public function up()
     {
         Schema::create('settlementtimes', function (Blueprint $table) {
-            $table->increments('id')->primary();
+            $table->increments('id');
             $table->string('finished_ordernum');
             $table->string('finished_projectnum');
             $table->timestamps();
