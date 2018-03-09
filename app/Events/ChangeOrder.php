@@ -36,7 +36,7 @@ class ChangeOrder implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('all');
+        return ['all'];
     }
 
     public function broadcastWith()

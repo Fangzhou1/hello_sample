@@ -123,7 +123,8 @@
 window.tem={};
 window.Echo.channel('all')
     .listen('ChangeOrder', (e) => {
-        console.log(e.name);
+        alert(e.name);
+        console.log(e);
     });
 
 

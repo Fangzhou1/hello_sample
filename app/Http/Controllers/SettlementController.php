@@ -49,7 +49,7 @@ class SettlementController extends Controller
           //dd($data);
           DB::table('settlements')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
-          broadcast(new ChangeOrder(Auth::user(),$settlement));
+          //broadcast(new ChangeOrder(Auth::user(),$settlement));
           return redirect()->back();
       }
 
@@ -68,7 +68,7 @@ class SettlementController extends Controller
         //dd($settlement->id);
         $settlement->delete();
         session()->flash('success', '恭喜你，删除成功！');
-        broadcast(new ChangeOrder(Auth::id(),$settlement->id));
+        broadcast(new ChangeOrder(Auth::user(),$settlement));
         return redirect()->back();
 
       }
@@ -82,9 +82,9 @@ class SettlementController extends Controller
       public function store()
         {
         $data=$this->request->except('_token');
-        Settlement::create($data);
+        $settlement=Settlement::create($data);
         session()->flash('success', '恭喜你，添加数据成功！');
-        broadcast(new ChangeOrder(Auth::id(),$settlement->id));
+        broadcast(new ChangeOrder(Auth::user(),$settlement));
         return redirect()->route('settlements.index');
         }
 
