@@ -10,7 +10,7 @@
 <body>
   @include('layouts._header')
 
-  <div class="container-fluid">
+  <div id="totalcontainer" class="container-fluid">
   @include('shared._messages')
   @yield('content')
   @include('layouts._footer')

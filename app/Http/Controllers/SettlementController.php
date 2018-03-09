@@ -59,16 +59,17 @@ class SettlementController extends Controller
         //dd($this->request->all());
         Settlement::where('id',$settlement->id)->update($this->request->except('_token'));
         session()->flash('success', '恭喜你，更新数据成功！');
-        broadcast(new ChangeOrder(Auth::user(),$settlement));
+        broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚修改了订单编号为"));
         return redirect()->back();
       }
 
       public function destroy(Settlement $settlement)
       {
         //dd($settlement->id);
+        $Settlementodn=$settlement->order_number;
         $settlement->delete();
+        broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为"));
         session()->flash('success', '恭喜你，删除成功！');
-        broadcast(new ChangeOrder(Auth::user(),$settlement));
         return redirect()->back();
 
       }
@@ -84,7 +85,7 @@ class SettlementController extends Controller
         $data=$this->request->except('_token');
         $settlement=Settlement::create($data);
         session()->flash('success', '恭喜你，添加数据成功！');
-        broadcast(new ChangeOrder(Auth::user(),$settlement));
+        broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚新增了订单编号为"));
         return redirect()->route('settlements.index');
         }
 

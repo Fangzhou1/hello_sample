@@ -17,16 +17,19 @@ class ChangeOrder implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $user;
-    public $settlement;
+    public $settlementid;
+    public $mes;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user,Settlement $settlement)
+    public function __construct(User $user,$settlementid,$mes)
     {
         $this->user=$user;
-        $this->settlement=$settlement;
+        $this->settlementid=$settlementid;
+        $this->mes=$mes;
+
     }
 
     /**
@@ -41,6 +44,6 @@ class ChangeOrder implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
-        return ['name' => $this->user->name,'order_number'=>$this->settlement->order_number];
+        return ['name' => $this->user->name,'order_number'=>$this->settlementid,'mes'=>$this->mes];
     }
 }
