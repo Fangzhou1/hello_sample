@@ -40,7 +40,7 @@ Route::post('settlements/import', 'SettlementController@import')->name('import')
 Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdate')->name('rowupdate');
 Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlements.smsmail');
 Route::get('settlements/smsmaildetail', 'SettlementController@smsmaildetail')->name('settlements.smsmaildetail');
-Route::get('settlements/sendemail/{emailinfo}/{username}', 'SettlementController@sendEmailReminderTo')->name('settlements.sendemail');
+Route::get('settlements/sendemail/', 'SettlementController@sendEmailReminderTo')->name('settlements.sendemail');
 Route::get('settlements/statistics', 'SettlementController@statistics')->name('settlements.statistics');
 
 Route::resource('settlements', 'SettlementController');

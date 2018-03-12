@@ -31,6 +31,9 @@ class SettlementController extends Controller
         $settlements['data'] = Settlement::where('order_number','<>','订单编号')->paginate($page);
 
         $tracesdata=Trace::where('type','结算')->orderBy('created_at','desc')->get();
+        if($tracesdata->isEmpty()){
+          return view('settlements.index',['current_url'=>$this->request->url(),'settlements'=>$settlements,'traces'=>[]]);
+        }
         //dd($traces);
         //dd($settlements);
         foreach ($tracesdata as $value) {
@@ -168,19 +171,26 @@ class SettlementController extends Controller
               return view('settlements.smsmaildetail',['current_url'=>$this->request->url(),'settlements'=>$settlements,'querytoarray'=>$querytoarray]);
           }
 
-          public function sendEmailReminderTo($emailinfo,$username)
+          public function sendEmailReminderTo()
         {
 
-        //dd($emailinfo);
-      //dd($username);
-            parse_str($emailinfo,$querytoarray);
-            $user=User::where('name',$username)->first();
-            //dd($user);
+
+            $emailinfo=$this->request->query();
+            //dd($emailinfo['email']);
+            if($emailinfo['email']=='')
+            {
+              session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
+              return redirect()->back();
+
+            }
+            parse_str($emailinfo['emailinfo'],$querytoarray);
+
+            //dd($emailinfo);
             $view = 'emails.settlementmail';
             $data = compact('querytoarray');
             $from = '253251551@qq.com';
             $name = 'sample';
-            $to = $user->email;
+            $to = $emailinfo['email'];
             $subject = "请抓紧完成结算审计！";
 
             Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
