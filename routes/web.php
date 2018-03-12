@@ -47,6 +47,11 @@ Route::resource('settlements', 'SettlementController',['except' => ['show', 'edi
 //决算审计路由
 Route::get('rreturns/importpage', 'RreturnsController@importpage')->name('rreturns.importpage');
 Route::post('rreturns/import', 'RreturnsController@import')->name('rreturns.import');
+Route::post('rreturns/rowupdate/{rreturn}', 'RreturnsController@rowupdate')->name('rreturns.rowupdate');
+Route::get('rreturns/smsmail', 'RreturnsController@smsmail')->name('rreturns.smsmail');
+Route::get('rreturns/smsmaildetail', 'RreturnsController@smsmaildetail')->name('rreturns.smsmaildetail');
+Route::get('rreturns/sendemail/', 'RreturnsController@sendEmailReminderTo')->name('rreturns.sendemail');
+Route::get('rreturns/statistics', 'RreturnsController@statistics')->name('rreturns.statistics');
 Route::resource('rreturns', 'RreturnsController',['except' => ['show', 'edit', 'update']]);
 
 

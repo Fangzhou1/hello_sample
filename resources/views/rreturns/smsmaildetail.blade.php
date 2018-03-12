@@ -1,26 +1,26 @@
 @extends('layouts.default')
-@section('title', '决算审计主页')
+@section('title', '决算审计详情页')
 
 @section('content')
-<!-- <div class="flash-message">
-  <p class="alert alert-dismissible alert-info">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    adssadsadsadasdsadsadsad
-  </p>
-</div> -->
+
 <div class="col-md-2">
 @include('layouts.left')
 </div>
 <div class="col-md-10">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">审计列表</a></li>
-    <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab" data-toggle="tab">列表修改痕迹</a></li>
-  </ul>
-<div class="tab-content">
-<br />
-<div id="tab1" role="tabpanel" class="tab-pane active">
-<a class="btn btn-success" href="{{route('rreturns.create')}}" role="button">添加&nbsp;<b>+</b></a>
-<span  class="pull-right" style="font-size: 18px;">总共查询到 {{$rreturns['data']->total()}} 行数据</span>
+<div class=row>
+  <div class="col-md-4">
+<a class="btn btn-primary" href="{{route('rreturns.smsmail')}}" role="button">返回</a>
+  </div>
+
+    <div class="col-md-8">
+  <div class="btn-group" role="group">
+    <a class="btn btn-default {{!isset($querytoarray['order'])||$querytoarray['order']==1?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&type={{$querytoarray['type']}}&order=1" role="button">按审计进度排序</a>
+    <a class="btn btn-default {{isset($querytoarray['order'])&&$querytoarray['order']==2?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&type={{$querytoarray['type']}}&order=2" role="button">按工程项目排序</a>
+  </div>&nbsp;&nbsp;
+  <a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
+  <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$rreturns['data']->total()}} 行数据</span>
+    </div>
+</div>
 
 <div class="table-responsive">
   <table class="table table-hover table-striped">
@@ -70,30 +70,6 @@
 </div>
 
 
-<div id="tab2" role="tabpane1" class="tab-pane">
-  @foreach ($traces as $key=>$data)
-<button style="width:50%;" class="btn btn-success btn-lg center-block superlong" type="button" data-toggle="collapse" data-target="#collapseExample{{$loop->iteration}}" aria-expanded="false" aria-controls="collapseExample">
-{{$key}}的痕迹
-</button>
-<div class="collapse" id="collapseExample{{$loop->iteration}}">
-  <div class="well">
-    @foreach ($data as $value)
-    <p>{{$value->content}}</p>
-    @endforeach
-  </div>
-</div>
-@if (!$loop->last)
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
-@endif
-@endforeach
-</div>
-
-
-
-</div>
-</div>
 
 
 <!-- Modal -->

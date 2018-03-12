@@ -186,7 +186,7 @@ class SettlementController extends Controller
             parse_str($emailinfo['emailinfo'],$querytoarray);
 
             //dd($emailinfo);
-            $view = 'emails.settlementmail';
+            $view = 'emails.settlementsmail';
             $data = compact('querytoarray');
             $from = '253251551@qq.com';
             $name = 'sample';
