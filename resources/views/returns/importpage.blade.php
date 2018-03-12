@@ -14,7 +14,7 @@
 </div>
 <div class="col-md-6">
   <div class="jumbotron">
-<form method="post" class="inline" action="{{route('import')}}" enctype="multipart/form-data">
+<form method="post" class="inline" action="{{route('rreturns.import')}}" enctype="multipart/form-data">
 {{ csrf_field() }}
 <h1>导入EXCEL文件</h1>
   <div class="form-group">

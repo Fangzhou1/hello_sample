@@ -3,7 +3,7 @@
 @section('title','催办页')
 @section('content')
 <div class="col-md-2">
-@include('settlements.left')
+@include('layouts.left')
 </div>
 <div class="col-md-10" >
 <div class="col-md-12 page-header" style="margin-top: 0px;">

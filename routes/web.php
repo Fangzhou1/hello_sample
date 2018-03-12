@@ -34,16 +34,37 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 
 Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
 
-
-Route::get('settlements/importpage', 'SettlementController@importpage')->name('importpage');
+//结算审计路由
+Route::get('settlements/importpage', 'SettlementController@importpage')->name('settlements.importpage');
 Route::post('settlements/import', 'SettlementController@import')->name('import');
 Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdate')->name('rowupdate');
 Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlements.smsmail');
 Route::get('settlements/smsmaildetail', 'SettlementController@smsmaildetail')->name('settlements.smsmaildetail');
 Route::get('settlements/sendemail/', 'SettlementController@sendEmailReminderTo')->name('settlements.sendemail');
 Route::get('settlements/statistics', 'SettlementController@statistics')->name('settlements.statistics');
+Route::resource('settlements', 'SettlementController',['except' => ['show', 'edit', 'update']]);
 
-Route::resource('settlements', 'SettlementController');
+//决算审计路由
+Route::get('rreturns/importpage', 'RreturnsController@importpage')->name('rreturns.importpage');
+Route::post('rreturns/import', 'RreturnsController@import')->name('rreturns.import');
+Route::resource('rreturns', 'RreturnsController',['except' => ['show', 'edit', 'update']]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('test', function () {
   $data= App\Models\Settlement::where('audit_progress','已出报告')->select(DB::raw('count(*) as finished_ordernum'))->first()->toArray();

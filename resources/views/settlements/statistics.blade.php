@@ -3,7 +3,7 @@
 @section('title','关于')
 @section('content')
 <div class="col-md-2">
-@include('settlements.left')
+@include('layouts.left')
 </div>
 <div class="col-md-10">
 

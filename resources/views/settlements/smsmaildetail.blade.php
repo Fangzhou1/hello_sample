@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="col-md-2">
-@include('settlements.left')
+@include('layouts.left')
 </div>
 <div class="col-md-10">
 <div class=row>

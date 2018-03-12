@@ -10,7 +10,7 @@
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="list-group">
         <a class="list-group-item {{($current_url==route('settlements.index'))?"active":""}}" href="{{route('settlements.index')}}">审计主页</a>
-        <a class="list-group-item {{($current_url==route('importpage'))?"active":""}}" href="{{route('importpage')}}">导入Excel表</a>
+        <a class="list-group-item {{($current_url==route('settlements.importpage'))?"active":""}}" href="{{route('settlements.importpage')}}">导入Excel表</a>
         <a class="list-group-item {{($current_url==route('settlements.smsmail'))||($current_url==route('settlements.smsmaildetail'))?"active":""}}" href="{{route('settlements.smsmail')}}">邮件短信催办</a>
         <a class="list-group-item {{($current_url==route('settlements.statistics'))?"active":""}}" href="{{route('settlements.statistics')}}">详细统计信息</a>
       </div>
@@ -29,11 +29,11 @@
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 
         <ul class="list-group">
-          <li class="list-group-item"><a href="#">Cras justo odio</a></li>
-          <li class="list-group-item"><a href="#">Dapibus ac facilisis in</a></li>
+          <a class="list-group-item {{($current_url==route('rreturns.index'))?"active":""}}" href="{{route('rreturns.index')}}">审计主页</a>
+          <a class="list-group-item {{($current_url==route('rreturns.importpage'))?"active":""}}" href="{{route('rreturns.importpage')}}">导入Excel表</a>
           <li class="list-group-item"><a href="#">Morbi leo risus</a></li>
           <li class="list-group-item"><a href="#">Porta ac consectetur ac</a></li>
-          <li class="list-group-item"><a href="#">Vestibulum at eros</a></li>
+
         </ul>
 
     </div>
