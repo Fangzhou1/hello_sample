@@ -41,5 +41,25 @@
   </div>
 
 
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          权限管理
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse {{(strpos($current_url,'permissions'))?"in":""}}" role="tabpanel" aria-labelledby="headingThree">
+
+        <ul class="list-group">
+          <a class="list-group-item {{($current_url==route('permissions.index'))?"active":""}}" href="{{route('permissions.index')}}">设置权限</a>
+          <a class="list-group-item {{($current_url==route('rreturns.importpage'))?"active":""}}" href="{{route('rreturns.importpage')}}">设置角色</a>
+          <a class="list-group-item {{($current_url==route('rreturns.statistics'))?"active":""}}" href="{{route('rreturns.statistics')}}">分配角色</a>
+
+        </ul>
+      </div>
+  </div>
+
+
 
 </div>
