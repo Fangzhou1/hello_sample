@@ -201,6 +201,7 @@ function update(obj)
     "validation_cost":$(obj).parents('tr').find(".validation_cost").text(),
     "id":$(obj).parents('tr').find(".id").text()
   }
+  
     $(obj).parents('table').wrapAll('<form method="POST" action="/settlements/rowupdate/'+tem.id+'">');
     $(obj).parents('tr').find(".order_number").html('<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"><input type="text" name="order_number" class="form-control input-sm" value='+tem.order_number+'>');
     $(obj).parents('tr').find(".vendor_name").html('<input type="text" name="vendor_name" class="form-control input-sm" value='+tem.vendor_name+'>');

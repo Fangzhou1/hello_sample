@@ -1,4 +1,6 @@
 @extends('layouts.default')
+<script type="text/javascript" src="/js/tableeditanddelete.js"></script>
+
 @section('title', '决算审计主页')
 
 @section('content')
@@ -48,6 +50,7 @@
             <th class="id" scope="row">{{$data->id or ""}}</th>
             <td class="project_duration">{{$data->project_duration or ""}}</td>
             <td class="project_number">{{$data->project_number or ""}}</td>
+            <td class="project_name">{{$data->project_name or ""}}</td>
             <td class="project_manager">{{$data->project_manager or ""}}</td>
             <td class="audit_progress">{{$data->audit_progress or ""}}</td>
             <td class="audit_document_number">{{$data->audit_document_number or ""}}</td>
@@ -59,7 +62,7 @@
 
 
             <td class="action">
-              <a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
             @endforeach
 
@@ -124,8 +127,9 @@
 
 <script type="text/javascript">
 
-
-window.tem={};
+var tem=["id","project_duration","project_number","project_name","project_manager","audit_progress","audit_document_number","audit_company","is_needsaudit","is_canaudit","audit_number","remarks"];
+var tableeditanddelete= new tableeditanddelete(tem,'/rreturns/rowupdate/');
+// window.tem={};
 
 
 $(document).ready(function(){
@@ -137,84 +141,71 @@ window.Echo.channel('all')
     });
 })
 
-
-function update(obj)
-{
-    if(!$.isEmptyObject(tem))
-    {
-    $(obj).parents('table').unwrap('form');
-    $(obj).parents('tbody').find('.editable').find(".project_duration").html(tem.project_duration);
-    $(obj).parents('tbody').find('.editable').find(".project_number").html(tem.project_number);
-    $(obj).parents('tbody').find('.editable').find(".project_name").html(tem.project_name);
-    $(obj).parents('tbody').find('.editable').find(".project_manager").html(tem.project_manager);
-    $(obj).parents('tbody').find('.editable').find(".audit_progress").html(tem.audit_progress);
-    $(obj).parents('tbody').find('.editable').find(".audit_document_number").html(tem.audit_document_number);
-    $(obj).parents('tbody').find('.editable').find(".audit_company").html(tem.audit_company);
-    $(obj).parents('tbody').find('.editable').find(".is_needsaudit").html(tem.is_needsaudit);
-    $(obj).parents('tbody').find('.editable').find(".is_canaudit").html(tem.is_canaudit);
-    $(obj).parents('tbody').find('.editable').find(".audit_number").html(tem.audit_number);
-    $(obj).parents('tbody').find('.editable').find(".remarks").html(tem.remarks);
-    $(obj).parents('tbody').find('.editable').find(".action").html('<a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="'+tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-
-    $(obj).parents('tbody').find(".editable").removeClass("editable");
-    }
-
-
-    $(obj).parents('tr').addClass("editable");
-
-    tem={"project_duration":$(obj).parents('tr').find(".project_duration").text(),
-    "project_number":$(obj).parents('tr').find(".project_number").text(),
-    "project_name":$(obj).parents('tr').find(".project_name").text(),
-    "project_manager":$(obj).parents('tr').find(".project_manager").text(),
-    "audit_progress":$(obj).parents('tr').find(".audit_progress").text(),
-    "audit_document_number":$(obj).parents('tr').find(".audit_document_number").text(),
-    "audit_company":$(obj).parents('tr').find(".audit_company").text(),
-    "is_needsaudit":$(obj).parents('tr').find(".is_needsaudit").text(),
-    "is_canaudit":$(obj).parents('tr').find(".is_canaudit").text(),
-    "audit_number":$(obj).parents('tr').find(".audit_number").text(),
-    "remarks":$(obj).parents('tr').find(".remarks").text(),
-    "id":$(obj).parents('tr').find(".id").text()
-  }
-    $(obj).parents('table').wrapAll('<form method="POST" action="/rreturns/rowupdate/'+tem.id+'">');
-    $(obj).parents('tr').find(".project_duration").html('<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"><input type="text" name="project_duration" class="form-control input-sm" value='+tem.project_duration+'>');
-    $(obj).parents('tr').find(".project_number").html('<input type="text" name="project_number" class="form-control input-sm" value='+tem.project_number+'>');
-    $(obj).parents('tr').find(".project_name").html('<input type="text" name="project_name" class="form-control input-sm" value='+tem.project_name+'>');
-    $(obj).parents('tr').find(".project_manager").html('<input type="text" name="project_manager" class="form-control input-sm" value='+tem.project_manager+'>');
-    $(obj).parents('tr').find(".audit_progress").html('<input type="text" name="audit_progress" class="form-control input-sm" value='+tem.audit_progress+'>');
-    $(obj).parents('tr').find(".audit_document_number").html('<input type="text" name="audit_document_number" class="form-control input-sm" value='+tem.audit_document_number+'>');
-    $(obj).parents('tr').find(".audit_company").html('<input type="text" name="audit_company" class="form-control input-sm" value='+tem.audit_company+'>');
-    $(obj).parents('tr').find(".is_needsaudit").html('<input type="text" name="is_needsaudit" class="form-control input-sm" value='+tem.is_needsaudit+'>');
-    $(obj).parents('tr').find(".is_canaudit").html('<input type="text" name="is_canaudit" class="form-control input-sm" value='+tem.is_canaudit+'>');
-    $(obj).parents('tr').find(".audit_number").html('<input type="text" name="audit_number" class="form-control input-sm" value='+tem.audit_number+'>');
-    $(obj).parents('tr').find(".remarks").html('<input type="text" name="remarks" class="form-control input-sm" value='+tem.remarks+'>');
-    $(obj).parents('tr').find(".action").html('<input class="btn btn-default btn-xs" type="submit" value="提交">&nbsp<a onclick="cancel(this)" class="btn btn-default btn-xs" href="javascript:;" role="button">取消</a>');
-
-
-  };
-  function cancel(obj)
-  {
-
-
-    $(obj).parents('table').unwrap('form');
-    $(obj).parents('.editable').find(".project_duration").html(tem.project_duration);
-    $(obj).parents('.editable').find(".project_number").html(tem.project_number);
-    $(obj).parents('.editable').find(".project_name").html(tem.project_name);
-    $(obj).parents('.editable').find(".project_manager").html(tem.project_manager);
-    $(obj).parents('.editable').find(".audit_progress").html(tem.audit_progress);
-    $(obj).parents('.editable').find(".audit_document_number").html(tem.audit_document_number);
-    $(obj).parents('.editable').find(".audit_company").html(tem.audit_company);
-    $(obj).parents('.editable').find(".is_needsaudit").html(tem.is_needsaudit);
-    $(obj).parents('.editable').find(".is_canaudit").html(tem.is_canaudit);
-    $(obj).parents('.editable').find(".audit_number").html(tem.audit_number);
-    $(obj).parents('.editable').find(".remarks").html(tem.remarks);
-
-    $(obj).parents('.editable').find(".action").html('<a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="'+tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-
-    $(obj).parents(".editable").removeClass("editable");
-    tem={};
-
-
-  }
+// function update(obj)
+// {
+//     if(!$.isEmptyObject(tem))
+//     {
+//       cancel(obj)
+//     }
+//
+//
+//     $(obj).parents('tr').addClass("editable");
+//
+//     tem={"project_duration":$(obj).parents('tr').find(".project_duration").text(),
+//     "project_number":$(obj).parents('tr').find(".project_number").text(),
+//     "project_name":$(obj).parents('tr').find(".project_name").text(),
+//     "project_manager":$(obj).parents('tr').find(".project_manager").text(),
+//     "audit_progress":$(obj).parents('tr').find(".audit_progress").text(),
+//     "audit_document_number":$(obj).parents('tr').find(".audit_document_number").text(),
+//     "audit_company":$(obj).parents('tr').find(".audit_company").text(),
+//     "is_needsaudit":$(obj).parents('tr').find(".is_needsaudit").text(),
+//     "is_canaudit":$(obj).parents('tr').find(".is_canaudit").text(),
+//     "audit_number":$(obj).parents('tr').find(".audit_number").text(),
+//     "remarks":$(obj).parents('tr').find(".remarks").text(),
+//     "id":$(obj).parents('tr').find(".id").text()
+//   }
+//     $(obj).parents('table').wrapAll('<form method="POST" action="/rreturns/rowupdate/'+tem.id+'">');
+//     $(obj).parents('tr').find(".id").append('<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">');
+//     $(obj).parents('tr').find(".project_duration").html('<input type="text" name="project_duration" class="form-control input-sm" value='+tem.project_duration+'>');
+//     $(obj).parents('tr').find(".project_number").html('<input type="text" name="project_number" class="form-control input-sm" value='+tem.project_number+'>');
+//     $(obj).parents('tr').find(".project_name").html('<input type="text" name="project_name" class="form-control input-sm" value='+tem.project_name+'>');
+//     $(obj).parents('tr').find(".project_manager").html('<input type="text" name="project_manager" class="form-control input-sm" value='+tem.project_manager+'>');
+//     $(obj).parents('tr').find(".audit_progress").html('<input type="text" name="audit_progress" class="form-control input-sm" value='+tem.audit_progress+'>');
+//     $(obj).parents('tr').find(".audit_document_number").html('<input type="text" name="audit_document_number" class="form-control input-sm" value='+tem.audit_document_number+'>');
+//     $(obj).parents('tr').find(".audit_company").html('<input type="text" name="audit_company" class="form-control input-sm" value='+tem.audit_company+'>');
+//     $(obj).parents('tr').find(".is_needsaudit").html('<input type="text" name="is_needsaudit" class="form-control input-sm" value='+tem.is_needsaudit+'>');
+//     $(obj).parents('tr').find(".is_canaudit").html('<input type="text" name="is_canaudit" class="form-control input-sm" value='+tem.is_canaudit+'>');
+//     $(obj).parents('tr').find(".audit_number").html('<input type="text" name="audit_number" class="form-control input-sm" value='+tem.audit_number+'>');
+//     $(obj).parents('tr').find(".remarks").html('<input type="text" name="remarks" class="form-control input-sm" value='+tem.remarks+'>');
+//     $(obj).parents('tr').find(".action").html('<input class="btn btn-default btn-xs" type="submit" value="提交">&nbsp<a onclick="cancel(this)" class="btn btn-default btn-xs" href="javascript:;" role="button">取消</a>');
+//
+//
+//   };
+//   function cancel(obj)
+//   {
+//
+//
+//     $(obj).parents('table').unwrap('form');
+//     $(obj).parents('tbody').find('.editable').find(".id").html(tem.id);
+//     $(obj).parents('tbody').find('.editable').find(".project_duration").html(tem.project_duration);
+//     $(obj).parents('tbody').find('.editable').find(".project_number").html(tem.project_number);
+//     $(obj).parents('tbody').find('.editable').find(".project_name").html(tem.project_name);
+//     $(obj).parents('tbody').find('.editable').find(".project_manager").html(tem.project_manager);
+//     $(obj).parents('tbody').find('.editable').find(".audit_progress").html(tem.audit_progress);
+//     $(obj).parents('tbody').find('.editable').find(".audit_document_number").html(tem.audit_document_number);
+//     $(obj).parents('tbody').find('.editable').find(".audit_company").html(tem.audit_company);
+//     $(obj).parents('tbody').find('.editable').find(".is_needsaudit").html(tem.is_needsaudit);
+//     $(obj).parents('tbody').find('.editable').find(".is_canaudit").html(tem.is_canaudit);
+//     $(obj).parents('tbody').find('.editable').find(".audit_number").html(tem.audit_number);
+//     $(obj).parents('tbody').find('.editable').find(".remarks").html(tem.remarks);
+//
+//     $(obj).parents('tbody').find('.editable').find(".action").html('<a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="'+tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+//
+//     $(obj).parents('tbody').find(".editable").removeClass("editable");
+//     tem={};
+//
+//
+//   }
 
 $(document).ready(function(){
 
