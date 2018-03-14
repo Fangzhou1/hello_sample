@@ -30,8 +30,8 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 
 //结算审计路由
 Route::get('settlements/importpage', 'SettlementController@importpage')->name('settlements.importpage');
-Route::post('settlements/import', 'SettlementController@import')->name('import');
-Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdate')->name('rowupdate');
+Route::post('settlements/import', 'SettlementController@import')->name('settlements.import');
+Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdate')->name('settlements.rowupdate');
 Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlements.smsmail');
 Route::get('settlements/smsmaildetail', 'SettlementController@smsmaildetail')->name('settlements.smsmaildetail');
 Route::get('settlements/sendemail/', 'SettlementController@sendEmailReminderTo')->name('settlements.sendemail');
@@ -49,9 +49,10 @@ Route::get('rreturns/statistics', 'RreturnsController@statistics')->name('rretur
 Route::resource('rreturns', 'RreturnsController',['except' => ['show', 'edit', 'update']]);
 
 
-
-Route::resource('permissions', 'PermissionsController');
-Route::resource('roles', 'RolesController');
+Route::post('/permissions/rowupdate/{permission}', 'PermissionsController@rowupdate')->name('permissions.rowupdate');
+Route::resource('permissions', 'PermissionsController',['except' => ['show', 'edit', 'update']]);
+Route::post('/roles/rowupdate/{role}', 'RolesController@rowupdate')->name('roles.rowupdate');
+Route::resource('roles', 'RolesController',['except' => ['show', 'edit', 'update']]);
 
 
 // Route::get('/users', 'UsersController@index')->name('users.index');

@@ -62,7 +62,7 @@
 
 
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
             @endforeach
 
@@ -112,11 +112,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <div id="iputwrap">
-          {{ method_field('DELETE') }}
-          {{ csrf_field() }}
-        <input class="btn btn-primary" type="submit" value="确定">
-        </div>
+        <form id="delete" method="POST" action="" style="display:inline-block">
+          <div id="iputwrap">
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+          <input class="btn btn-primary" type="submit" value="确定">
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -139,6 +141,15 @@ window.Echo.channel('all')
       $("#totalcontainer").prepend('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+e.name+e.mes+e.order_number+'的订单</div>');
 
     });
+
+
+//模态框显现时传递数据，改变form的action路由值
+    $('#myModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var recipient = button.data('whatever'); // Extract info from data-* attributes
+      $(this).find("#delete").attr('action','/rreturns/'+recipient);
+  });
+
 })
 
 // function update(obj)
@@ -165,7 +176,7 @@ window.Echo.channel('all')
 //     "id":$(obj).parents('tr').find(".id").text()
 //   }
 //     $(obj).parents('table').wrapAll('<form method="POST" action="/rreturns/rowupdate/'+tem.id+'">');
-//     $(obj).parents('tr').find(".id").append('<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">');
+//     $(obj).parents('tr').find(".id").append('<input type="hidden" name="_token" value="">');
 //     $(obj).parents('tr').find(".project_duration").html('<input type="text" name="project_duration" class="form-control input-sm" value='+tem.project_duration+'>');
 //     $(obj).parents('tr').find(".project_number").html('<input type="text" name="project_number" class="form-control input-sm" value='+tem.project_number+'>');
 //     $(obj).parents('tr').find(".project_name").html('<input type="text" name="project_name" class="form-control input-sm" value='+tem.project_name+'>');
@@ -207,17 +218,7 @@ window.Echo.channel('all')
 //
 //   }
 
-$(document).ready(function(){
 
 
-
-  $('#myModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var recipient = button.data('whatever'); // Extract info from data-* attributes
-    $(this).find("#iputwrap").wrapAll('<form method="POST" action="/rreturns/'+recipient+'" style="display:inline-block">');
-});
-
-
-});
 </script>
 @stop

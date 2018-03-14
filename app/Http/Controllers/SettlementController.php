@@ -94,7 +94,6 @@ class SettlementController extends Controller
         broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为"));
         session()->flash('success', '恭喜你，删除成功！');
         return redirect()->back();
-
       }
 
       public function create()

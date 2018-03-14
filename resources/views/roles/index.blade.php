@@ -9,25 +9,23 @@
 <div class="col-md-10">
 
 <div id="tab1" role="tabpanel" class="tab-pane active">
-<a class="btn btn-success" href="{{route('permissions.create')}}" role="button">添加&nbsp;<b>+</b></a>
-<span  class="pull-right" style="font-size: 18px;">总共查询到{{count($permissions)}}行数据</span>
+<a class="btn btn-success" href="{{route('roles.create')}}" role="button">添加&nbsp;<b>+</b></a>
+<span  class="pull-right" style="font-size: 18px;">总共查询到{{count($roles)}}行数据</span>
 <div class="table-responsive">
   <table class="table table-hover table-striped">
         <thead>
           <tr>
             <th>id</th>
-            <th>权限名称</th>
-            <th>路由名称</th>
+            <th>角色名称</th>
             <th>用户组</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($permissions as $data)
+          @foreach ($roles as $data)
           <tr>
             <td class="id">{{$data->id}}</td>
             <td class="name">{{$data->name}}</td>
-            <td class="route">{{$data->route}}</td>
             <td class="guard_name">{{$data->guard_name}}</td>
             <td class="action">
               <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
@@ -69,14 +67,14 @@
 
 
 <script type="text/javascript">
-var tem=["id","name","route","guard_name"];
-var tableeditanddelete= new tableeditanddelete(tem,'/permissions/rowupdate/');
+var tem=["id","name","guard_name"];
+var tableeditanddelete= new tableeditanddelete(tem,'/roles/row  update/');
 
 $(document).ready(function(){
   $('#myModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data('whatever'); // Extract info from data-* attributes
-    $(this).find("#delete").attr('action','/permissions/'+recipient);
+    $(this).find("#delete").attr('action','/roles/'+recipient);
 });
 })
 </script>

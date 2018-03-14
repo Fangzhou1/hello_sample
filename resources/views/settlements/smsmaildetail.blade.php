@@ -1,4 +1,5 @@
 @extends('layouts.default')
+<script type="text/javascript" src="/js/tableeditanddelete.js"></script>
 @section('title', '结算审计主页')
 
 @section('content')
@@ -72,7 +73,7 @@
             <td class="validation_cost">{{$data->validation_cost}}</td>
 
             <td class="action">
-              <a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
             @endforeach
 
@@ -97,129 +98,29 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <div id="iputwrap">
-          {{ method_field('DELETE') }}
-          {{ csrf_field() }}
-        <input class="btn btn-primary" type="submit" value="确定">
-        </div>
+        <form id="delete" method="POST" action="" style="display:inline-block">
+          <div id="iputwrap">
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+          <input class="btn btn-primary" type="submit" value="确定">
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
-window.tem={};
-function update(obj)
-{
-    if(!$.isEmptyObject(tem))
-    {
-    $(obj).parents('table').unwrap('form');
-    $(obj).parents('tbody').find('.editable').find(".order_number").html(tem.order_number);
-    $(obj).parents('tbody').find('.editable').find(".vendor_name").html(tem.vendor_name);
-    $(obj).parents('tbody').find('.editable').find(".material_name").html(tem.material_name);
-    $(obj).parents('tbody').find('.editable').find(".material_type").html(tem.material_type);
-    $(obj).parents('tbody').find('.editable').find(".project_number").html(tem.material_type);
-    $(obj).parents('tbody').find('.editable').find(".project_name").html(tem.project_name);
-    $(obj).parents('tbody').find('.editable').find(".project_manager").html(tem.project_manager);
-    $(obj).parents('tbody').find('.editable').find(".audit_progress").html(tem.audit_progress);
-    $(obj).parents('tbody').find('.editable').find(".audit_document_number").html(tem.audit_document_number);
-    $(obj).parents('tbody').find('.editable').find(".audit_company").html(tem.audit_company);
-    $(obj).parents('tbody').find('.editable').find(".order_description").html(tem.order_description);
-    $(obj).parents('tbody').find('.editable').find(".contract_number").html(tem.contract_number);
-    $(obj).parents('tbody').find('.editable').find(".audit_number").html(tem.audit_number);
-    $(obj).parents('tbody').find('.editable').find(".cost").html(tem.cost);
-    $(obj).parents('tbody').find('.editable').find(".paid_cost").html(tem.paid_cost);
-    $(obj).parents('tbody').find('.editable').find(".mis_cost").html(tem.mis_cost);
-    $(obj).parents('tbody').find('.editable').find(".submit_cost").html(tem.submit_cost);
-    $(obj).parents('tbody').find('.editable').find(".validation_cost").html(tem.validation_cost);
-    $(obj).parents('tbody').find('.editable').find(".action").html('<a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="'+tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-
-    $(obj).parents('tbody').find(".editable").removeClass("editable");
-    }
-
-
-    $(obj).parents('tr').addClass("editable");
-
-    tem={"order_number":$(obj).parents('tr').find(".order_number").text(),
-    "vendor_name":$(obj).parents('tr').find(".vendor_name").text(),
-    "material_name":$(obj).parents('tr').find(".material_name").text(),
-    "material_type":$(obj).parents('tr').find(".material_type").text(),
-    "project_number":$(obj).parents('tr').find(".project_number").text(),
-    "project_name":$(obj).parents('tr').find(".project_name").text(),
-    "project_manager":$(obj).parents('tr').find(".project_manager").text(),
-    "audit_progress":$(obj).parents('tr').find(".audit_progress").text(),
-    "audit_document_number":$(obj).parents('tr').find(".audit_document_number").text(),
-    "audit_company":$(obj).parents('tr').find(".audit_company").text(),
-    "order_description":$(obj).parents('tr').find(".order_description").text(),
-    "contract_number":$(obj).parents('tr').find(".contract_number").text(),
-    "audit_number":$(obj).parents('tr').find(".audit_number").text(),
-    "cost":$(obj).parents('tr').find(".cost").text(),
-    "paid_cost":$(obj).parents('tr').find(".paid_cost").text(),
-    "mis_cost":$(obj).parents('tr').find(".mis_cost").text(),
-    "submit_cost":$(obj).parents('tr').find(".submit_cost").text(),
-    "validation_cost":$(obj).parents('tr').find(".validation_cost").text(),
-    "id":$(obj).parents('tr').find(".id").text()
-  }
-    $(obj).parents('table').wrapAll('<form method="POST" action="/settlements/rowupdate/'+tem.id+'">');
-    $(obj).parents('tr').find(".order_number").html('<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>"><input type="text" name="order_number" class="form-control input-sm" value='+tem.order_number+'>');
-    $(obj).parents('tr').find(".vendor_name").html('<input type="text" name="vendor_name" class="form-control input-sm" value='+tem.vendor_name+'>');
-    $(obj).parents('tr').find(".material_name").html('<input type="text" name="material_name" class="form-control input-sm" value='+tem.material_name+'>');
-    $(obj).parents('tr').find(".material_type").html('<input type="text" name="material_type" class="form-control input-sm" value='+tem.material_type+'>');
-    $(obj).parents('tr').find(".project_number").html('<input type="text" name="project_number" class="form-control input-sm" value='+tem.material_type+'>');
-    $(obj).parents('tr').find(".project_name").html('<input type="text" name="project_name" class="form-control input-sm" value='+tem.project_name+'>');
-    $(obj).parents('tr').find(".project_manager").html('<input type="text" name="project_manager" class="form-control input-sm" value='+tem.project_manager+'>');
-    $(obj).parents('tr').find(".audit_progress").html('<input type="text" name="audit_progress" class="form-control input-sm" value='+tem.audit_progress+'>');
-    $(obj).parents('tr').find(".audit_document_number").html('<input type="text" name="audit_document_number" class="form-control input-sm" value='+tem.audit_document_number+'>');
-    $(obj).parents('tr').find(".audit_company").html('<input type="text" name="audit_company" class="form-control input-sm" value='+tem.audit_company+'>');
-    $(obj).parents('tr').find(".order_description").html('<input type="text" name="order_description" class="form-control input-sm" value='+tem.order_description+'>');
-    $(obj).parents('tr').find(".contract_number").html('<input type="text" name="contract_number" class="form-control input-sm" value='+tem.contract_number+'>');
-    $(obj).parents('tr').find(".audit_number").html('<input type="text" name="audit_number" class="form-control input-sm" value='+tem.audit_number+'>');
-    $(obj).parents('tr').find(".cost").html('<input type="text" name="cost" class="form-control input-sm" value='+tem.cost+'>');
-    $(obj).parents('tr').find(".paid_cost").html('<input type="text" name="paid_cost" class="form-control input-sm" value='+tem.paid_cost+'>');
-    $(obj).parents('tr').find(".mis_cost").html('<input type="text" name="mis_cost" class="form-control input-sm" value='+tem.mis_cost+'>');
-    $(obj).parents('tr').find(".submit_cost").html('<input type="text" name="submit_cost" class="form-control input-sm" value='+tem.submit_cost+'>');
-    $(obj).parents('tr').find(".validation_cost").html('<input type="text" name="validation_cost" class="form-control input-sm" value='+tem.validation_cost+'>');
-    $(obj).parents('tr').find(".action").html('<input class="btn btn-default btn-xs" type="submit" value="提交">&nbsp<a onclick="cancel(this)" class="btn btn-default btn-xs" href="javascript:;" role="button">取消</a>');
-
-
-  };
-  function cancel(obj)
-  {
-
-
-    $(obj).parents('table').unwrap('form');
-    $(obj).parents('.editable').find(".order_number").html(tem.order_number);
-    $(obj).parents('.editable').find(".vendor_name").html(tem.vendor_name);
-    $(obj).parents('.editable').find(".material_name").html(tem.material_name);
-    $(obj).parents('.editable').find(".material_type").html(tem.material_type);
-    $(obj).parents('.editable').find(".project_number").html(tem.material_type);
-    $(obj).parents('.editable').find(".project_name").html(tem.project_name);
-    $(obj).parents('.editable').find(".project_manager").html(tem.project_manager);
-    $(obj).parents('.editable').find(".audit_progress").html(tem.audit_progress);
-    $(obj).parents('.editable').find(".audit_document_number").html(tem.audit_document_number);
-    $(obj).parents('.editable').find(".audit_company").html(tem.audit_company);
-    $(obj).parents('.editable').find(".order_description").html(tem.order_description);
-    $(obj).parents('.editable').find(".contract_number").html(tem.contract_number);
-    $(obj).parents('.editable').find(".audit_number").html(tem.audit_number);
-    $(obj).parents('.editable').find(".cost").html(tem.cost);
-    $(obj).parents('.editable').find(".paid_cost").html(tem.paid_cost);
-    $(obj).parents('.editable').find(".mis_cost").html(tem.mis_cost);
-    $(obj).parents('.editable').find(".submit_cost").html(tem.submit_cost);
-    $(obj).parents('.editable').find(".validation_cost").html(tem.validation_cost);
-    $(obj).parents('.editable').find(".action").html('<a class="update" title="编辑" onclick="update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="'+tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-
-    $(obj).parents(".editable").removeClass("editable");
-    tem={};
-
-
-  }
+var tem=["id","order_number","vendor_name","material_name","material_type","project_number","project_name","project_manager","audit_progress","audit_document_number","audit_company","order_description","contract_number","audit_number","cost","paid_cost","mis_cost","submit_cost","validation_cost"];
+var tableeditanddelete= new tableeditanddelete(tem,'/settlements/rowupdate/');
 
 $(document).ready(function(){
   $('#myModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data('whatever'); // Extract info from data-* attributes
-    $(this).find("#iputwrap").wrapAll('<form method="POST" action="/settlements/'+recipient+'" style="display:inline-block">');
+    $(this).find("#delete").attr('action','/settlements/'+recipient);
+})
 });
-});
+
 </script>
 @stop

@@ -24,7 +24,7 @@ function tableeditanddelete(field,editlink) {
     for(var key in this.field){
       this.tem[this.field[key]]=$(obj).parents('tr').find("."+this.field[key]).text();
     }
-    console.log(this.tem);
+    
     $(obj).parents('table').wrapAll('<form method="POST" action="'+this.editlink+this.tem.id+'">');
     $(obj).parents('tr').find(".id").append('<input type="hidden" name="_token" value="'+$('meta[name="csrf-token"]').attr('content')+'">');
     for(var key in this.field)

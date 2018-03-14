@@ -11,6 +11,11 @@ class SessionsController extends Controller
       $this->middleware('guest', [
         'only' => ['create','store']
       ]);
+
+      $this->middleware('auth', [
+        'only' => ['destroy']
+      ]);
+
   }
     public function create()
   {

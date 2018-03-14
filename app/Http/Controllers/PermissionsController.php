@@ -39,9 +39,34 @@ class PermissionsController extends Controller
         return view('permissions.index',['current_url'=>$this->request->url(),'permissions'=>$permissions]);
     }
 
+    public function rowupdate(Permission $permission)
+    {
+      //dd($this->request->all());
+      Permission::where('id',$permission->id)->update($this->request->except('_token'));
+      session()->flash('success', '恭喜你，更新数据成功！');
+      return redirect()->back();
+    }
+
+    public function destroy(Permission $permission)
+    {
+      $permission->delete();
+      session()->flash('success', '恭喜你，删除成功！');
+      return redirect()->back();
+    }
+
+
     public function create()
 
-   {
-    dd('1');   //return view('users.create');
-   }
+     {
+      return view('permissions.create');
+     }
+
+
+   public function store()
+     {
+     $datarequest=$this->request->except('_token');
+     $permission=Permission::create($datarequest);
+     session()->flash('success', '恭喜你，添加数据成功！');
+     return redirect()->route('permissions.index');
+     }
 }
