@@ -32,7 +32,9 @@
             <td class="activated">{{$data->activated}}</td>
             <td class="action">
               <a class="update" title="个人主页" href="{{route('users.show',$data->id)}}" role="button"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>&nbsp
+              @can('destroy', $data)
               <a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp
+              @endcan
               <a class="update" title="分配角色" href="{{route('users.rolestouserpage',$data->id)}}" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></td>
           </tr>
 

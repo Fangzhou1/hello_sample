@@ -9,19 +9,14 @@
       <li class=users-list>
 
         <a href="{{ route('users.show', $user->id )}}" class="username"> {{($users->currentPage()-1)*$page+$loop->iteration}}、{{ $user->name }}</a>
-      @can('destroy', $user)
-        <form class="pull-right" action="{{ route('users.destroy', $user->id) }}" method="post">
-          {{ csrf_field() }}
-          {{ method_field('DELETE') }}
-          <button type="submit" class="btn btn-sm btn-danger delete-btn">删除</button>
-        </form>
-      @elsecannot('destroy', $user)
+
+
       <div class="pull-right">
 
-        <span class="label label-info pull-right" style="height:39px;line-height:39px">管理员</span>
+        <span class="label label-info pull-right" style="height:39px;line-height:39px">{{$user->getRoleNames()->first()}}</span>
 
       </div>
-      @endcan
+
       </li>
     @endforeach
   </ul>

@@ -57,7 +57,11 @@ class RolesController extends Controller
 
      public function permissionstorolepage(Role $role)
      {
+       //dd($role);
+
        $permission=Permission::all();
+
+       //dd($permission);
        return view('roles.permissionstorolepage',compact("role","permission"));
      }
 

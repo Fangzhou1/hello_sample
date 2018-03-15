@@ -27,7 +27,7 @@ class UsersController extends Controller
     {
         $page=10;
         $users = User::paginate($page);
-        return view('users.index', compact('users','store'));
+        return view('users.index', compact('users','page'));
     }
 
   public function create()

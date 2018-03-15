@@ -45,7 +45,9 @@
             <th>{{ $settlements['title']->mis_cost or ""}}</th>
             <th>{{ $settlements['title']->submit_cost or ""}}</th>
             <th>{{ $settlements['title']->validation_cost or ""}}</th>
+            @hasanyrole('项目经理|高级管理员|站长')
             <th>操作</th>
+            @endhasanyrole
           </tr>
         </thead>
         <tbody>
@@ -70,10 +72,11 @@
             <td class="mis_cost">{{$data->mis_cost or ""}}</td>
             <td class="submit_cost">{{$data->submit_cost or ""}}</td>
             <td class="validation_cost">{{$data->validation_cost or ""}}</td>
-
+          @hasanyrole('项目经理|高级管理员|站长')
             <td class="action">
               <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
+          @endhasanyrole
             @endforeach
 
         </tbody>

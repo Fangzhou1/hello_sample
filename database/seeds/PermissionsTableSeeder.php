@@ -34,7 +34,34 @@ class PermissionsTableSeeder extends Seeder
       ['name'=>"决算审计新增页","route"=>"rreturns.create","guard_name"=>"Web"],
       ['name'=>"决算审计新增","route"=>"rreturns.store","guard_name"=>"Web"],
       ['name'=>"决算审计删除","route"=>"rreturns.destroy","guard_name"=>"Web"],
+      ['name'=>"结算批量导入页","route"=>"settlements.importpage","guard_name"=>"Web"],
+      ['name'=>"结算批量导入","route"=>"settlements.import","guard_name"=>"Web"],
+      ['name'=>"决算批量导入页","route"=>"rreturns.importpage","guard_name"=>"Web"],
+      ['name'=>"决算批量导入","route"=>"rreturns.import","guard_name"=>"Web"],
+      ['name'=>"权限主页","route"=>"permissions.index","guard_name"=>"Web"],
+      ['name'=>"新增权限页","route"=>"permissions.create","guard_name"=>"Web"],
+      ['name'=>"新增权限","route"=>"permissions.store","guard_name"=>"Web"],
+      ['name'=>"删除权限","route"=>"permissions.destroy","guard_name"=>"Web"],
+      ['name'=>"更新权限","route"=>"permissions.rowupdate","guard_name"=>"Web"],
+      ['name'=>"角色主页","route"=>"roles.index","guard_name"=>"Web"],
+      ['name'=>"新增角色页","route"=>"roles.create","guard_name"=>"Web"],
+      ['name'=>"新增角色","route"=>"roles.store","guard_name"=>"Web"],
+      ['name'=>"删除角色","route"=>"roles.destroy","guard_name"=>"Web"],
+      ['name'=>"给角色赋予权限","route"=>"roles.permissionstorole","guard_name"=>"Web"],
+      ['name'=>"更新角色","route"=>"roles.rowupdate","guard_name"=>"Web"],
+      ['name'=>"用户列表页","route"=>"users.index","guard_name"=>"Web"],
+      ['name'=>"用户展示页","route"=>"users.show","guard_name"=>"Web"],
+      ['name'=>"用户处理页","route"=>"users.edit","guard_name"=>"Web"],
+      ['name'=>"更新用户","route"=>"users.update","guard_name"=>"Web"],
+      ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"Web"],
+      ['name'=>"用户处置列表页","route"=>"users.usersactionindex","guard_name"=>"Web"],
+      ['name'=>"给用户赋予角色页","route"=>"users.rolestouserpage","guard_name"=>"Web"],
+      ['name'=>"给用户赋予角色","route"=>"users.rolestouser","guard_name"=>"Web"],
     ];
+
+
+
+
 
       DB::table('permissions')->insert($data);
     }

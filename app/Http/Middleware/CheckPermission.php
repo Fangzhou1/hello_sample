@@ -18,12 +18,14 @@ class CheckPermission
      */
     public function handle($request, Closure $next)
     {
+
+     //dd(Route::currentRouteName());
       $route=Route::currentRouteName();
       $permission=Permission::where('route',$route)->first();
-      dd($route);
+      //dd($route);
       if(Auth::user()->can($permission->name))
 
-          return $next($request);
+           return $next($request);
 
         else{
           session()->flash('info', '您没有权限进入，请联系管理员！');
