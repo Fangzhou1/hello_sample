@@ -20,6 +20,11 @@ Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('signup', 'UsersController@create')->name('signup');
 Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
+
+
+Route::post('/users/rolestouser/{user}', 'UsersController@rolestouser')->name('users.rolestouser');
+Route::get('/users/rolestouserpage/{user}', 'UsersController@rolestouserpage')->name('users.rolestouserpage');
+Route::get('/users/usersactionindex', 'UsersController@usersactionindex')->name('users.usersactionindex');
 Route::resource('users', 'UsersController');
 
 //注册
@@ -48,19 +53,21 @@ Route::get('rreturns/sendemail/', 'RreturnsController@sendEmailReminderTo')->nam
 Route::get('rreturns/statistics', 'RreturnsController@statistics')->name('rreturns.statistics');
 Route::resource('rreturns', 'RreturnsController',['except' => ['show', 'edit', 'update']]);
 
-
+//权限管理
 Route::post('/permissions/rowupdate/{permission}', 'PermissionsController@rowupdate')->name('permissions.rowupdate');
 Route::resource('permissions', 'PermissionsController',['except' => ['show', 'edit', 'update']]);
+Route::get('/roles/permissionstorolepage/{role}', 'RolesController@permissionstorolepage')->name('roles.permissionstorolepage');
+Route::post('/roles/permissionstorole/{role}', 'RolesController@permissionstorole')->name('roles.permissionstorole');
 Route::post('/roles/rowupdate/{role}', 'RolesController@rowupdate')->name('roles.rowupdate');
 Route::resource('roles', 'RolesController',['except' => ['show', 'edit', 'update']]);
 
 
 // Route::get('/users', 'UsersController@index')->name('users.index');
-// Route::get('/users/{user}', 'UsersController@show')->name('users.show');
+// Route::get('/users/{user}', 'UsersController@show')->name('users.show');//
 // Route::get('/users/create', 'UsersController@create')->name('users.create');
 // Route::post('/users', 'UsersController@store')->name('users.store');
-// Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
-// Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
+// Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');//
+// Route::patch('/users/{user}', 'UsersController@update')->name('users.update');//
 // Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
 

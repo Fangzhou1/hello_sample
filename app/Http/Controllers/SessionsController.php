@@ -16,6 +16,7 @@ class SessionsController extends Controller
         'only' => ['destroy']
       ]);
 
+
   }
     public function create()
   {

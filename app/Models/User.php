@@ -10,6 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable,HasRoles;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,6 +37,11 @@ class User extends Authenticatable
                $user->activation_token = str_random(30);
            });
        }
+
+       public function getActivatedAttribute($value)
+          {
+              return $value==1?"已激活":"未激活";
+          }
 
 
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Mail;
 use App\Handlers\ImageUploadHandler;
+use Spatie\Permission\Models\Role;
 use Auth;
 
 
@@ -19,13 +20,14 @@ class UsersController extends Controller
       $this->middleware('guest', [
         'only' => ['create','store','confirmEmail']
       ]);
+      $this->middleware('check',['except' => ['create', 'store','confirmEmail']]);
   }
 
   public function index()
     {
         $page=10;
         $users = User::paginate($page);
-        return view('users.index', compact('users','page'));
+        return view('users.index', compact('users','store'));
     }
 
   public function create()
@@ -136,4 +138,30 @@ class UsersController extends Controller
         session()->flash('success', '恭喜你，激活成功！');
         return redirect()->route('users.show', $user->id);
     }
+
+      public function usersactionindex(Request $request)
+     {
+       $page=10;
+       $users = User::paginate($page);
+       return view('users.usersactionindex', ['users'=>$users,'page'=>$page,'current_url'=>$request->url()]);
+     }
+
+     public function rolestouserpage(User $user,Request $request)
+    {
+      $roles=Role::all();
+      return view('users.rolestouserpage', ['user'=>$user,'roles'=>$roles,'current_url'=>$request->url()]);
+
+    }
+
+    public function rolestouser(User $user,Request $request)
+   {
+
+     $user->syncRoles($request->input('role'));
+     session()->flash('success', '恭喜你，角色分配成功！');
+     $page=10;
+     $users = User::paginate($page);
+     return redirect()->route('users.usersactionindex');
+
+   }
+
 }

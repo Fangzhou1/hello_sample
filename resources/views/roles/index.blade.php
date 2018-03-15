@@ -28,7 +28,9 @@
             <td class="name">{{$data->name}}</td>
             <td class="guard_name">{{$data->guard_name}}</td>
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp
+              <a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp
+              <a class="update" title="分配权限" href="{{route('roles.permissionstorolepage',$data->id)}}" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></td>
           </tr>
 
             @endforeach

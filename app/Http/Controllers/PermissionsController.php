@@ -12,6 +12,7 @@ class PermissionsController extends Controller
   public function __construct(Request $request)
   {
       $this->middleware('auth');
+      $this->middleware('check');
       $this->request=$request;
 
 
@@ -69,4 +70,6 @@ class PermissionsController extends Controller
      session()->flash('success', '恭喜你，添加数据成功！');
      return redirect()->route('permissions.index');
      }
+
+
 }

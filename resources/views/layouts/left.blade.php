@@ -49,12 +49,12 @@
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse {{(strpos($current_url,'permissions'))||(strpos($current_url,'roles'))?"in":""}}" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseThree" class="panel-collapse collapse {{(strpos($current_url,'permissions'))||(strpos($current_url,'roles'))||(strpos($current_url,'usersactionindex'))?"in":""}}" role="tabpanel" aria-labelledby="headingThree">
 
         <ul class="list-group">
           <a class="list-group-item {{($current_url==route('permissions.index'))?"active":""}}" href="{{route('permissions.index')}}">设置权限</a>
           <a class="list-group-item {{($current_url==route('roles.index'))?"active":""}}" href="{{route('roles.index')}}">设置角色</a>
-          <a class="list-group-item {{($current_url==route('rreturns.statistics'))?"active":""}}" href="{{route('rreturns.statistics')}}">分配角色</a>
+          <a class="list-group-item {{($current_url==route('users.usersactionindex'))?"active":""}}" href="{{route('users.usersactionindex')}}">分配角色</a>
 
         </ul>
       </div>

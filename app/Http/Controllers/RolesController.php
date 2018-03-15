@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
@@ -11,6 +12,7 @@ class RolesController extends Controller
   public function __construct(Request $request)
   {
       $this->middleware('auth');
+      $this->middleware('check');
       $this->request=$request;
 
 
@@ -52,4 +54,24 @@ class RolesController extends Controller
        session()->flash('success', '恭喜你，添加数据成功！');
        return redirect()->route('roles.index');
      }
+
+     public function permissionstorolepage(Role $role)
+     {
+       $permission=Permission::all();
+       return view('roles.permissionstorolepage',compact("role","permission"));
+     }
+
+     public function permissionstorole(Role $role)
+     {
+       foreach ($this->request->except('_token') as $data) {
+         //dump($data);
+         $role->syncPermissions($data);
+       }
+       //die();
+       session()->flash('success', '恭喜你，权限分配成功！');
+       return redirect()->route('roles.index');
+       //dd($this->request->all());
+       //dd($role);
+     }
+
 }
