@@ -36,6 +36,8 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 //结算审计路由
 Route::get('settlements/importpage', 'SettlementController@importpage')->name('settlements.importpage');
 Route::post('settlements/import', 'SettlementController@import')->name('settlements.import');
+Route::get('settlements/export', 'SettlementController@export')->name('settlements.export');
+Route::get('settlements/exportbytype', 'SettlementController@exportbytype')->name('settlements.exportbytype');
 Route::post('settlements/rowupdate/{settlement}', 'SettlementController@rowupdate')->name('settlements.rowupdate');
 Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlements.smsmail');
 Route::get('settlements/smsmaildetail', 'SettlementController@smsmaildetail')->name('settlements.smsmaildetail');
@@ -46,6 +48,8 @@ Route::resource('settlements', 'SettlementController',['except' => ['show', 'edi
 //决算审计路由
 Route::get('rreturns/importpage', 'RreturnsController@importpage')->name('rreturns.importpage');
 Route::post('rreturns/import', 'RreturnsController@import')->name('rreturns.import');
+Route::get('rreturns/export', 'RreturnsController@export')->name('rreturns.export');
+Route::get('rreturns/exportbytype', 'RreturnsController@exportbytype')->name('rreturns.exportbytype');
 Route::post('/rreturns/rowupdate/{rreturn}', 'RreturnsController@rowupdate')->name('rreturns.rowupdate');
 Route::get('rreturns/smsmail', 'RreturnsController@smsmail')->name('rreturns.smsmail');
 Route::get('rreturns/smsmaildetail', 'RreturnsController@smsmaildetail')->name('rreturns.smsmaildetail');

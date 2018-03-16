@@ -43,6 +43,23 @@ class RreturnsController extends Controller
           return redirect()->back();
       }
 
+      public function export()
+        {
+            $rreturns=Rreturn::all()->toArray();
+            //dd($rreturns);
+            $upload=new ExcelUploadHandler;
+            $upload->download($rreturns,'决算审计总表');
+        }
+
+        public function exportbytype()
+          {
+              $typeinfo=$this->request->query();
+              $rreturns=Rreturn::where($typeinfo)->get()->toArray();
+              $upload=new ExcelUploadHandler;
+              $upload->download($rreturns,'决算审计分表');
+
+          }
+
       public function index()
         {
             $page=10;

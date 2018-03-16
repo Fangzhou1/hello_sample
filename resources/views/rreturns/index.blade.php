@@ -22,6 +22,7 @@
 <br />
 <div id="tab1" role="tabpanel" class="tab-pane active">
 <a class="btn btn-success" href="{{route('rreturns.create')}}" role="button">添加&nbsp;<b>+</b></a>
+<a class="btn btn-primary" href="{{route('rreturns.export')}}" role="button">导出EXCEL表格</a>
 <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$rreturns['data']->total()}} 行数据</span>
 
 <div class="table-responsive">

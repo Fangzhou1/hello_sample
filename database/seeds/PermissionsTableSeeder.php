@@ -57,6 +57,11 @@ class PermissionsTableSeeder extends Seeder
       ['name'=>"用户处置列表页","route"=>"users.usersactionindex","guard_name"=>"Web"],
       ['name'=>"给用户赋予角色页","route"=>"users.rolestouserpage","guard_name"=>"Web"],
       ['name'=>"给用户赋予角色","route"=>"users.rolestouser","guard_name"=>"Web"],
+      ['name'=>"给角色赋予权限页","route"=>"roles.permissionstorolepage","guard_name"=>"Web"],
+      ['name'=>"导出结算总表","route"=>"settlements.export","guard_name"=>"Web"],
+      ['name'=>"导出决算总表","route"=>"rreturns.export","guard_name"=>"Web"],
+      ['name'=>"按分类导出结算分表","route"=>"settlements.exportbytype","guard_name"=>"Web"],
+      ['name'=>"按分类导出决算分表","route"=>"rreturns.exportbytype","guard_name"=>"Web"],
     ];
 
 

@@ -21,6 +21,7 @@
 <br />
 <div id="tab1" role="tabpanel" class="tab-pane active">
 <a class="btn btn-success" href="{{route('settlements.create')}}" role="button">添加&nbsp;<b>+</b></a>
+<a class="btn btn-primary" href="{{route('settlements.export')}}" role="button">导出EXCEL表格</a>
 <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$settlements['data']->total()}} 行数据</span>
 <div class="table-responsive">
   <table class="table table-hover table-striped">

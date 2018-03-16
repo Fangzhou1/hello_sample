@@ -32,9 +32,9 @@
 <ul class="list-group">
   <li class="list-group-item">用户名：{{$user->name}}</li>
   <li class="list-group-item">邮箱：{{$user->email}}</li>
-  <li class="list-group-item">Morbi leo risus</li>
-  <li class="list-group-item">Porta ac consectetur ac</li>
-  <li class="list-group-item">Vestibulum at eros</li>
+  <li class="list-group-item">角色：{{$user->getRoleNames()->first()}}</li>
+  <li class="list-group-item">最近更新主页时间：{{$user->updated_at->diffForHumans()}}</li>
+  <li class="list-group-item">账户状态：{{$user->activated}}</li>
 </ul>
 </div>
         <hr>

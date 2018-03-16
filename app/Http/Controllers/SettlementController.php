@@ -67,6 +67,23 @@ class SettlementController extends Controller
           return redirect()->back();
       }
 
+      public function export()
+        {
+            $settlement=Settlement::all()->toArray();
+            //dd($settlement);
+            $upload=new ExcelUploadHandler;
+            $upload->download($settlement,'结算审计总表');
+
+        }
+
+        public function exportbytype()
+          {
+              $typeinfo=$this->request->query();
+              $settlement=Settlement::where($typeinfo)->get()->toArray();
+              $upload=new ExcelUploadHandler;
+              $upload->download($settlement,'结算审计分表');
+
+          }
 
       public function rowupdate(Settlement $settlement)
       {

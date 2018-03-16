@@ -31,7 +31,7 @@
       <li class="dropdown">
 
          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="user-avatar pull-left" style="margin-right:8px;">
-         <img src="{{ Auth::user()->avatar or 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2416237431,485618085&fm=11&gp=0.jpg'}}" class="img-responsive img-circle" width="30px" height="30px">
+         <img src="{{(Auth::user()->avatar)?(Auth::user()->avatar):'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2416237431,485618085&fm=11&gp=0.jpg'}}" class="img-responsive img-circle" width="30px" height="30px">
          </span>{{Auth::user()->name}}<span class="caret"></span></a>
          <ul class="dropdown-menu">
            <li><a href="{{ route('users.show', Auth::user()->id) }}">个人中心</a></li>

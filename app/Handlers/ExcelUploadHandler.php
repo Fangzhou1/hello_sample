@@ -20,11 +20,18 @@ class ExcelUploadHandler
 
 
           $this->results=$reader->get()->toArray();
-
-
-
   });
       return $this->results;
+    }
+
+
+    public function download($export,$name)
+    {
+      Excel::create($name, function($excel) use ($export) {
+        $excel->sheet('sheet1', function($sheet) use ($export){
+          $sheet->fromArray($export);
+        });
+      })->export('xls');
     }
 
 }
