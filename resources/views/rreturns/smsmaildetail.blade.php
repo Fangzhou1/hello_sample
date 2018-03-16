@@ -18,11 +18,13 @@
     <a class="btn btn-default {{!isset($querytoarray['order'])||$querytoarray['order']==1?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&type={{$querytoarray['type']}}&order=1" role="button">按审计进度排序</a>
     <a class="btn btn-default {{isset($querytoarray['order'])&&$querytoarray['order']==2?'active':""}}" href="{{$current_url}}?name={{$querytoarray['name']}}&type={{$querytoarray['type']}}&order=2" role="button">按工程项目排序</a>
   </div>&nbsp;&nbsp;
+
   @if($querytoarray['type']==1)
   <a class="btn btn-primary" href="{{route('rreturns.exportbytype')}}?project_manager={{$rreturns['data']->first()->project_manager}}" role="button">导出EXCEL表格</a>
   @else
   <a class="btn btn-primary" href="{{route('rreturns.exportbytype')}}?audit_company={{$rreturns['data']->first()->audit_company}}" role="button">导出EXCEL表格</a>
   @endif
+
   <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$rreturns['data']->total()}} 行数据</span>
     </div>
 </div>
@@ -52,6 +54,7 @@
           <tr>
             <th class="id" scope="row">{{$data->id or ""}}</th>
             <td class="project_duration">{{$data->project_duration or ""}}</td>
+            <td class="project_name">{{$data->project_name or ""}}</td>
             <td class="project_number">{{$data->project_number or ""}}</td>
             <td class="project_manager">{{$data->project_manager or ""}}</td>
             <td class="audit_progress">{{$data->audit_progress or ""}}</td>
@@ -66,6 +69,7 @@
             <td class="action">
               <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
+
             @endforeach
 
         </tbody>

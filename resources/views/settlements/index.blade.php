@@ -9,10 +9,11 @@
     adssadsadsadasdsadsadsad
   </p>
 </div> -->
+
 <div class="col-md-2">
 @include('layouts.left')
 </div>
-<div class="col-md-10">
+<div class="col-md-10 pull-right">
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">审计列表</a></li>
     <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab" data-toggle="tab">列表修改痕迹</a></li>
@@ -20,8 +21,10 @@
 <div class="tab-content">
 <br />
 <div id="tab1" role="tabpanel" class="tab-pane active">
+  @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('settlements.create')}}" role="button">添加&nbsp;<b>+</b></a>
 <a class="btn btn-primary" href="{{route('settlements.export')}}" role="button">导出EXCEL表格</a>
+@endhasanyrole
 <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$settlements['data']->total()}} 行数据</span>
 <div class="table-responsive">
   <table class="table table-hover table-striped">
@@ -46,9 +49,9 @@
             <th>{{ $settlements['title']->mis_cost or ""}}</th>
             <th>{{ $settlements['title']->submit_cost or ""}}</th>
             <th>{{ $settlements['title']->validation_cost or ""}}</th>
-            @hasanyrole('项目经理|高级管理员|站长')
+
             <th>操作</th>
-            @endhasanyrole
+
           </tr>
         </thead>
         <tbody>
@@ -73,11 +76,17 @@
             <td class="mis_cost">{{$data->mis_cost or ""}}</td>
             <td class="submit_cost">{{$data->submit_cost or ""}}</td>
             <td class="validation_cost">{{$data->validation_cost or ""}}</td>
-          @hasanyrole('项目经理|高级管理员|站长')
+
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
-          </tr>
+              @hasanyrole('项目经理|高级管理员|站长')
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+          @else
+          你无权限操作
           @endhasanyrole
+            </td>
+
+          </tr>
+
             @endforeach
 
         </tbody>

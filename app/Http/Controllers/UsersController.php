@@ -43,7 +43,7 @@ class UsersController extends Controller
  public function store(Request $request)
  {
    $this->validate($request, [
-      'name' => 'required|max:50',
+      'name' => 'required|unique:users|max:50',
       'email' => 'required|email|unique:users|max:255',
       'password' => 'required|confirmed|min:6',
       'captcha' => 'required|captcha',
@@ -51,16 +51,23 @@ class UsersController extends Controller
      'captcha.captcha' => '请输入正确的验证码',
         ]);
 
+    $data=[
+              'name' => $request->name,
+              'email' => $request->email,
+              'password' => bcrypt($request->password),
+          ];
+      if($request->name=='fangzhou')
+      {
+        $data['activated']=1;
+        $user = User::create($data);
+        $user->assignRole('站长');
+        Auth::login();
+        session()->flash('success', '欢迎您，站长！');
+        return redirect('/');
+      }
 
-  $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-        if($request->name=='fangzhou')
-        {
-          $user->assignRole('站长');
-        }
+  $user = User::create($data);
+
   $this->sendEmailConfirmationTo($user);
   session()->flash('success', '验证邮件已发送到你的注册邮箱上，请注意查收。');
   return redirect('/');

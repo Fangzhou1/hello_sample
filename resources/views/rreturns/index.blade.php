@@ -21,8 +21,10 @@
 <div class="tab-content">
 <br />
 <div id="tab1" role="tabpanel" class="tab-pane active">
+  @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('rreturns.create')}}" role="button">添加&nbsp;<b>+</b></a>
 <a class="btn btn-primary" href="{{route('rreturns.export')}}" role="button">导出EXCEL表格</a>
+@endhasanyrole
 <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$rreturns['data']->total()}} 行数据</span>
 
 <div class="table-responsive">
@@ -30,19 +32,20 @@
         <thead>
           <tr>
             <th>id</th>
-            <th>{{ $rreturns['title']->project_duration or ""}}</th>
+            <th style="min-width:200px">{{ $rreturns['title']->project_duration or ""}}</th>
             <th>{{ $rreturns['title']->project_number or ""}}</th>
-            <th>{{ $rreturns['title']->project_name or ""}}</th>
-            <th>{{ $rreturns['title']->project_manager or ""}}</th>
-            <th>{{ $rreturns['title']->audit_progress or ""}}</th>
-            <th>{{ $rreturns['title']->audit_document_number or ""}}</th>
+            <th style="min-width:320px">{{ $rreturns['title']->project_name or ""}}</th>
+            <th style="min-width:150px">{{ $rreturns['title']->project_manager or ""}}</th>
+            <th style="min-width:150px">{{ $rreturns['title']->audit_progress or ""}}</th>
+            <th style="min-width:150px">{{ $rreturns['title']->audit_document_number or ""}}</th>
             <th>{{ $rreturns['title']->audit_company or ""}}</th>
             <th>{{ $rreturns['title']->is_needsaudit or ""}}</th>
             <th>{{ $rreturns['title']->is_canaudit or ""}}</th>
             <th>{{ $rreturns['title']->audit_number or ""}}</th>
-            <th>{{ $rreturns['title']->remarks or ""}}</th>
+            <th style="min-width:320px">{{ $rreturns['title']->remarks or ""}}</th>
 
             <th>操作</th>
+
           </tr>
         </thead>
         <tbody>
@@ -63,8 +66,16 @@
 
 
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              @hasanyrole('项目经理|高级管理员|站长')
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              @else
+              你无权限操作
+              @endhasanyrole
+            </td>
+
+
           </tr>
+
             @endforeach
 
         </tbody>
@@ -87,8 +98,6 @@
   </div>
 </div>
 @if (!$loop->last)
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
 <div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
 @endif
 @endforeach

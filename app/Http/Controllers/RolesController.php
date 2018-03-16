@@ -21,7 +21,7 @@ class RolesController extends Controller
   public function index()
     {
       $roles=Role::get();
-      return view('Roles.index',['current_url'=>$this->request->url(),'roles'=>$roles]);
+      return view('roles.index',['current_url'=>$this->request->url(),'roles'=>$roles]);
     }
 
     public function rowupdate(Role $role)
@@ -43,7 +43,7 @@ class RolesController extends Controller
     public function create()
 
      {
-      return view('Roles.create');
+      return view('roles.create');
      }
 
 
