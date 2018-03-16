@@ -13,7 +13,6 @@ class PermissionsTableSeeder extends Seeder
     {
 
 
-
       $data=[
       ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"Web"],
       ['name'=>"结算审计更新","route"=>"settlements.rowupdate","guard_name"=>"Web"],
@@ -61,7 +60,7 @@ class PermissionsTableSeeder extends Seeder
       ['name'=>"导出结算总表","route"=>"settlements.export","guard_name"=>"Web"],
       ['name'=>"导出决算总表","route"=>"rreturns.export","guard_name"=>"Web"],
       ['name'=>"按分类导出结算分表","route"=>"settlements.exportbytype","guard_name"=>"Web"],
-      ['name'=>"按分类导出决算分表","route"=>"rreturns.exportbytype","guard_name"=>"Web"],
+      ['name'=>"按分类导出决算分表","route"=>"rreturns.exportbytype","guard_name"=>"Web"]
     ];
 
 
