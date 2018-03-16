@@ -61,7 +61,7 @@ class UsersController extends Controller
         $data['activated']=1;
         $user = User::create($data);
         $user->assignRole('站长');
-        Auth::login();
+        Auth::login($user);
         session()->flash('success', '欢迎您，站长！');
         return redirect('/');
       }
