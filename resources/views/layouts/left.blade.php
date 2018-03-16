@@ -40,7 +40,7 @@
       </div>
   </div>
 
-<!-- @role('站长') -->
+
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
@@ -59,7 +59,7 @@
         </ul>
       </div>
   </div>
-<!-- @endrole -->
+
 
 
 </div>
