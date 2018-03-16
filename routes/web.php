@@ -87,7 +87,7 @@ Route::get('test2', function () {
 });
 
 Route::get('test3', function () {
-  DB::table('permissions')->insert([[
+  DB::table('permissions')->insert([
   ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"结算审计更新","route"=>"settlements.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"结算审计分类页面","route"=>"settlements.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
@@ -135,7 +135,7 @@ Route::get('test3', function () {
   ['name'=>"导出决算总表","route"=>"rreturns.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"按分类导出结算分表","route"=>"settlements.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"按分类导出决算分表","route"=>"rreturns.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()]
-]]);
+]);
 
 });
 
