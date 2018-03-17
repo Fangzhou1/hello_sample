@@ -39,7 +39,7 @@ class RreturnsController extends Controller
           //dd($data);
           DB::table('rreturns')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
-          
+
           return redirect()->back();
       }
 
@@ -88,8 +88,8 @@ class RreturnsController extends Controller
           $data['project_number']=$rreturn->project_number;
           $data['type']='决算';
           $mes='修改了';
-          event(new ModifyDates($data,$mes));
-          broadcast(new ChangeOrder(Auth::user(),$rreturn->project_number,"刚刚修改了项目编号为"));
+          $mes2=event(new ModifyDates($data,$mes));
+          broadcast(new ChangeOrder(Auth::user(),$rreturn->project_number,"刚刚修改了项目编号为",$mes2));
           return redirect()->back();
         }
 
@@ -102,8 +102,8 @@ class RreturnsController extends Controller
           $data['project_number']=$rreturnodn;
           $data['type']='决算';
           $mes='删除了';
-          event(new ModifyDates($data,$mes));
-          broadcast(new ChangeOrder(Auth::user(),$rreturnodn,"刚刚删除了项目编号为"));
+          $mes2=event(new ModifyDates($data,$mes));
+          broadcast(new ChangeOrder(Auth::user(),$rreturnodn,"刚刚删除了项目编号为",$mes2));
           session()->flash('success', '恭喜你，删除成功！');
           return redirect()->back();
 
@@ -123,9 +123,9 @@ class RreturnsController extends Controller
           $data['project_number']=$rreturn->project_number;
           $data['type']='决算';
           $mes='新建了';
-          event(new ModifyDates($data,$mes));
+          $mes2=event(new ModifyDates($data,$mes));
           session()->flash('success', '恭喜你，添加数据成功！');
-          broadcast(new ChangeOrder(Auth::user(),$rreturn->project_number,"刚刚新增了项目编号为"));
+          broadcast(new ChangeOrder(Auth::user(),$rreturn->project_number,"刚刚新增了项目编号为",$mes2));
           return redirect()->route('rreturns.index');
           }
 

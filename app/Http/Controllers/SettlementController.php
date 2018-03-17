@@ -63,7 +63,7 @@ class SettlementController extends Controller
           //dd($data);
           DB::table('settlements')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
-          
+
           return redirect()->back();
       }
 
@@ -108,6 +108,7 @@ class SettlementController extends Controller
         $settlement->delete();
         $data['name']=Auth::user()->name;
         $data['order_number']=$Settlementodn;
+        $data['project_number']=$settlement->project_number;
         $data['type']='结算';
         $mes='删除了';
         $mes2=event(new ModifyDates($data,$mes));
@@ -128,10 +129,11 @@ class SettlementController extends Controller
         $settlement=Settlement::create($datarequest);
         $data['name']=Auth::user()->name;
         $data['order_number']=$settlement->order_number;
+        $data['project_number']=$settlement->project_number;
         $data['type']='结算';
         $mes='新建了';
-        event(new ModifyDates($data,$mes));
-        $mes2=session()->flash('success', '恭喜你，添加数据成功！');
+        $mes2=event(new ModifyDates($data,$mes));
+        session()->flash('success', '恭喜你，添加数据成功！');
         broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚新增了订单编号为",$mes2));
         return redirect()->route('settlements.index');
         }
@@ -254,18 +256,22 @@ class SettlementController extends Controller
 
         //结算审计项目随时间进度统计
         $newdata_tem=Settlementtime::orderBy('created_at', 'desc')->take(7)->get()->toArray();
-        //dd($newdata_tem);
-        $newdata_tem=$this->my_sort($newdata_tem,'created_at',SORT_ASC,SORT_REGULAR );
-        //dd($newdata_tem);
-        foreach ($newdata_tem as $value) {
+        if($newdata_tem==[])
+        $newdata2=[];
+        else {
+          $newdata_tem=$this->my_sort($newdata_tem,'created_at',SORT_ASC,SORT_REGULAR );
+          //dd($newdata_tem);
+          foreach ($newdata_tem as $value) {
 
-          $newdata2['xdata'][]=substr($value['created_at'],0,10);
-          $newdata2['ydata_ordernum'][]=$value['finished_ordernum'];
-          $newdata2['ydata_projectnum'][]=$value['finished_projectnum'];
-        //  $newdata21=array_multisort($newdata2['xdata'],SORT_ASC,$newdata2);
+            $newdata2['xdata'][]=substr($value['created_at'],0,10);
+            $newdata2['ydata_ordernum'][]=$value['finished_ordernum'];
+            $newdata2['ydata_projectnum'][]=$value['finished_projectnum'];
+          //  $newdata21=array_multisort($newdata2['xdata'],SORT_ASC,$newdata2);
+          }
+          $newdata2['ydata_ordernum']=implode(",",$newdata2['ydata_ordernum']);
+          $newdata2['ydata_projectnum']=implode(",",$newdata2['ydata_projectnum']);
         }
-        $newdata2['ydata_ordernum']=implode(",",$newdata2['ydata_ordernum']);
-        $newdata2['ydata_projectnum']=implode(",",$newdata2['ydata_projectnum']);
+
 
         return view('settlements.statistics',['current_url'=>$this->request->url(),'newdata1'=>$newdata1,'newdata3'=>$newdata3,'newdata2'=>$newdata2]);
       }

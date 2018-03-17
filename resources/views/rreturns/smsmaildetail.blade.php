@@ -75,7 +75,7 @@
         </tbody>
       </table>
 </div>
-{!! $rreturns['data']->links() !!}
+{!! $rreturns['data']->appends($querytoarray)->links() !!}
 </div>
 
 

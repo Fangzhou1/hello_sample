@@ -19,18 +19,18 @@ class CheckPermission
     public function handle($request, Closure $next)
     {
 
-     // //dd(Route::currentRouteName());
-     //  $route=Route::currentRouteName();
-     //  $permission=Permission::where('route',$route)->first();
-     //  //dd($route);
-     //  if(Auth::user()->can($permission->name))
+     //dd(Route::currentRouteName());
+      $route=Route::currentRouteName();
+      $permission=Permission::where('route',$route)->first();
+      //dd($route);
+      if(Auth::user()->can($permission->name))
 
            return $next($request);
-        //
-        // else{
-        //   session()->flash('warning', '您没有权限进入，请联系管理员！');
-        //   return redirect('/');
-        // }
+
+        else{
+          session()->flash('warning', '您没有权限进入，请联系管理员！');
+          return redirect('/');
+        }
 
 
     }
