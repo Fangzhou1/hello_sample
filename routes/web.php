@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 
 
@@ -88,7 +90,6 @@ Route::get('test2', function () {
 
 Route::get('test3', function () {
   DB::table('permissions')->insert([
-  ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"结算审计更新","route"=>"settlements.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"结算审计分类页面","route"=>"settlements.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"结算审计详情","route"=>"settlements.smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
@@ -124,7 +125,7 @@ Route::get('test3', function () {
   ['name'=>"更新角色","route"=>"roles.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"用户列表页","route"=>"users.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"用户展示页","route"=>"users.show","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"用户处理页","route"=>"users.edit","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+  ['name'=>"用户更新页","route"=>"users.edit","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"更新用户","route"=>"users.update","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
   ['name'=>"用户处置列表页","route"=>"users.usersactionindex","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
@@ -139,7 +140,13 @@ Route::get('test3', function () {
 
 });
 
+Route::get('test4', function () {
+  $role=Role::where('name','站长')-first();
+  //dd($role);
+    $role->givePermissionTo(["结算审计更新","结算审计分类页面","结算审计详情","结算审计发邮件","结算审计统计","结算审计主页","结算审计新增页","结算审计新增","结算审计删除","决算审计更新","决算审计分类页面","决算审计详情","决算审计发邮件","决算审计统计","决算审计主页","决算审计新增页","决算审计新增","决算审计删除","结算批量导入页","结算批量导入","决算批量导入页","决算批量导入","权限主页","新增权限页","新增权限","删除权限","更新权限",
+    "角色主页","新增角色页","新增角色","删除角色","给角色赋予权限","更新角色","用户列表页","用户展示页","用户更新页","更新用户","删除用户","用户处置列表页","给用户赋予角色页","给用户赋予角色","给角色赋予权限页","导出结算总表","导出决算总表","按分类导出结算分表","按分类导出决算分表"]);
 
+});
 
 
 

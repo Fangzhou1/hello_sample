@@ -8426,10 +8426,6 @@ img.captcha {
   cursor: pointer;
 }
 
-#totalcontainer {
-  display: inline-block;
-}
-
 /* userlist */
 
 li.users-list {
