@@ -39,7 +39,7 @@ class RreturnsController extends Controller
           //dd($data);
           DB::table('rreturns')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
-          //broadcast(new ChangeOrder(Auth::user(),$rreturn));
+          
           return redirect()->back();
       }
 

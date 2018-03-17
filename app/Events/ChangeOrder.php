@@ -19,17 +19,18 @@ class ChangeOrder implements ShouldBroadcastNow
     public $user;
     public $settlementid;
     public $mes;
+    public $mes2;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user,$settlementid,$mes)
+    public function __construct(User $user,$settlementid,$mes,$mes2="")
     {
         $this->user=$user;
         $this->settlementid=$settlementid;
         $this->mes=$mes;
-
+        $this->mes2=$mes2;
     }
 
     /**
@@ -44,6 +45,6 @@ class ChangeOrder implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
-        return ['name' => $this->user->name,'order_number'=>$this->settlementid,'mes'=>$this->mes];
+        return ['name' => $this->user->name,'order_number'=>$this->settlementid,'mes'=>$this->mes,'mes2'=>$this->mes2];
     }
 }

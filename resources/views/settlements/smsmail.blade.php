@@ -86,7 +86,7 @@
 </div>
 
 
-<!-- {{route('settlements.sendemail',[http_build_query($data),$key])}} -->
+
 <script type="text/javascript">
 $(document).ready(function(){
   $('#myModal').on('show.bs.modal', function (event) {

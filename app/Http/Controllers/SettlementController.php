@@ -63,7 +63,7 @@ class SettlementController extends Controller
           //dd($data);
           DB::table('settlements')->insert($data);
           session()->flash('success', '恭喜你，导入数据成功！');
-          //broadcast(new ChangeOrder(Auth::user(),$settlement));
+          
           return redirect()->back();
       }
 
@@ -92,10 +92,12 @@ class SettlementController extends Controller
         session()->flash('success', '恭喜你，更新数据成功！');
         $data['name']=Auth::user()->name;
         $data['order_number']=$settlement->order_number;
+        $data['project_number']=$settlement->project_number;
         $data['type']='结算';
         $mes='修改了';
-        event(new ModifyDates($data,$mes));
-        broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚修改了订单编号为"));
+        $mes2=event(new ModifyDates($data,$mes));
+        //dd($mes2);
+        broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚修改了订单编号为",$mes2));
         return redirect()->back();
       }
 
@@ -108,8 +110,8 @@ class SettlementController extends Controller
         $data['order_number']=$Settlementodn;
         $data['type']='结算';
         $mes='删除了';
-        event(new ModifyDates($data,$mes));
-        broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为"));
+        $mes2=event(new ModifyDates($data,$mes));
+        broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为",$mes2));
         session()->flash('success', '恭喜你，删除成功！');
         return redirect()->back();
       }
@@ -129,8 +131,8 @@ class SettlementController extends Controller
         $data['type']='结算';
         $mes='新建了';
         event(new ModifyDates($data,$mes));
-        session()->flash('success', '恭喜你，添加数据成功！');
-        broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚新增了订单编号为"));
+        $mes2=session()->flash('success', '恭喜你，添加数据成功！');
+        broadcast(new ChangeOrder(Auth::user(),$settlement->order_number,"刚刚新增了订单编号为",$mes2));
         return redirect()->route('settlements.index');
         }
 
