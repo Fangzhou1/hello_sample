@@ -13,7 +13,7 @@
 <div class="col-md-2">
 @include('layouts.left')
 </div>
-<div class="col-md-10 pull-right">
+<div class="col-md-10">
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">审计列表</a></li>
     <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab" data-toggle="tab">列表修改痕迹</a></li>

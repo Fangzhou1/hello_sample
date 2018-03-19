@@ -177,12 +177,27 @@ class RreturnsController extends Controller
 
                 //dd($querytoarray);
                   $name=$this->request->query('name');
+
                   $page=10;
                   $rreturns['title'] = Rreturn::first();
                   if($querytoarray['type']==1)
-                  $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->where('project_manager',$name)->orderBy($order,'desc')->paginate($page);
+                  {
+                    if(Rreturn::where('project_manager',$name)->get()->isEmpty()){
+                      session()->flash('info', '你已删除项目经理为'.$name.'的所有决算审计的内容！');
+                      return redirect()->route('rreturns.smsmail');
+                    }
+                    $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->where('project_manager',$name)->orderBy($order,'desc')->paginate($page);
+                  }
+
                   elseif($querytoarray['type']==2)
-                  $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->where('audit_company',$name)->orderBy($order,'desc')->paginate($page);
+                  {
+                    if(Rreturn::where('audit_company',$name)->get()->isEmpty()){
+                      session()->flash('info', '你已删除审计公司为'.$name.'的所有决算审计的内容！');
+                      return redirect()->route('rreturns.smsmail');
+                    }
+                    $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->where('audit_company',$name)->orderBy($order,'desc')->paginate($page);
+                  }
+
                   //dd($rreturns['data']);
                   return view('rreturns.smsmaildetail',['current_url'=>$this->request->url(),'rreturns'=>$rreturns,'querytoarray'=>$querytoarray]);
               }
@@ -222,6 +237,7 @@ class RreturnsController extends Controller
             public function statistics()
           {
             $newdata=Rreturntime::orderBy('created_at', 'desc')->take(7)->get()->toArray();
+          //  dd($newdata);
             if(!$newdata)
             {
               $data=json_encode([]);

@@ -182,14 +182,32 @@ class SettlementController extends Controller
 
             //dd($querytoarray);
               $name=$this->request->query('name');
-              $page=10;
-              $settlements['title'] = Settlement::first();
-              if($querytoarray['type']==1)
-              $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('project_manager',$name)->orderBy($order,'desc')->paginate($page);
-              elseif($querytoarray['type']==2)
-              $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('audit_company',$name)->orderBy($order,'desc')->paginate($page);
-              //dd($settlements['data']);
-              return view('settlements.smsmaildetail',['current_url'=>$this->request->url(),'settlements'=>$settlements,'querytoarray'=>$querytoarray]);
+
+
+
+                $page=10;
+                $settlements['title'] = Settlement::first();
+                if($querytoarray['type']==1)
+                {
+                  if(Settlement::where('project_manager',$name)->get()->isEmpty()){
+                    session()->flash('info', '你已删除项目经理为'.$name.'的所有结算审计的内容！');
+                    return redirect()->route('settlements.smsmail');
+                  }
+                  $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('project_manager',$name)->orderBy($order,'desc')->paginate($page);
+                }
+
+                elseif($querytoarray['type']==2)
+                {
+                  if(Settlement::where('audit_company',$name)->get()->isEmpty()){
+                    session()->flash('info', '你已删除审计公司为'.$name.'的所有结算审计的内容！');
+                    return redirect()->route('settlements.smsmail');
+                  }
+                  $settlements['data'] = Settlement::where('order_number','<>','订单编号')->where('audit_company',$name)->orderBy($order,'desc')->paginate($page);
+                  //dd($settlements['data']);
+                }
+
+                return view('settlements.smsmaildetail',['current_url'=>$this->request->url(),'settlements'=>$settlements,'querytoarray'=>$querytoarray]);
+
           }
 
           public function sendEmailReminderTo()
