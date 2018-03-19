@@ -17,9 +17,9 @@ class UsersTableSeeder extends Seeder
         $user->name = 'fangzhou';
         $user->email = '13971192686@139.com';
         $user->password = bcrypt('123456');
-        $user->is_admin = true;
         $user->activated = true;
-        $user->save();
         $user->assignRole('站长');
+        $user->save();
+
     }
 }

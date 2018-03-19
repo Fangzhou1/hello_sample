@@ -9,6 +9,7 @@ use App\Handlers\ExcelUploadHandler;
 use App\Events\ChangeOrder;
 use App\Events\ModifyDates;
 use App\Models\Trace;
+use App\Models\Rreturntime;
 use Auth;
 
 class RreturnsController extends Controller
@@ -218,11 +219,28 @@ class RreturnsController extends Controller
 
 
 
-                public function statistics()
-              {
-                return view('rreturns.statistics',['current_url'=>$this->request->url()]);
+            public function statistics()
+          {
+            $newdata=Rreturntime::orderBy('created_at', 'desc')->take(7)->get()->toArray();
+            if(!$newdata)
+            {
+              $data=json_encode([]);
+              return view('rreturns.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
+            }
+            foreach ($newdata as $key => $value) {
+              $data['xaxis'][]=$value['created_at'];
+              $data['data']['不具备决算送审条件'][]=$value['不具备决算送审条件'];
+              $data['data']['具备送审条件未送审'][]=$value['具备送审条件未送审'];
+              $data['data']['被退回'][]=$value['被退回'];
+              $data['data']['审计中'][]=$value['审计中'];
+              $data['data']['已出报告'][]=$value['已出报告'];
+            }
+            $data=json_encode($data);
+            //dd($data);
 
-              }
+            return view('rreturns.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
+
+          }
 
 
 
