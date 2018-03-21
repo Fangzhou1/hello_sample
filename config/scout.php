@@ -90,7 +90,7 @@ return [
 
     'elasticsearch' => [
         //laravel54是项目名，可以自定义
-        'index' => env('ELASTICSEARCH_INDEX', 'laravel54'),
+        'index' => env('ELASTICSEARCH_INDEX', 'sample'),
         'hosts' => [
             env('ELASTICSEARCH_HOST', 'http://127.0.0.1:9200'),
         ],

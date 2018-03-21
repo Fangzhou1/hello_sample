@@ -312,5 +312,26 @@ class SettlementController extends Controller
         return $arrays;
     }
 
+    public function search()
+      {
+          $query=$this->request->input('query');
+          $page=10;
+          $settlements['title'] = Settlement::first();
+          $settlements['data'] = Settlement::search($query)->paginate($page);
+          //dd($settlements['data']);
+          $tracesdata=Trace::where('type','结算')->orderBy('created_at','desc')->get();
+          if($tracesdata->isEmpty()){
+            return view('settlements.index',['current_url'=>$this->request->url(),'settlements'=>$settlements,'traces'=>[]]);
+          }
+          //dd($traces);
+          //dd($settlements);
+          foreach ($tracesdata as $value) {
+            $traces[$value->year.'年'.$value->month.'月'][]=$value;
+          }
+
+          //dd($traces);
+          return view('settlements.search',['current_url'=>$this->request->url(),'settlements'=>$settlements,'traces'=>$traces]);
+      }
+
 
 }

@@ -51,6 +51,7 @@ Route::get('settlements/smsmail', 'SettlementController@smsmail')->name('settlem
 Route::get('settlements/smsmaildetail', 'SettlementController@smsmaildetail')->name('settlements.smsmaildetail');
 Route::get('settlements/sendemail/', 'SettlementController@sendEmailReminderTo')->name('settlements.sendemail');
 Route::get('settlements/statistics', 'SettlementController@statistics')->name('settlements.statistics');
+Route::get('settlements/search', 'SettlementController@search')->name('settlements.search');
 Route::resource('settlements', 'SettlementController',['except' => ['show', 'edit', 'update']]);
 
 //决算审计路由

@@ -17,12 +17,7 @@
             <li class="active"><a href="{{route('settlements.index')}}">工程审计管理</a></li>
             <li ><a href="#">待开发 </a></li>
       </ul>
-    <form class="navbar-form navbar-left">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search">
-      </div>
-      <button type="submit" class="btn btn-default">搜索</button>
-    </form>
+
 
     <ul class="nav navbar-nav navbar-right">
       @if (Auth::check())
