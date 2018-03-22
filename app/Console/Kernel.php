@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
 
           $data=$this->readSettlementProgress();
           Settlementtime::create($data);
-          readRreturnProgressandcreate();
+          $this->readRreturnProgressandcreate();
 
         })->everyMinute();
     }
