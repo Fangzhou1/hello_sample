@@ -27,9 +27,15 @@ class SettlementController extends Controller
 
   public function index()
     {
+      //dd(parse_url('postgres://qkhdklcjrqaipc:df01a2f558215a0a7829c6aec0d4fc22e90a5def129294f53e08e42a3a97c911@ec2-54-235-66-81.compute-1.amazonaws.com:5432/d34bjielr59n77'));
         $page=10;
         $settlements['title'] = Settlement::first();
-        $settlements['data'] = Settlement::where('order_number','<>','订单编号')->paginate($page);
+        $query=$this->request->input('query');
+        //dd($query);
+        if($query)
+          $settlements['data'] = Settlement::search($query)->paginate($page);
+        else
+          $settlements['data'] = Settlement::where('order_number','<>','订单编号')->paginate($page);
 
         $tracesdata=Trace::where('type','结算')->orderBy('created_at','desc')->get();
         if($tracesdata->isEmpty()){
@@ -140,7 +146,6 @@ class SettlementController extends Controller
 
       public function smsmail()
         {
-
 //以项目经理和审计进度分组查询，带上项目经理的订单和项目数信息
           $data=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
           $data2=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as order_num,count(DISTINCT project_number) as project_num,project_manager'))->groupBy('project_manager')->get();

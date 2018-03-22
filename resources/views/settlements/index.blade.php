@@ -24,7 +24,7 @@
   @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('settlements.create')}}" role="button">添加&nbsp;<b>+</b></a>
 <a class="btn btn-primary" href="{{route('settlements.export')}}" role="button">导出EXCEL表格</a>
-<form action={{route('settlements.search')}} method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
+<form action={{route('settlements.index')}} method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
   <div class="form-group">
     <input type="text" name="query" class="form-control" placeholder="Search">
   </div>

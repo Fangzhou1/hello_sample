@@ -65,7 +65,11 @@ class RreturnsController extends Controller
         {
             $page=10;
             $rreturns['title'] = Rreturn::first();
-            $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->paginate($page);
+            $query=$this->request->input('query');
+            if($query)
+              $rreturns['data'] = Rreturn::search($query)->paginate($page);
+            else
+              $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->paginate($page);
 
             $tracesdata=Trace::where('type','决算')->orderBy('created_at','desc')->get();
             if($tracesdata->isEmpty()){

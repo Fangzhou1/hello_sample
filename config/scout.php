@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'elasticsearch'),
+    'driver' => env('SCOUT_DRIVER', 'algolia'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,14 +86,6 @@ return [
     'algolia' => [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
-    ],
-
-    'elasticsearch' => [
-        //laravel54是项目名，可以自定义
-        'index' => env('ELASTICSEARCH_INDEX', 'sample'),
-        'hosts' => [
-            env('ELASTICSEARCH_HOST', 'http://127.0.0.1:9200'),
-        ],
     ],
 
 ];
