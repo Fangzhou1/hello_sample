@@ -76,6 +76,7 @@ class Kernel extends ConsoleKernel
     {
       $data=DB::table('rreturns')->where('project_number','<>','项目编号')->select(DB::raw('count(*) as projectnum,audit_progress,is_canaudit'))->groupBy('is_canaudit','audit_progress')->get();
     //dd($data);
+    $newdata3=[];
       foreach ($data as $value) {
         if($value->audit_progress=='未送审'&&$value->is_canaudit=='否')
           $newdata3['不具备决算送审条件']=$value->projectnum;
