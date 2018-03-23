@@ -14,8 +14,8 @@
 </div>
 
 @foreach ($datas as $key=>$data)
-<div class="col-md-3">
-  <div style="min_height=211.4px" class="panel panel-default">
+<div class="col-md-3" style="min-height:150px">
+  <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">项目经理：{{$key }}</h3>
   </div>
@@ -58,6 +58,7 @@
 </div>
 </div>
 @endforeach
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

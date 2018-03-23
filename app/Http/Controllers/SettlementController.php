@@ -67,8 +67,8 @@ class SettlementController extends Controller
           $upload=new ExcelUploadHandler;
           $data=$upload->save($file);
           //dd($data);
-          DB::table('settlements')->insert($data);
-          session()->flash('success', '恭喜你，导入数据成功！');
+          $this->batchimport($data);
+          //session()->flash('success', '恭喜你，导入数据成功！');
 
           return redirect()->back();
       }
@@ -336,6 +336,20 @@ class SettlementController extends Controller
 
           //dd($traces);
           return view('settlements.search',['current_url'=>$this->request->url(),'settlements'=>$settlements,'traces'=>$traces]);
+      }
+
+      protected function batchimport($data)
+      {
+        $data_tem=array_slice($data,0,1000);
+        $data=array_slice($data,1000);
+        DB::table('settlements')->insert($data_tem);
+        if($data){
+          $this->batchimport($data);
+        }
+        else {
+          session()->flash('success', '恭喜你，导入数据成功！');
+        }
+
       }
 
 
