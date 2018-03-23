@@ -58,7 +58,7 @@ class StorageTrace
                     elseif($rreturn->is_needsaudit=='是') {
                       $mes2="项目编号为".$event->data['project_number']."的项目没有结算审计订单，请录入结算审计订单！";
                     }
-                    elseif($rreturn->is_needsaudit=='否'&&$rreturn->is_canaudit=='否';) {
+                    elseif($rreturn->is_needsaudit=='否'&&$rreturn->is_canaudit=='否') {
                       $rreturn->is_canaudit='是';
                     }
 
@@ -112,7 +112,7 @@ class StorageTrace
                   elseif($rreturn->is_needsaudit=='是') {
                     $mes2="项目编号为".$event->data['project_number']."的项目没有结算审计订单，请录入结算审计订单！";
                   }
-                  elseif($rreturn->is_needsaudit=='否'&&$rreturn->is_canaudit=='否';) {
+                  elseif($rreturn->is_needsaudit=='否'&&$rreturn->is_canaudit=='否') {
                     $rreturn->is_canaudit='是';
                   }
 
