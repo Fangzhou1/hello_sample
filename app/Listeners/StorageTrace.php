@@ -58,6 +58,9 @@ class StorageTrace
                     elseif($rreturn->is_needsaudit=='是') {
                       $mes2="项目编号为".$event->data['project_number']."的项目没有结算审计订单，请录入结算审计订单！";
                     }
+                    elseif($rreturn->is_needsaudit=='否'&&$rreturn->is_canaudit=='否';) {
+                      $rreturn->is_canaudit='是';
+                    }
 
                   }
               elseif($rreturn->is_needsaudit=='是')
@@ -76,8 +79,8 @@ class StorageTrace
 
               elseif($rreturn->is_needsaudit=='否')
               {
-                  if(!$ret0->isEmpty())
-                  $mes2="由于项目编号为".$event->data['project_number']."的项目不需要结算审计，可以将此项目中结算审计的订单删除。";
+                  $rreturn->is_canaudit='是';
+                  $mes2="由于项目编号为".$event->data['project_number']."的项目不需要结算审计，可以将此项目中结算审计的订单删除。并且项目可直接进入决算审计。";
 
               }
               $trace->content=$trace->content.$mes2;
@@ -99,16 +102,19 @@ class StorageTrace
           {
               if($ret->isEmpty())
               {
-                if(!$ret0->isEmpty()){
-                    if($rreturn->audit_progress!='已出报告'){
-                      $rreturn->is_canaudit='是';
-                      $mes2="并且项目编号为".$event->data['project_number']."的项目结算已全部完成，可以开始决算审计了！";
-                      $rreturn->save();
-                    }
-                }
-                elseif($rreturn->is_needsaudit=='是') {
-                  $mes2="项目编号为".$event->data['project_number']."的项目没有结算审计订单，请录入结算审计订单！";
-                }
+                  if(!$ret0->isEmpty()){
+                      if($rreturn->audit_progress!='已出报告'){
+                        $rreturn->is_canaudit='是';
+                        $mes2="并且项目编号为".$event->data['project_number']."的项目结算已全部完成，可以开始决算审计了！";
+                        $rreturn->save();
+                      }
+                  }
+                  elseif($rreturn->is_needsaudit=='是') {
+                    $mes2="项目编号为".$event->data['project_number']."的项目没有结算审计订单，请录入结算审计订单！";
+                  }
+                  elseif($rreturn->is_needsaudit=='否'&&$rreturn->is_canaudit=='否';) {
+                    $rreturn->is_canaudit='是';
+                  }
 
               }
               elseif($rreturn->is_needsaudit=='是')
@@ -127,8 +133,11 @@ class StorageTrace
 
               elseif($rreturn->is_needsaudit=='否')
               {
-                  if(!$ret0->isEmpty())
-                  $mes2="由于项目编号为".$event->data['project_number']."的项目不需要结算审计，可以将此项目中结算审计的订单删除。";
+                  if(!$ret0->isEmpty()){
+                    $rreturn->is_canaudit='是';
+                    $mes2="由于项目编号为".$event->data['project_number']."的项目不需要结算审计，可以将此项目中结算审计的订单删除。并且项目可直接进入决算审计。";
+                  }
+
 
               }
               $trace->content=$trace->content.$mes2;

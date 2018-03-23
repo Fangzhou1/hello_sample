@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
           Settlementtime::create($data);
           $this->readRreturnProgressandcreate();
 
-        })->everyMinute();
+        })->dailyAt('3:00');
     }
 
     /**
