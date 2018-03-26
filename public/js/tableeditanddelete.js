@@ -30,7 +30,31 @@ function tableeditanddelete(field,editlink,flag) {
     $(obj).parents('tr').find(".id").append('<input type="hidden" name="_token" value="'+$('meta[name="csrf-token"]').attr('content')+'">');
     for(var key in this.field)
       if(this.field[key]!='id')
-        $(obj).parents('tr').find("."+this.field[key]).html('<input type="text" name="'+this.field[key]+'" class="form-control input-sm" value='+this.tem[this.field[key]]+'>');
+        if(this.field[key]!='audit_progress'&&this.field[key]!='is_needsaudit'&&this.field[key]!='is_canaudit')
+          $(obj).parents('tr').find("."+this.field[key]).html('<input type="text" name="'+this.field[key]+'" class="form-control input-sm" value='+this.tem[this.field[key]]+'>');
+        else if(this.field[key]=='audit_progress')
+        {
+          var select1=this.tem[this.field[key]]=="未送审"?"selected":"";
+          var select2=this.tem[this.field[key]]=="审计中"?"selected":"";
+          var select3=this.tem[this.field[key]]=="被退回"?"selected":"";
+          var select4=this.tem[this.field[key]]=="已出报告"?"selected":"";
+          $(obj).parents('tr').find("."+this.field[key]).html('<select  name="'+this.field[key]+'" class="form-control input-sm">'
+          +'<option value="未送审" '+select1+'>未送审</option>'
+          +'<option value="审计中" '+select2+'>审计中</option>'
+          +'<option value="被退回" '+select3+'>被退回</option>'
+          +'<option value="已出报告" '+select4+'>已出报告</option></select>');
+        }
+
+        else if(this.field[key]=='is_needsaudit'||this.field[key]=='is_canaudit')
+        {
+          var select1=this.tem[this.field[key]]=="是"?"selected":"";
+          var select2=this.tem[this.field[key]]=="否"?"selected":"";
+          $(obj).parents('tr').find("."+this.field[key]).html('<select  name="'+this.field[key]+'" class="form-control input-sm">'
+          +'<option value="是" '+select1+'>是</option>'
+         +'<option value="否" '+select2+'>否</option></select>');
+        }
+
+
     $(obj).parents('tr').find(".action").html('<input class="btn btn-default btn-xs" type="submit" value="提交">&nbsp<a onclick="tableeditanddelete.cancel(this)" class="btn btn-default btn-xs" href="javascript:;" role="button">取消</a>');
    }
 

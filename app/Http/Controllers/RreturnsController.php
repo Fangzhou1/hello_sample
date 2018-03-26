@@ -227,7 +227,7 @@ class RreturnsController extends Controller
                 $from = '253251551@qq.com';
                 $name = 'sample';
                 $to = $emailinfo['email'];
-                $subject = "请抓紧完成结算审计！";
+                $subject = "请抓紧完成决算审计！";
 
                 Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
                     $message->from($from, $name)->to($to)->subject($subject);

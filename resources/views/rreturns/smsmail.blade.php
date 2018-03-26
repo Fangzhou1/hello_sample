@@ -92,7 +92,7 @@ $(document).ready(function(){
     var button = $(event.relatedTarget); // Button that triggered the modal
 
     var recipient = button.data('whatever')// Extract info from data-* attributes
-    alert(recipient);
+
     $(this).find('input[name="emailinfo"]').attr('value',recipient);
     $(this).find('#wrapiput').attr('action','/rreturns/sendemail');
 });

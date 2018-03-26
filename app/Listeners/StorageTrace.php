@@ -133,10 +133,10 @@ class StorageTrace
 
               elseif($rreturn->is_needsaudit=='否')
               {
-                  if(!$ret0->isEmpty()){
+
                     $rreturn->is_canaudit='是';
                     $mes2="由于项目编号为".$event->data['project_number']."的项目不需要结算审计，可以将此项目中结算审计的订单删除。并且项目可直接进入决算审计。";
-                  }
+
 
 
               }
