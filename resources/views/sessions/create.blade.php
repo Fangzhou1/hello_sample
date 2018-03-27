@@ -9,7 +9,6 @@
     </div>
     <div class="panel-body">
       @include('shared._errors')
-      @include('shared._messages')
       <form method="POST" action="{{ route('login') }}">
           {{ csrf_field() }}
 
