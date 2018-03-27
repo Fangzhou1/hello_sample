@@ -35,10 +35,16 @@ Route::get('/users/rolestouserpage/{user}', 'UsersController@rolestouserpage')->
 Route::get('/users/usersactionindex', 'UsersController@usersactionindex')->name('users.usersactionindex');
 Route::resource('users', 'UsersController');
 
-//注册
+//登陆、退出
 Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
+
+//密码重设
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 
 //结算审计路由

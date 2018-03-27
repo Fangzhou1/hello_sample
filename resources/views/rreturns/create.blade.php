@@ -28,7 +28,11 @@
   </div>
   <div class="form-group">
     <label for="audit_progress">决算审计进度</label>
-    <input name="audit_progress" type="text" class="form-control" placeholder="Text input">
+    <select  name="audit_progress" class="form-control">
+    <option value="未送审">未送审</option>
+    <option value="审计中">审计中</option>
+    <option value="被退回">被退回</option>
+    <option value="已出报告">已出报告</option></select>
   </div>
   <div class="form-group">
     <label for="audit_document_number">决算审计文号</label>
@@ -40,11 +44,15 @@
   </div>
   <div class="form-group">
     <label for="is_needsaudit">是否需要结算审计</label>
-    <input name="is_needsaudit" type="text" class="form-control" placeholder="Text input">
+    <select  name="is_needsaudit" class="form-control">
+    <option value="是">是</option>
+    <option value="否">否</option></select>
   </div>
   <div class="form-group">
     <label for="is_canaudit">是否能够决算审计</label>
-    <input name="is_canaudit" type="text" class="form-control" placeholder="Text input">
+    <select  name="is_canaudit" class="form-control">
+    <option value="否">否</option>
+    <option value="是">是</option></select>
   </div>
   <div class="form-group">
     <label for="audit_number">送审编号</label>

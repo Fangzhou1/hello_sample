@@ -40,7 +40,11 @@
   </div>
   <div class="form-group">
     <label for="audit_progress">审计进度</label>
-    <input name="audit_progress" type="text" class="form-control" placeholder="Text input">
+    <select  name="audit_progress" class="form-control">
+    <option value="未送审">未送审</option>
+    <option value="审计中">审计中</option>
+    <option value="被退回">被退回</option>
+    <option value="已出报告">已出报告</option></select>
   </div>
   <div class="form-group">
     <label for="audit_document_number">审计文号</label>

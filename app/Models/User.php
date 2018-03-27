@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\ResetPassword;
 
 class User extends Authenticatable
 {
@@ -42,6 +43,11 @@ class User extends Authenticatable
           {
               return $value==1?"已激活":"未激活";
           }
+
+      public function sendPasswordResetNotification($token)
+        {
+            $this->notify(new ResetPassword($token));
+        }
 
 
 }
