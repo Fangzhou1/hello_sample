@@ -9,7 +9,7 @@
 <div class="col-md-4">
   <div class="jumbotron">
   <h1>下载模板</h1><br /> <br />
-  <p><a class="btn btn-success btn-lg btn-block" href="#" role="button">下载</a></p>
+  <p><a class="btn btn-success btn-lg btn-block" href="{{route('download.jusmb')}}" role="button">下载</a></p>
 </div>
 </div>
 <div class="col-md-6">

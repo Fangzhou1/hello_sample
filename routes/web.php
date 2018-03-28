@@ -175,23 +175,33 @@ Route::resource('roles', 'RolesController',['except' => ['show', 'edit', 'update
 //   App\Models\Settlementtime::create($data);
 // });
 
-Route::get('test', function () {
+// Route::get('test', function () {
+//
+//   $data=DB::table('rreturns')->where('project_number','<>','项目编号')->select(DB::raw('count(*) as projectnum,audit_progress,is_canaudit'))->groupBy('is_canaudit','audit_progress')->get();
+// //dd($data);
+//   foreach ($data as $value) {
+//     if($value->audit_progress=='未送审'&&$value->is_canaudit=='否')
+//       $newdata3['不具备决算送审条件']=$value->projectnum;
+//     elseif($value->audit_progress=='未送审'&&$value->is_canaudit=='是')
+//       $newdata3['具备送审条件未送审']=$value->projectnum;
+//     elseif($value->audit_progress=='审计中')
+//       $newdata3['审计中']=$value->projectnum;
+//     elseif($value->audit_progress=='被退回')
+//       $newdata3['被退回']=$value->projectnum;
+//     elseif($value->audit_progress=='已出报告')
+//       $newdata3['已出报告']=$value->projectnum;
+//
+//   }
+//
+//   App\Models\Rreturntime::create($newdata3);
+// });
 
-  $data=DB::table('rreturns')->where('project_number','<>','项目编号')->select(DB::raw('count(*) as projectnum,audit_progress,is_canaudit'))->groupBy('is_canaudit','audit_progress')->get();
-//dd($data);
-  foreach ($data as $value) {
-    if($value->audit_progress=='未送审'&&$value->is_canaudit=='否')
-      $newdata3['不具备决算送审条件']=$value->projectnum;
-    elseif($value->audit_progress=='未送审'&&$value->is_canaudit=='是')
-      $newdata3['具备送审条件未送审']=$value->projectnum;
-    elseif($value->audit_progress=='审计中')
-      $newdata3['审计中']=$value->projectnum;
-    elseif($value->audit_progress=='被退回')
-      $newdata3['被退回']=$value->projectnum;
-    elseif($value->audit_progress=='已出报告')
-      $newdata3['已出报告']=$value->projectnum;
+Route::get('/download/jesmb', function () {
+  return response()
+        ->download(storage_path('app/jesmb.xlsx'));
+})->name('download.jesmb');
 
-  }
-
-  App\Models\Rreturntime::create($newdata3);
-});
+Route::get('/download/jusmb', function () {
+  return response()
+        ->download(storage_path('app/jusmb.xlsx'));
+})->name('download.jusmb');
