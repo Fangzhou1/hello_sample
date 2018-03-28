@@ -232,7 +232,7 @@ class SettlementController extends Controller
 
             $filename=$querytoarray['manager'].'的结算审计表('.Carbon::now().')';
             //dd($filename);
-            $settlements = Settlement::::where('order_number','订单编号')->orWhere('project_manager',$querytoarray['manager'])->get();
+            $settlements = Settlement::where('order_number','订单编号')->orWhere('project_manager',$querytoarray['manager'])->get();
             $upload=new ExcelUploadHandler;
             $upload->exporttoserver($settlements,$filename);
 
