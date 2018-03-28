@@ -243,6 +243,7 @@ class SettlementController extends Controller
             $name = 'sample';
             $to = $emailinfo['email'];
             $subject = "请抓紧完成结算审计！";
+            $attach=storage_path('exports/'.$filename.'.xls');
 
             Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
                 $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
