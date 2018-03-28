@@ -10,7 +10,9 @@ use App\Events\ChangeOrder;
 use App\Events\ModifyDates;
 use App\Models\Trace;
 use App\Models\Rreturntime;
+use Carbon\Carbon;
 use Auth;
+use Mail;
 
 class RreturnsController extends Controller
 {
@@ -221,6 +223,13 @@ class RreturnsController extends Controller
                 }
                 parse_str($emailinfo['emailinfo'],$querytoarray);
 
+                $filename=$querytoarray['manager'].'的决算审计表('.Carbon::now().')';
+                dd($filename);
+                $rreturns = Rreturn::where('project_manager',$querytoarray['manager'])->get();
+                $upload=new ExcelUploadHandler;
+                $upload->exporttoserver($rreturns,$filename);
+
+
                 //dd($emailinfo);
                 $view = 'emails.rreturnsmail';
                 $data = compact('querytoarray');
@@ -228,9 +237,10 @@ class RreturnsController extends Controller
                 $name = 'sample';
                 $to = $emailinfo['email'];
                 $subject = "请抓紧完成决算审计！";
+                $attach=storage_path('exports/'.$filename.'.xls');
 
-                Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-                    $message->from($from, $name)->to($to)->subject($subject);
+                Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
+                    $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
                 });
                 session()->flash('success', '发送成功！');
                 return redirect()->back();

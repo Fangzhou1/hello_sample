@@ -13,6 +13,16 @@
 </div>
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+window.Echo.channel('all')
+    .listen('ChangeOrder', function(e){
+
+      $("#totalcontainer").prepend('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+e.name+e.mes+e.order_number+'的订单</div>');
+
+    });
+  });
+  
 var data={!!$data!!};
 //  console.log(typeof data!='object');
 if(typeof data!='object'){

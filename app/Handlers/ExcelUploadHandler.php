@@ -34,4 +34,13 @@ class ExcelUploadHandler
       })->export('xls');
     }
 
+    public function exporttoserver($export,$name)
+    {
+      Excel::create($name, function($excel) use ($export) {
+        $excel->sheet('sheet1', function($sheet) use ($export){
+          $sheet->fromArray($export);
+        });
+      })->store('xls');
+    }
+
 }

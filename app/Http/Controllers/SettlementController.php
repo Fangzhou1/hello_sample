@@ -220,6 +220,7 @@ class SettlementController extends Controller
 
 
             $emailinfo=$this->request->query();
+            dd($emailinfo);
             //dd($emailinfo['email']);
             if($emailinfo['email']=='')
             {
