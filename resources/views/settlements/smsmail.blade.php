@@ -23,7 +23,7 @@
     <!-- <p>所涉及的项目数：{{$data['project_num'] or 0}}个</p><a class="pull-right btn btn-success" href="{{route('settlements.sendemail',[http_build_query($data),$key])}}" role="button">邮件通知</a> -->
     <p>所涉及的订单数：{{$data['order_num'] or 0}}个</p>
     <hr>
-    <p>未送审：{{$data['未送审'] or 0}}个<a class="pull-right btn btn-success" data-whatever="{{http_build_query($data)}}"  data-toggle="modal" data-target="#myModal" href="javascript:;" role="button">邮件通知</a></p>
+    <p>未送审：{{$data['未送审'] or 0}}个<a class="pull-right btn btn-success" data-whatever="{{http_build_query($data)}}&manager={{$key}}"  data-toggle="modal" data-target="#myModal" href="javascript:;" role="button">邮件通知</a></p>
     <p>审计中：{{$data['审计中'] or 0}}个<a class="pull-right btn btn-success" href="#" role="button">短信通知</a></p>
     <p>已退回：{{$data['被退回'] or 0}}个</p>
     <p>已出报告：{{$data['已出报告'] or 0}}个<a class="pull-right btn btn-success" href="{{route('settlements.smsmaildetail')}}?name={{$key}}&type=1" role="button">查看详情</a></p>
@@ -96,7 +96,7 @@ $(document).ready(function(){
         $("#totalcontainer").prepend('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+e.name+e.mes+e.order_number+'的订单</div>');
 
       });
-      
+
   $('#myModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
 

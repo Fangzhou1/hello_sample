@@ -26,7 +26,7 @@
 <a class="btn btn-primary" href="{{route('settlements.export')}}" role="button">导出EXCEL表格</a>
 <form action={{route('settlements.index')}} method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
   <div class="form-group">
-    <input type="text" name="query" class="form-control" placeholder="Search">
+    <input type="text" name="query" class="form-control" placeholder="Search" value="{{ old('query') }}">
   </div>
   <button type="submit" class="btn btn-default">搜索</button>
 </form>

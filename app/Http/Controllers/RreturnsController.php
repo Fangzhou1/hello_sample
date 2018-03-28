@@ -57,7 +57,7 @@ class RreturnsController extends Controller
         public function exportbytype()
           {
               $typeinfo=$this->request->query();
-              $rreturns=Rreturn::where($typeinfo)->get()->toArray();
+              $rreturns=Rreturn::where('project_number','项目编号')->orWhere($typeinfo)->get()->toArray();
               $upload=new ExcelUploadHandler;
               $upload->download($rreturns,'决算审计分表');
 
@@ -225,7 +225,7 @@ class RreturnsController extends Controller
 
                 $filename=$querytoarray['manager'].'的决算审计表('.Carbon::now().')';
                 //dd($filename);
-                $rreturns = Rreturn::where('project_manager',$querytoarray['manager'])->get();
+                $rreturns = Rreturn::where('project_number','项目编号')->orWhere('project_manager',$querytoarray['manager'])->get();
                 $upload=new ExcelUploadHandler;
                 $upload->exporttoserver($rreturns,$filename);
 

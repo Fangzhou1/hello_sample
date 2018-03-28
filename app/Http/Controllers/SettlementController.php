@@ -85,7 +85,7 @@ class SettlementController extends Controller
         public function exportbytype()
           {
               $typeinfo=$this->request->query();
-              $settlement=Settlement::where($typeinfo)->get()->toArray();
+              $settlement=Settlement::where('order_number','订单编号')->orWhere($typeinfo)->get()->toArray();
               $upload=new ExcelUploadHandler;
               $upload->download($settlement,'结算审计分表');
 
@@ -230,6 +230,12 @@ class SettlementController extends Controller
             }
             parse_str($emailinfo['emailinfo'],$querytoarray);
 
+            $filename=$querytoarray['manager'].'的结算审计表('.Carbon::now().')';
+            //dd($filename);
+            $settlements = Settlement::::where('order_number','订单编号')->orWhere('project_manager',$querytoarray['manager'])->get();
+            $upload=new ExcelUploadHandler;
+            $upload->exporttoserver($settlements,$filename);
+
             //dd($emailinfo);
             $view = 'emails.settlementsmail';
             $data = compact('querytoarray');
@@ -238,8 +244,8 @@ class SettlementController extends Controller
             $to = $emailinfo['email'];
             $subject = "请抓紧完成结算审计！";
 
-            Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-                $message->from($from, $name)->to($to)->subject($subject);
+            Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
+                $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
             });
             session()->flash('success', '发送成功！');
             return redirect()->back();
