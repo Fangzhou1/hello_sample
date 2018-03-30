@@ -117,8 +117,7 @@
 </div>
 @if (!$loop->last)
 <div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
-<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
+
 @endif
 @endforeach
 </div>
