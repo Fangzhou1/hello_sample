@@ -1,9 +1,9 @@
 @extends('layouts.default')
-<script type="text/javascript" src="/js/tableeditanddelete.js"></script>
+
 @section('title', '决算审计详情页')
 
 @section('content')
-
+<script type="text/javascript" src="/js/tableeditanddelete.js"></script>
 <div class="col-md-2">
 @include('layouts.left')
 </div>
@@ -67,7 +67,7 @@
 
 
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
 
             @endforeach

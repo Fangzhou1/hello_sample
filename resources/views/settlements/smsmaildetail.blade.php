@@ -1,9 +1,9 @@
 @extends('layouts.default')
-<script type="text/javascript" src="/js/tableeditanddelete.js"></script>
+
 @section('title', '结算审计主页')
 
 @section('content')
-
+<script type="text/javascript" src="/js/tableeditanddelete.js"></script>
 <div class="col-md-2">
 @include('layouts.left')
 </div>
@@ -79,7 +79,7 @@
             <td class="validation_cost">{{$data->validation_cost}}</td>
             @hasanyrole('项目经理|高级管理员|站长')
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
           </tr>
             @endhasanyrole
             @endforeach
@@ -129,7 +129,7 @@ $(document).ready(function(){
         $("#totalcontainer").prepend('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+e.name+e.mes+e.order_number+'的订单</div>');
 
       });
-      
+
   $('#myModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data('whatever'); // Extract info from data-* attributes
