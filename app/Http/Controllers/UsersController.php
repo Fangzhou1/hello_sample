@@ -56,15 +56,15 @@ class UsersController extends Controller
               'email' => $request->email,
               'password' => bcrypt($request->password),
           ];
-      if($request->name=='fangzhou')
-      {
-        $data['activated']=1;
-        $user = User::create($data);
-        $user->assignRole('站长');
-        Auth::login($user);
-        session()->flash('success', '欢迎您，站长！');
-        return redirect('/');
-      }
+      // if($request->name=='fangzhou')
+      // {
+      //   $data['activated']=1;
+      //   $user = User::create($data);
+      //   $user->assignRole('站长');
+      //   Auth::login($user);
+      //   session()->flash('success', '欢迎您，站长！');
+      //   return redirect('/');
+      // }
 
   $user = User::create($data);
 

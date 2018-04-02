@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\InitEs::class
+        Commands\InitEs::class,
+        Commands\CreateFounder::class
     ];
 
     /**
