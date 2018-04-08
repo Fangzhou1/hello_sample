@@ -16,7 +16,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Model' => 'App\Policies\ModelPolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
         'App\Models\Settlement' => 'App\Policies\SettlementPolicy',
-        'App\Models\Rreturn' => 'App\Policies\RreturnPolicy'
+        'App\Models\Rreturn' => 'App\Policies\RreturnPolicy',
+        'App\Models\Refund' => 'App\Policies\RefundPolicy'
     ];
 
     /**

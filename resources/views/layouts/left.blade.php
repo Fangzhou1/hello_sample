@@ -40,6 +40,26 @@
       </div>
   </div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          物资退库管理
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse {{(strpos($current_url,'refunds'))?"in":""}}" role="tabpanel" aria-labelledby="headingThree">
+
+        <ul class="list-group">
+          <a class="list-group-item {{($current_url==route('refunds.index'))?"active":""}}" href="{{route('refunds.index')}}">物资退库主页</a>
+          <a class="list-group-item {{($current_url==route('refunds.importpage'))?"active":""}}" href="{{route('refunds.importpage')}}">导入Excel表</a>
+          <a class="list-group-item {{($current_url==route('rreturns.smsmail'))||($current_url==route('rreturns.smsmaildetail'))?"active":""}}" href="{{route('rreturns.smsmail')}}">邮件短信催办</a>
+          <a class="list-group-item {{($current_url==route('rreturns.statistics'))?"active":""}}" href="{{route('rreturns.statistics')}}">详细统计信息</a>
+
+        </ul>
+      </div>
+  </div>
+
 @role('站长')
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">

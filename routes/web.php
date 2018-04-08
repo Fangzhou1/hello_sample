@@ -81,6 +81,13 @@ Route::post('/roles/rowupdate/{role}', 'RolesController@rowupdate')->name('roles
 Route::resource('roles', 'RolesController',['except' => ['show', 'edit', 'update']]);
 
 
+//物资退库管理
+Route::get('refunds', 'RefundsController@index')->name('refunds.index');
+Route::get('refunds/importpage', 'RefundsController@importpage')->name('refunds.importpage');
+Route::post('refunds/importrefunds', 'RefundsController@importrefunds')->name('refunds.importrefunds');
+Route::post('refunds/importrefunddetails', 'RefundsController@importrefunddetails')->name('refunds.importrefunddetails');
+Route::get('refunds/export', 'RefundsController@export')->name('refunds.export');
+Route::resource('refunds', 'RefundsController',['except' => ['show', 'edit', 'update']]);
 // Route::get('/users', 'UsersController@index')->name('users.index');
 // Route::get('/users/{user}', 'UsersController@show')->name('users.show');//
 // Route::get('/users/create', 'UsersController@create')->name('users.create');
