@@ -77,11 +77,23 @@
             <td class="mis_cost">{{$data->mis_cost}}</td>
             <td class="submit_cost">{{$data->submit_cost}}</td>
             <td class="validation_cost">{{$data->validation_cost}}</td>
-            @hasanyrole('项目经理|高级管理员|站长')
+
             <td class="action">
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              @if(Auth::user()->hasAnyRole('高级管理员|站长'))
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              @elseif(Auth::user()->hasAnyRole('项目经理'))
+                  @can('updateanddestroy', $data)
+                  <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  @else
+                  你无权限操作
+                  @endcan
+              @else
+              你无权限操作
+              @endif
+
+            </td>
           </tr>
-            @endhasanyrole
+
             @endforeach
 
         </tbody>

@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\InitEs::class,
-        Commands\CreateFounder::class
+        Commands\CreateFounder::class,
+        Commands\InitProjectmanager::class
     ];
 
     /**

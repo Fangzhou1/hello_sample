@@ -46,7 +46,7 @@
             <th style="min-width:200px">{{ $settlements['title']->project_name or ""}}</th>
             <th style="min-width:300px">{{ $settlements['title']->project_manager or ""}}</th>
             <th>{{ $settlements['title']->audit_progress or ""}}</th>
-            <th>{{ $settlements['title']->audit_document_number or ""}}</th>
+            <th style="min-width:300px">{{ $settlements['title']->audit_document_number or ""}}</th>
             <th>{{ $settlements['title']->audit_company or ""}}</th>
             <th style="min-width:350px">{{ $settlements['title']->order_description or ""}}</th>
             <th style="min-width:300px">{{ $settlements['title']->contract_number or ""}}</th>
@@ -85,13 +85,20 @@
             <td class="validation_cost">{{$data->validation_cost or ""}}</td>
 
             <td class="action">
-              @hasanyrole('项目经理|高级管理员|站长')
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-          @else
-          你无权限操作
-          @endhasanyrole
-            </td>
 
+              @if(Auth::user()->hasAnyRole('高级管理员|站长'))
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              @elseif(Auth::user()->hasAnyRole('项目经理'))
+                  @can('updateanddestroy', $data)
+                  <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  @else
+                  你无权限操作
+                  @endcan
+              @else
+              你无权限操作
+              @endif
+
+            </td>
           </tr>
 
             @endforeach

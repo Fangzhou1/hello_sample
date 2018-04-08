@@ -93,7 +93,9 @@ class SettlementController extends Controller
 
       public function rowupdate(Settlement $settlement)
       {
-        //dd($this->request->all());
+        //dd(Auth::user()->hasAnyRole(['高级管理员','站长']));
+        if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+        $this->authorize('updateanddestroy', $settlement);
         Settlement::where('id',$settlement->id)->update($this->request->except('_token'));
         session()->flash('success', '恭喜你，更新数据成功！');
         $data['name']=Auth::user()->name;
@@ -110,6 +112,8 @@ class SettlementController extends Controller
       public function destroy(Settlement $settlement)
       {
         //dd($settlement->id);
+        if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+        $this->authorize('updateanddestroy', $settlement);
         $Settlementodn=$settlement->order_number;
         $settlement->delete();
         $data['name']=Auth::user()->name;

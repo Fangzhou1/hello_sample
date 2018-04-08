@@ -89,6 +89,8 @@ class RreturnsController extends Controller
         public function rowupdate(Rreturn $rreturn)
         {
           //dd($this->request->all());
+          if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+          $this->authorize('updateanddestroy', $rreturn);
           Rreturn::where('id',$rreturn->id)->update($this->request->except('_token'));
           session()->flash('success', '恭喜你，更新数据成功！');
           $data['name']=Auth::user()->name;
@@ -103,6 +105,8 @@ class RreturnsController extends Controller
         public function destroy(Rreturn $rreturn)
         {
           //dd($rreturn->id);
+          if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+          $this->authorize('updateanddestroy', $rreturn);
           $rreturnodn=$rreturn->project_number;
           $rreturn->delete();
           $data['name']=Auth::user()->name;
