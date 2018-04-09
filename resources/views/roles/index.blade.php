@@ -70,7 +70,7 @@
 
 <script type="text/javascript">
 var tem=["id","name","guard_name"];
-var tableeditanddelete= new tableeditanddelete(tem,'/roles/row  update/',1);
+var tableeditanddelete= new tableeditanddelete(tem,'/roles/rowupdate/',1);
 
 $(document).ready(function(){
   $('#myModal').on('show.bs.modal', function (event) {

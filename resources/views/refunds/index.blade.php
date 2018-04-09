@@ -59,7 +59,7 @@
             <th>{{ $refunds['title']->unrefund_cost or ""}}</th>
             <th>{{ $refunds['title']->reason or ""}}</th>
             <th>{{ $refunds['title']->Remarks or ""}}</th>
-            <th>{{ $refunds['title']->kkk or ""}}</th>
+
 
             <th>操作</th>
 
@@ -69,36 +69,36 @@
           @foreach ($refunds['data'] as $data)
           <tr>
             <th class="id" scope="row">{{$data->id or ""}}</th>
-            <td class="project_duration">{{$data->audit_report_name or ""}}</td>
-            <td class="project_number">{{$data->professional_room or ""}}</td>
-            <td class="project_name">{{$data->project_manager or ""}}</td>
-            <td class="project_manager">{{$data->project_number or ""}}</td>
-            <td class="audit_progress">{{$data->publish_date or ""}}</td>
+            <td class="audit_report_name">{{$data->audit_report_name or ""}}</td>
+            <td class="professional_room">{{$data->professional_room or ""}}</td>
+            <td class="project_manager">{{$data->project_manager or ""}}</td>
+            <td class="project_number">{{$data->project_number or ""}}</td>
+            <td class="publish_date">{{$data->publish_date or ""}}</td>
             <td class="audit_document_number">{{$data->audit_document_number or ""}}</td>
-            <td class="audit_company">{{$data->audit_type or ""}}</td>
-            <td class="is_needsaudit">{{$data->project_type or ""}}</td>
-            <td class="is_canaudit">{{$data->audit_company or ""}}</td>
-            <td class="audit_number">{{$data->submit_cost or ""}}</td>
-            <td class="remarks">{{$data->validation_cost or ""}}</td>
-            <td class="remarks">{{$data->subtraction_cost or ""}}</td>
-            <td class="remarks">{{$data->subtraction_rate or ""}}</td>
-            <td class="remarks">{{$data->mterials_audit or ""}}</td>
-            <td class="remarks">{{$data->construction_should_refund or ""}}</td>
-            <td class="remarks">{{$data->thing_refund or ""}}</td>
-            <td class="remarks">{{$data->cash_refund or ""}}</td>
-            <td class="remarks">{{$data->direct_yes or ""}}</td>
-            <td class="remarks">{{$data->direct_no or ""}}</td>
-            <td class="remarks">{{$data->unrefund_cost or ""}}</td>
-            <td class="remarks">{{$data->reason or ""}}</td>
-            <td class="remarks">{{$data->Remarks or ""}}</td>
-            <td class="remarks">{{$data->kkk or ""}}</td>
+            <td class="audit_type">{{$data->audit_type or ""}}</td>
+            <td class="project_type">{{$data->project_type or ""}}</td>
+            <td class="audit_company">{{$data->audit_company or ""}}</td>
+            <td class="submit_cost">{{$data->submit_cost or ""}}</td>
+            <td class="validation_cost">{{$data->validation_cost or ""}}</td>
+            <td class="subtraction_cost">{{$data->subtraction_cost or ""}}</td>
+            <td class="subtraction_rate">{{$data->subtraction_rate or ""}}</td>
+            <td class="mterials_audit">{{$data->mterials_audit or ""}}</td>
+            <td class="construction_should_refund">{{$data->construction_should_refund or ""}}</td>
+            <td class="thing_refund">{{$data->thing_refund or ""}}</td>
+            <td class="cash_refund">{{$data->cash_refund or ""}}</td>
+            <td class="direct_yes">{{$data->direct_yes or ""}}</td>
+            <td class="direct_no">{{$data->direct_no or ""}}</td>
+            <td class="unrefund_cost">{{$data->unrefund_cost or ""}}</td>
+            <td class="reason">{{$data->reason or ""}}</td>
+            <td class="Remarks">{{$data->Remarks or ""}}</td>
+
 
             <td class="action">
               @if(Auth::user()->hasAnyRole('高级管理员|站长'))
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;<a class="update" title="对应物资详情" href="{{route('refunds.refundsdetail',$data->kkk)}}" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
               @elseif(Auth::user()->hasAnyRole('项目经理'))
                   @can('updateanddestroy', $data)
-                  <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;<a class="update" title="对应物资详情" href="{{route('refunds.refundsdetail',$data->kkk)}}" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
                   @else
                   你无权限操作
                   @endcan
@@ -157,8 +157,8 @@
 
 <script type="text/javascript">
 
-var tem=["id","project_duration","project_number","project_name","project_manager","audit_progress","audit_document_number","audit_company","is_needsaudit","is_canaudit","audit_number","remarks"];
-var tableeditanddelete= new tableeditanddelete(tem,'/rreturns/rowupdate/');
+var tem=["id","audit_report_name","professional_room","project_manager","project_number","publish_date","audit_document_number","audit_type","project_type","audit_company","submit_cost","validation_cost","subtraction_cost","subtraction_rate","mterials_audit","construction_should_refund","thing_refund","cash_refund","direct_yes","direct_no","unrefund_cost","reason","Remarks"];
+var tableeditanddelete= new tableeditanddelete(tem,'/refunds/rowupdate/',2);
 // window.tem={};
 
 

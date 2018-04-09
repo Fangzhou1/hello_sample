@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Refund;
 use Illuminate\Support\Facades\DB;
+
 use App\Handlers\ExcelUploadHandler;
 
 class RefundsController extends Controller
@@ -86,6 +87,11 @@ class RefundsController extends Controller
         }
 
         public function export()
+        {
+
+        }
+
+        public function refundsdetail()
         {
 
         }

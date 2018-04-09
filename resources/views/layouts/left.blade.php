@@ -62,14 +62,14 @@
 
 @role('站长')
   <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingThree">
+    <div class="panel-heading" role="tab" id="headingFore">
       <h4 class="panel-title">
-        <a  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a  role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFore" aria-expanded="false" aria-controls="collapseFore">
           权限管理
         </a>
       </h4>
     </div>
-    <div id="collapseThree" class="panel-collapse collapse {{(strpos($current_url,'permissions'))||(strpos($current_url,'roles'))||(strpos($current_url,'usersactionindex'))?"in":""}}" role="tabpanel" aria-labelledby="headingThree">
+    <div id="collapseFore" class="panel-collapse collapse {{(strpos($current_url,'permissions'))||(strpos($current_url,'roles'))||(strpos($current_url,'usersactionindex'))?"in":""}}" role="tabpanel" aria-labelledby="headingThree">
 
         <ul class="list-group">
           <a class="list-group-item {{($current_url==route('permissions.index'))?"active":""}}" href="{{route('permissions.index')}}">设置权限</a>

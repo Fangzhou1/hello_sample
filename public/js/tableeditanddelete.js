@@ -1,3 +1,5 @@
+//flag默认为0，为1时是角色页，为2时是物资主页
+
 function tableeditanddelete(field,editlink,flag) {
 
 
@@ -70,8 +72,11 @@ function tableeditanddelete(field,editlink,flag) {
         if(this.field[key]!='id')
          tbody.find('.editable').find("."+this.field[key]).html(this.tem[this.field[key]]);
        tbody.find('.editable').find(".action").html('<a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp&nbsp<a data-whatever="'+this.tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp&nbsp</td>');
-       if(this.flag){
+       if(this.flag==1){
          tbody.find('.editable').find(".action").append('<a class="update" title="分配权限" href="/roles/permissionstorolepage/'+this.tem.id+'" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>')
+       }
+       if(this.flag==2){
+         tbody.find('.editable').find(".action").append('<a class="update" title="对应物资需求" href="/refunds/refunddetail/'+this.tem.id+'" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>')
        }
        tbody.find(".editable").removeClass("editable");
        this.tem={};
