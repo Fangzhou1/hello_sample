@@ -57,7 +57,7 @@
             <th>{{ $refunds['title']->direct_yes or ""}}</th>
             <th>{{ $refunds['title']->direct_no or ""}}</th>
             <th>{{ $refunds['title']->unrefund_cost or ""}}</th>
-            <th>{{ $refunds['title']->reason or ""}}</th>
+            <th style="min-width:300px">{{ $refunds['title']->reason or ""}}</th>
             <th>{{ $refunds['title']->Remarks or ""}}</th>
 
 
@@ -95,10 +95,10 @@
 
             <td class="action">
               @if(Auth::user()->hasAnyRole('高级管理员|站长'))
-              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;<a class="update" title="对应物资详情" href="{{route('refunds.refundsdetail',$data->kkk)}}" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+              <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="#" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;<a class="update" title="对应物资详情" href="{{route('refunds.refundsdetail',$data->id)}}" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
               @elseif(Auth::user()->hasAnyRole('项目经理'))
                   @can('updateanddestroy', $data)
-                  <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;<a class="update" title="对应物资详情" href="{{route('refunds.refundsdetail',$data->kkk)}}" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
+                  <a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;<a class="update" title="对应物资详情" href="{{route('refunds.refundsdetail',$data->id)}}" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>
                   @else
                   你无权限操作
                   @endcan

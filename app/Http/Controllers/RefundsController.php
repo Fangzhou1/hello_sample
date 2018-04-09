@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Refund;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Refunddetail;
 use App\Handlers\ExcelUploadHandler;
 
 class RefundsController extends Controller
@@ -75,7 +75,7 @@ class RefundsController extends Controller
             $upload=new ExcelUploadHandler;
             $data=$upload->save($file);
             //dd($data);
-            DB::table('refunds')->insert($data);
+            DB::table('refunddetails')->insert($data);
             session()->flash('success', '恭喜你，导入数据成功！');
 
             return redirect()->back();
@@ -91,9 +91,11 @@ class RefundsController extends Controller
 
         }
 
-        public function refundsdetail()
+        public function refundsdetail(Refund $refund)
         {
-
+          //dd($refund->toArray());
+          //dd($refund->refunddetails);
+          dd($refund->load('refunddetails')->toArray());
         }
 
 }
