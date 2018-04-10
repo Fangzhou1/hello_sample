@@ -89,6 +89,10 @@ Route::post('refunds/importrefunddetails', 'RefundsController@importrefunddetail
 Route::get('refunds/export', 'RefundsController@export')->name('refunds.export');
 Route::get('refunds/refundsdetail/{refund}', 'RefundsController@refundsdetail')->name('refunds.refundsdetail');
 Route::resource('refunds', 'RefundsController',['except' => ['show', 'edit', 'update']]);
+
+
+//物资详情退库管理
+Route::resource('refunddetails','RefunddetailsController',['except' => ['index','show']]);
 // Route::get('/users', 'UsersController@index')->name('users.index');
 // Route::get('/users/{user}', 'UsersController@show')->name('users.show');//
 // Route::get('/users/create', 'UsersController@create')->name('users.create');

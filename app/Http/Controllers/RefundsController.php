@@ -95,10 +95,13 @@ class RefundsController extends Controller
         {
 
           $refundsdetails['title']=Refunddetail::first();
-          $refundsdetails['data']=$refund->load(['refunddetails' => function ($query) {
-    $query->paginate(10);
-}]);
-          //dd($refundsdetails['data']);
+
+          $refundsdetails['data']=$refund->refunddetails()->paginate(15);
+          $refundsdetails['data']->refund=$refund;
+//           $refundsdetails['data']=$refund->load(['refunddetails' => function ($query) {
+//     $query->get()->toArray();
+// }]);
+        //  dd($refundsdetails['data']);
           return view('refunds.refundsdetail',['refundsdetails'=>$refundsdetails,'current_url'=>$this->request->url()]);
         }
 

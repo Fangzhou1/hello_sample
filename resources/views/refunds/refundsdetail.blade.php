@@ -3,15 +3,10 @@
 @section('title','物资详情')
 @section('content')
 <div class="col-md-12 page-header" style="margin-top: 0px;">
-<h1><small><b>项目编号：{{$refundsdetails['data']->project_number or ''}}，审计报告为：{{$refundsdetails['data']->audit_report_name}}<p>物资详情如下：</p></b></small></h1>
+<a class="btn btn-primary" href="javascript:history.back();" role="button">返回</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
+</div>
 <div class="col-md-12">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">物资列表</a></li>
-    <li role="presentation"><a href="#tab2" aria-controls="profile" role="tab" data-toggle="tab">列表修改痕迹</a></li>
-  </ul>
-<div class="tab-content">
-<br />
-<div id="tab1" role="tabpanel" class="tab-pane active">
+
   @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="#" role="button">添加新的物资&nbsp;<b>+</b></a>
 <a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
@@ -22,7 +17,7 @@
   <button type="submit" class="btn btn-default">搜索</button>
 </form>
 @endhasanyrole
-<span  class="pull-right" style="font-size: 18px;">总共查询到 12 行数据</span>
+<span  class="pull-right" style="font-size: 18px;">总共查询到{{$refundsdetails['data']->total()}}行数据</span>
 
 <div class="table-responsive">
   <table class="table table-hover table-striped">
@@ -56,7 +51,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($refundsdetails['data']->refunddetails as $data)
+          @foreach ($refundsdetails['data'] as $data)
           <tr>
             <th class="id" scope="row">{{$data->id or ""}}</th>
             <td class="audit_report_name">{{$data->audit_document_number or ""}}</td>
@@ -84,7 +79,7 @@
 
 
             <td class="action">
-123
+<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 
             </td>
 
@@ -97,14 +92,6 @@
       </table>
 </div>
 
-</div>
-
-
-
-
-
-
-</div>
 </div>
 
 
@@ -133,6 +120,4 @@
   </div>
 </div>
 
-
-</div>
 @stop
