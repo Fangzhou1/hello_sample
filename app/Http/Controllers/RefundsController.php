@@ -83,7 +83,7 @@ class RefundsController extends Controller
 
         public function create()
         {
-
+            return;
         }
 
         public function export()
@@ -93,9 +93,13 @@ class RefundsController extends Controller
 
         public function refundsdetail(Refund $refund)
         {
-          //dd($refund->toArray());
-          //dd($refund->refunddetails);
-          dd($refund->load('refunddetails')->toArray());
+
+          $refundsdetails['title']=Refunddetail::first();
+          $refundsdetails['data']=$refund->load(['refunddetails' => function ($query) {
+    $query->paginate(10);
+}]);
+          //dd($refundsdetails['data']);
+          return view('refunds.refundsdetail',['refundsdetails'=>$refundsdetails,'current_url'=>$this->request->url()]);
         }
 
 }
