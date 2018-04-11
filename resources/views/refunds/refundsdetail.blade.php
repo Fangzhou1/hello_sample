@@ -8,7 +8,7 @@
 <div class="col-md-12">
 
   @hasanyrole('项目经理|高级管理员|站长')
-<a class="btn btn-success" href="#" role="button">添加新的物资&nbsp;<b>+</b></a>
+<a class="btn btn-success" href="{{route('refunddetails.create')}}?project_number={{$refundsdetails['data']->refund->project_number or ''}}&audit_document_number={{$refundsdetails['data']->refund->audit_document_number or ''}}" role="button">添加新的物资&nbsp;<b>+</b></a>
 <a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
 <form action='' method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
   <div class="form-group">
@@ -79,7 +79,7 @@
 
 
             <td class="action">
-<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}?unit_price={{$data->unit_price}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 
             </td>
 

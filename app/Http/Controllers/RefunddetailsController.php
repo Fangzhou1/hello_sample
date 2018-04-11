@@ -18,16 +18,23 @@ class RefunddetailsController extends Controller
     {
         // $page=10;
         // $settlements = Settlement::paginate($page);
-
-        return view('refunddetails.edit',['refunddetail'=>$refunddetail]);
+      //dd($refunddetail);
+        return view('refunddetails.edit',['refunddetail'=>$refunddetail,'unit_price'=>$this->request->input('unit_price')]);
     }
 
     public function update(Refunddetail $refunddetail)
       {
           // $page=10;
           // $settlements = Settlement::paginate($page);
-          dd($refunddetail);
-          return view('refunddetails.edit',['refunddetail'=>$refunddetail]);
+          $data=$this->request->except(['_token','_method']);
+          $refunddetail->update($data);
+          session()->flash('success', '恭喜你，更新数据成功！');
+          return redirect()->back();
       }
+
+      public function create()
+        {
+          return view('refunddetails.create');
+        }
 
 }

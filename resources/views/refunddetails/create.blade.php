@@ -1,15 +1,15 @@
 @extends('layouts.default')
 
-@section('title','物资编辑页')
+@section('title','物资新增页')
 @section('content')
 <div class="col-md-1 page-header" style="margin-top: 0px;">
 <a class="btn btn-primary" href="#" role="button">返回</a>
 </div>
 <div class="col-md-11 page-header" style="margin: 0px;">
-<h1>物资详情编辑页</h1>
+<h1>物资详情新增页</h1>
 </div>
 
-<form class="form-inline" method="post" action="{{route('refunddetails.update',$refunddetail->id)}}">
+<form class="form-inline" method="post" action="">
   {{ csrf_field() }}
   <input type="hidden" name="_method" value="PATCH">
 <div class="col-md-12" style="margin-bottom:20px;">
@@ -39,15 +39,15 @@
       </thead>
       <tbody>
         <tr>
-          <td scope="row"><input name="audit_document_number" type="text" class="form-control" value='{{$refunddetail->audit_document_number}}' disabled></td>
-          <td scope="row"><input name="project_number" type="text" class="form-control" value='{{$refunddetail->project_number}}' disabled></td>
-          <td scope="row"><input name="project_name" type="text" class="form-control" value='{{$refunddetail->project_name}}'></td>
-          <td scope="row"><input name="construction_enterprise" type="text" class="form-control" value='{{$refunddetail->construction_enterprise}}'></td>
-          <td scope="row"><input name="material_name" type="text" class="form-control" value='{{$refunddetail->material_name}}'></td>
-          <td scope="row"><input name="unit_price" id="unit_price" type="text" class="form-control" value='{{$refunddetail->unit_price}}'></td>
-          <td scope="row"><input name="reduction_quantity" id="reduction_quantity" type="text" class="form-control" value='{{$refunddetail->reduction_quantity}}'></td>
-          <td scope="row"><input name="subtraction_cost" id="subtraction_cost" type="text" class="form-control" value='{{$refunddetail->subtraction_cost}}' disabled></td>
-          <td scope="row"><select name="iscomplete_refund" class="form-control"><option value="是" {{$refunddetail->iscomplete_refund=='是'?'selected':''}}>是</option><option value="否" {{$refunddetail->iscomplete_refund=='否'?'selected':''}}>否</option></select></td>
+          <td scope="row"><input name="audit_document_number" type="text" class="form-control" value='<?php echo $_GET["audit_document_number"]; ?>' disabled></td>
+          <td scope="row"><input name="project_number" type="text" class="form-control" value='<?php echo $_GET["project_number"]; ?>' disabled></td>
+          <td scope="row"><input name="project_name" type="text" class="form-control"></td>
+          <td scope="row"><input name="construction_enterprise" type="text" class="form-control"></td>
+          <td scope="row"><input name="material_name" type="text" class="form-control"></td>
+          <td scope="row"><input name="unit_price" id="unit_price" type="text" class="form-control"></td>
+          <td scope="row"><input name="reduction_quantity" id="reduction_quantity" type="text" class="form-control"></td>
+          <td scope="row"><input name="subtraction_cost" id="subtraction_cost" type="text" class="form-control" disabled></td>
+          <td scope="row"><select name="iscomplete_refund" class="form-control"><option value="是">是</option><option value="否">否</option></select></td>
 
 
       </tbody>
@@ -75,11 +75,11 @@
       </thead>
       <tbody>
         <tr>
-          <td scope="row"><input name="scm_refund_number" type="text" class="form-control" value='{{$refunddetail->scm_refund_number}}'></td>
-          <td scope="row"><input name="refund_apply_amount" type="text" class="form-control" value='{{$refunddetail->refund_apply_amount}}'></td>
-          <td scope="row"><input name="refund_amount" type="text" class="form-control" value='{{$refunddetail->refund_amount}}'></td>
-          <td scope="row"><input name="erp_refund_number" type="text" class="form-control" value='{{$refunddetail->erp_refund_number}}'></td>
-          <td scope="row"><input name="erp_unrefund_reason" type="text" class="form-control" value='{{$refunddetail->erp_unrefund_reason}}'></td>
+          <td scope="row"><input name="scm_refund_number" type="text" class="form-control"></td>
+          <td scope="row"><input name="refund_apply_amount" type="text" class="form-control"></td>
+          <td scope="row"><input name="refund_amount" type="text" class="form-control"></td>
+          <td scope="row"><input name="erp_refund_number" type="text" class="form-control"></td>
+          <td scope="row"><input name="erp_unrefund_reason" type="text" class="form-control"></td>
         </tr>
       </tbody>
     </table>
@@ -99,7 +99,7 @@
         <thead>
           <tr>
             <th>SCM收货单号</th>
-            <th>SCM收货数量(单价为：{{$unit_price}})</th>
+            <th>SCM收货数量</th>
             <th>退库金额</th>
 
 
@@ -108,9 +108,9 @@
         </thead>
         <tbody>
           <tr>
-            <td scope="row"><input name="scm_receive_number" type="text" class="form-control" value='{{$refunddetail->scm_receive_number}}'></td>
-            <td scope="row"><input name="scm_receive_amount" id="scm_receive_amount" type="text" class="form-control" value='{{$refunddetail->scm_receive_amount}}'></td>
-            <td scope="row"><input name="refund_cost" id="refund_cost" type="text" class="form-control" value='{{$refunddetail->refund_cost}}' oninput="txtChange(this)" onpropertychange="txtChange(this)" disabled></td>
+            <td scope="row"><input name="scm_receive_number" type="text" class="form-control"></td>
+            <td scope="row"><input name="scm_receive_amount" id="scm_receive_amount" type="text" class="form-control"></td>
+            <td scope="row"><input name="refund_cost" id="refund_cost" type="text" class="form-control" oninput="txtChange(this)" onpropertychange="txtChange(this)" disabled></td>
 
           </tr>
         </tbody>
@@ -135,7 +135,7 @@
       <tbody>
         <tr>
 
-          <td scope="row"><input name="cash_refund" id="cash_refund" type="text" class="form-control" value='{{$refunddetail->cash_refund}}'></td>
+          <td scope="row"><input name="cash_refund" id="cash_refund" type="text" class="form-control"></td>
 
         </tr>
       </tbody>
@@ -161,7 +161,7 @@
       <tr>
 
 
-        <td scope="row"><input name="unrefund_cost" id="unrefund_cost" type="text" class="form-control" value='{{$refunddetail->unrefund_cost}}'disabled></td>
+        <td scope="row"><input name="unrefund_cost" id="unrefund_cost" type="text" class="form-control" disabled></td>
       </tr>
     </tbody>
   </table>
@@ -181,7 +181,7 @@
     <table class="table">
 
 
-          <textarea name="unrefund_reason" class="form-control" rows="3" style="width:100%" placeholder="可以写一些东西...">{{$refunddetail->unrefund_reason}}</textarea>
+          <textarea name="unrefund_reason" class="form-control" rows="3" style="width:100%" placeholder="可以写一些东西..."></textarea>
 
     </table>
   </div>
@@ -196,7 +196,7 @@
     <table class="table">
 
 
-          <textarea name="remarks" class="form-control" rows="3" style="width:100%" placeholder="可以写一些东西...">{{$refunddetail->remarks}}</textarea>
+          <textarea name="remarks" class="form-control" rows="3" style="width:100%" placeholder="可以写一些东西..."></textarea>
 
     </table>
   </div>
@@ -241,7 +241,7 @@ $(document).ready(function(){
 
     $("#scm_receive_amount").blur(function(){
 
-      $("#refund_cost").val({{$unit_price}}*$("#scm_receive_amount").val());
+      $("#refund_cost").val(1*$("#scm_receive_amount").val());
     });
 
 
