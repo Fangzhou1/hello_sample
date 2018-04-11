@@ -80,7 +80,7 @@
 
             <td class="action">
 <a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}?unit_price={{$data->unit_price}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-
+&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </td>
 
 
@@ -119,5 +119,14 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#myModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var recipient = button.data('whatever'); // Extract info from data-* attributes
+  $(this).find("#delete").attr('action','/refunddetails/'+recipient);
 
+});
+});
+</script>
 @stop

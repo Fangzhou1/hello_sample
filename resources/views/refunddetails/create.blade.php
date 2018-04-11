@@ -9,9 +9,8 @@
 <h1>物资详情新增页</h1>
 </div>
 
-<form class="form-inline" method="post" action="">
+<form class="form-inline" method="post" action="{{route('refunddetails.store')}}">
   {{ csrf_field() }}
-  <input type="hidden" name="_method" value="PATCH">
 <div class="col-md-12" style="margin-bottom:20px;">
   <div class="panel panel-success">
     <!-- Default panel contents -->
@@ -39,8 +38,8 @@
       </thead>
       <tbody>
         <tr>
-          <td scope="row"><input name="audit_document_number" type="text" class="form-control" value='<?php echo $_GET["audit_document_number"]; ?>' disabled></td>
-          <td scope="row"><input name="project_number" type="text" class="form-control" value='<?php echo $_GET["project_number"]; ?>' disabled></td>
+          <td scope="row"><input name="audit_document_number" type="text" class="form-control" value='<?php echo $_GET["audit_document_number"]; ?>' readonly = "readonly"></td>
+          <td scope="row"><input name="project_number" type="text" class="form-control" value='<?php echo $_GET["project_number"]; ?>' readonly = "readonly"></td>
           <td scope="row"><input name="project_name" type="text" class="form-control"></td>
           <td scope="row"><input name="construction_enterprise" type="text" class="form-control"></td>
           <td scope="row"><input name="material_name" type="text" class="form-control"></td>

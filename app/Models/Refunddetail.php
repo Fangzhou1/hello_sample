@@ -16,4 +16,14 @@ class Refunddetail extends Model
     {
         return $this->belongsTo('App\Models\Refund','kkk2','kkk');
     }
+
+  // public static function boot()
+  //    {
+  //        parent::boot();
+  //
+  //        static::creating(function ($refunddetail) {
+  //          $kkk2=$refunddetail->project_number.'/'.$refunddetail->audit_document_number
+  //            $refunddetail->kkk2 = $kkk2;
+  //        });
+  //    }
 }

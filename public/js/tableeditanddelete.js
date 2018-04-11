@@ -20,7 +20,13 @@ function tableeditanddelete(field,editlink,flag) {
       for(var key in this.field)
         if(this.field[key]!='id')
           tbody.find('.editable').find("."+this.field[key]).html(this.tem[this.field[key]]);
-      tbody.find('.editable').find(".action").html('<a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp<a data-whatever="'+this.tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+      tbody.find('.editable').find(".action").html('<a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;&nbsp;<a data-whatever="'+this.tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+      if(this.flag==1){
+        tbody.find('.editable').find(".action").append('&nbsp;&nbsp;<a class="update" title="分配权限" href="/roles/permissionstorolepage/'+this.tem.id+'" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>')
+      }
+      if(this.flag==2){
+        tbody.find('.editable').find(".action").append('&nbsp;&nbsp;<a class="update" title="对应物资需求" href="/refunds/refunddetail/'+this.tem.id+'" role="button"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></a>')
+      }
       tbody.find(".editable").removeClass("editable");
     }
     $(obj).parents('tr').addClass("editable");
@@ -32,6 +38,8 @@ function tableeditanddelete(field,editlink,flag) {
     $(obj).parents('tr').find(".id").append('<input type="hidden" name="_token" value="'+$('meta[name="csrf-token"]').attr('content')+'">');
     for(var key in this.field)
       if(this.field[key]!='id')
+        if(this.flag!=2)
+        {
         if(this.field[key]!='audit_progress'&&this.field[key]!='is_needsaudit'&&this.field[key]!='is_canaudit')
           $(obj).parents('tr').find("."+this.field[key]).html('<input type="text" name="'+this.field[key]+'" class="form-control input-sm" value='+this.tem[this.field[key]]+'>');
         else if(this.field[key]=='audit_progress')
@@ -55,9 +63,13 @@ function tableeditanddelete(field,editlink,flag) {
           +'<option value="是" '+select1+'>是</option>'
          +'<option value="否" '+select2+'>否</option></select>');
         }
-
-
-    $(obj).parents('tr').find(".action").html('<input class="btn btn-default btn-xs" type="submit" value="提交">&nbsp<a onclick="tableeditanddelete.cancel(this)" class="btn btn-default btn-xs" href="javascript:;" role="button">取消</a>');
+        }
+        else if(this.flag==2)
+          if(this.field[key]!='audit_document_number'&&this.field[key]!='project_number')
+            $(obj).parents('tr').find("."+this.field[key]).html('<input type="text" name="'+this.field[key]+'" class="form-control input-sm" value='+this.tem[this.field[key]]+'>');
+          else
+            $(obj).parents('tr').find("."+this.field[key]).text(this.tem[this.field[key]]);
+    $(obj).parents('tr').find(".action").html('<input class="btn btn-default btn-xs" type="submit" value="提交">&nbsp;<a onclick="tableeditanddelete.cancel(this)" class="btn btn-default btn-xs" href="javascript:;" role="button">取消</a>');
    }
 
 
@@ -65,13 +77,12 @@ function tableeditanddelete(field,editlink,flag) {
 
      function cancel(obj)
      {
-       flag=flag||0;
        var tbody=$(obj).parents('tbody');
        $(obj).parents('table').unwrap('form');
        for(var key in this.field)
         if(this.field[key]!='id')
          tbody.find('.editable').find("."+this.field[key]).html(this.tem[this.field[key]]);
-       tbody.find('.editable').find(".action").html('<a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp&nbsp<a data-whatever="'+this.tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp&nbsp</td>');
+       tbody.find('.editable').find(".action").html('<a class="update" title="编辑" onclick="tableeditanddelete.update(this)" href="javascript:;" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>&nbsp;&nbsp;<a data-whatever="'+this.tem.id+'" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;&nbsp;</td>');
        if(this.flag==1){
          tbody.find('.editable').find(".action").append('<a class="update" title="分配权限" href="/roles/permissionstorolepage/'+this.tem.id+'" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>')
        }

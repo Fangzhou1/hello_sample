@@ -14,6 +14,7 @@ class Refund extends Model
 
   public function refunddetails()
     {
+        
         return $this->hasMany('App\Models\Refunddetail','kkk2','kkk');
     }
 

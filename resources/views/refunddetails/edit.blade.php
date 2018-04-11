@@ -39,14 +39,14 @@
       </thead>
       <tbody>
         <tr>
-          <td scope="row"><input name="audit_document_number" type="text" class="form-control" value='{{$refunddetail->audit_document_number}}' disabled></td>
-          <td scope="row"><input name="project_number" type="text" class="form-control" value='{{$refunddetail->project_number}}' disabled></td>
+          <td scope="row"><input name="audit_document_number" type="text" class="form-control" value='{{$refunddetail->audit_document_number}}' readonly = "readonly"></td>
+          <td scope="row"><input name="project_number" type="text" class="form-control" value='{{$refunddetail->project_number}}' readonly = "readonly"></td>
           <td scope="row"><input name="project_name" type="text" class="form-control" value='{{$refunddetail->project_name}}'></td>
           <td scope="row"><input name="construction_enterprise" type="text" class="form-control" value='{{$refunddetail->construction_enterprise}}'></td>
           <td scope="row"><input name="material_name" type="text" class="form-control" value='{{$refunddetail->material_name}}'></td>
           <td scope="row"><input name="unit_price" id="unit_price" type="text" class="form-control" value='{{$refunddetail->unit_price}}'></td>
           <td scope="row"><input name="reduction_quantity" id="reduction_quantity" type="text" class="form-control" value='{{$refunddetail->reduction_quantity}}'></td>
-          <td scope="row"><input name="subtraction_cost" id="subtraction_cost" type="text" class="form-control" value='{{$refunddetail->subtraction_cost}}' disabled></td>
+          <td scope="row"><input name="subtraction_cost" id="subtraction_cost" type="text" class="form-control" value='{{$refunddetail->subtraction_cost}}' readonly = "readonly"></td>
           <td scope="row"><select name="iscomplete_refund" class="form-control"><option value="是" {{$refunddetail->iscomplete_refund=='是'?'selected':''}}>是</option><option value="否" {{$refunddetail->iscomplete_refund=='否'?'selected':''}}>否</option></select></td>
 
 
@@ -110,7 +110,7 @@
           <tr>
             <td scope="row"><input name="scm_receive_number" type="text" class="form-control" value='{{$refunddetail->scm_receive_number}}'></td>
             <td scope="row"><input name="scm_receive_amount" id="scm_receive_amount" type="text" class="form-control" value='{{$refunddetail->scm_receive_amount}}'></td>
-            <td scope="row"><input name="refund_cost" id="refund_cost" type="text" class="form-control" value='{{$refunddetail->refund_cost}}' oninput="txtChange(this)" onpropertychange="txtChange(this)" disabled></td>
+            <td scope="row"><input name="refund_cost" id="refund_cost" type="text" class="form-control" value='{{$refunddetail->refund_cost}}' oninput="txtChange(this)" onpropertychange="txtChange(this)" readonly = "readonly"></td>
 
           </tr>
         </tbody>
@@ -161,7 +161,7 @@
       <tr>
 
 
-        <td scope="row"><input name="unrefund_cost" id="unrefund_cost" type="text" class="form-control" value='{{$refunddetail->unrefund_cost}}'disabled></td>
+        <td scope="row"><input name="unrefund_cost" id="unrefund_cost" type="text" class="form-control" value='{{$refunddetail->unrefund_cost}}'readonly = "readonly"></td>
       </tr>
     </tbody>
   </table>

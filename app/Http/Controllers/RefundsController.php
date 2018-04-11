@@ -105,4 +105,23 @@ class RefundsController extends Controller
           return view('refunds.refundsdetail',['refundsdetails'=>$refundsdetails,'current_url'=>$this->request->url()]);
         }
 
+        public function rowupdate(Refund $refund)
+        {
+          dd($this->request->except('_token'));
+          //dd(Auth::user()->hasAnyRole(['高级管理员','站长']));
+          // if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+          // $this->authorize('updateanddestroy', $settlement);
+          Refund::where('id',$refund->id)->update($this->request->except('_token'));
+          session()->flash('success', '恭喜你，更新数据成功！');
+          $data['name']=Auth::user()->name;
+          $data['order_number']=$refund->order_number;
+          $data['project_number']=$refund->project_number;
+          $data['type']='结算';
+          $mes='修改了';
+          $mes2=event(new ModifyDates($data,$mes));
+          //dd($mes2);
+          broadcast(new ChangeOrder(Auth::user(),$refund->order_number,"刚刚修改了订单编号为",$mes2));
+          return redirect()->back();
+        }
+
 }

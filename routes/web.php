@@ -87,6 +87,7 @@ Route::get('refunds/importpage', 'RefundsController@importpage')->name('refunds.
 Route::post('refunds/importrefunds', 'RefundsController@importrefunds')->name('refunds.importrefunds');
 Route::post('refunds/importrefunddetails', 'RefundsController@importrefunddetails')->name('refunds.importrefunddetails');
 Route::get('refunds/export', 'RefundsController@export')->name('refunds.export');
+Route::post('refunds/rowupdate/{refund}', 'RefundsController@rowupdate')->name('refunds.rowupdate');
 Route::get('refunds/refundsdetail/{refund}', 'RefundsController@refundsdetail')->name('refunds.refundsdetail');
 Route::resource('refunds', 'RefundsController',['except' => ['show', 'edit', 'update']]);
 
