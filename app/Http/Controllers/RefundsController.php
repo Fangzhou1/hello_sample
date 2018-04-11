@@ -83,8 +83,23 @@ class RefundsController extends Controller
 
         public function create()
         {
-            return;
+            return view('refunds.create');
         }
+
+        public function store()
+          {
+          $datarequest=$this->request->except('_token');
+          $refund=Refund::create($datarequest);
+          // $data['name']=Auth::user()->name;
+          // $data['order_number']=$refund->order_number;
+          // $data['project_number']=$refund->project_number;
+          // $data['type']='结算';
+          // $mes='新建了';
+          // $mes2=event(new ModifyDates($data,$mes));
+          session()->flash('success', '恭喜你，添加数据成功！');
+          //broadcast(new ChangeOrder(Auth::user(),$refund->order_number,"刚刚新增了订单编号为",$mes2));
+          return redirect()->route('refunds.index');
+          }
 
         public function export()
         {
@@ -107,21 +122,47 @@ class RefundsController extends Controller
 
         public function rowupdate(Refund $refund)
         {
-          dd($this->request->except('_token'));
+          // dd($refund);
+          // dd($this->request->except('_token'));
           //dd(Auth::user()->hasAnyRole(['高级管理员','站长']));
           // if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
           // $this->authorize('updateanddestroy', $settlement);
-          Refund::where('id',$refund->id)->update($this->request->except('_token'));
+           $refund->update($this->request->except('_token'));
           session()->flash('success', '恭喜你，更新数据成功！');
-          $data['name']=Auth::user()->name;
-          $data['order_number']=$refund->order_number;
-          $data['project_number']=$refund->project_number;
-          $data['type']='结算';
-          $mes='修改了';
-          $mes2=event(new ModifyDates($data,$mes));
+          // $data['name']=Auth::user()->name;
+          // $data['order_number']=$refund->order_number;
+          // $data['project_number']=$refund->project_number;
+          // $data['type']='结算';
+          // $mes='修改了';
+          // $mes2=event(new ModifyDates($data,$mes));
           //dd($mes2);
-          broadcast(new ChangeOrder(Auth::user(),$refund->order_number,"刚刚修改了订单编号为",$mes2));
+          //broadcast(new ChangeOrder(Auth::user(),$refund->order_number,"刚刚修改了订单编号为",$mes2));
           return redirect()->back();
         }
+
+        public function destroy(Refund $refund)
+        {
+          //dd($refunddetail);
+          $refundadn=$refund->audit_document_number;
+          $refundpn=$refund->project_number;
+          if($refund->refunddetails->isNotEmpty())
+          {
+            session()->flash('warning', '删除失败！此物资条目下存在多种具体物资，请先删除所有子类具体物资，否则无法删除此条目！');
+            return redirect()->route('refunds.index');
+          }
+          $refund->delete();
+          // $data['name']=Auth::user()->name;
+          // $data['audit_document_number']=$refunddetailadn;
+          // $data['project_number']=$refunddetailpn;
+          // $data['type']='物资详情';
+          // $mes='删除了';
+          //$mes2=event(new ModifyDates($data,$mes));
+          //broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为",$mes2));
+          session()->flash('success', '恭喜你，删除成功！');
+          return redirect()->route('refunds.index');
+
+        }
+
+
 
 }

@@ -14,8 +14,21 @@ class Refund extends Model
 
   public function refunddetails()
     {
-        
+
         return $this->hasMany('App\Models\Refunddetail','kkk2','kkk');
     }
+
+    public static function boot()
+       {
+           parent::boot();
+
+           static::creating(function ($refund) {
+
+             $kkk=$refund->project_number.'/'.$refund->audit_document_number;
+               $refund->kkk = $kkk;
+               
+
+           });
+       }
 
 }
