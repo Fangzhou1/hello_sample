@@ -53,7 +53,7 @@
         <ul class="list-group">
           <a class="list-group-item {{($current_url==route('refunds.index'))?"active":""}}" href="{{route('refunds.index')}}">物资退库主页</a>
           <a class="list-group-item {{($current_url==route('refunds.importpage'))?"active":""}}" href="{{route('refunds.importpage')}}">导入Excel表</a>
-          <a class="list-group-item {{($current_url==route('rreturns.smsmail'))||($current_url==route('rreturns.smsmaildetail'))?"active":""}}" href="{{route('rreturns.smsmail')}}">邮件短信催办</a>
+          <a class="list-group-item {{($current_url==route('refunds.smsmail'))||($current_url==route('refunds.smsmaildetail'))?"active":""}}" href="{{route('refunds.smsmail')}}">邮件短信催办</a>
           <a class="list-group-item {{($current_url==route('rreturns.statistics'))?"active":""}}" href="{{route('rreturns.statistics')}}">详细统计信息</a>
 
         </ul>
