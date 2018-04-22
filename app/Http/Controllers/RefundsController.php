@@ -7,6 +7,8 @@ use App\Models\Refund;
 use Illuminate\Support\Facades\DB;
 use App\Models\Refunddetail;
 use App\Handlers\ExcelUploadHandler;
+use App\Models\User;
+use Carbon\Carbon;
 
 class RefundsController extends Controller
 {
@@ -173,9 +175,40 @@ class RefundsController extends Controller
               {
                 return view('refunds.smsmail',['current_url'=>$this->request->url(),'datas'=>[]]);
               }
+
+
+              //得到项目经理的联系方式（如微信、邮箱、手机号）
+              foreach($datas as $data)
+              {
+                if(strpos($data->project_manager,'、'))
+                {
+                  $tems=explode("、",$data->project_manager);
+                  foreach($tems as $tem)
+                  {
+                    if($user=User::where('name',$tem)->first())
+                      $data->notification_information[$tem]=$user->email;
+                    else
+                      $data->notification_information[$tem]='';
+                  }
+                }
+                else {
+                  $tem=$data->project_manager;
+                  if($user=User::where('name',$tem)->first())
+                    $data->notification_information[$tem]=$user->email;
+                  else
+                    $data->notification_information[$tem]='';
+                }
+              //dd(http_build_query($data));
+              }
+
+
+
+
+
+
               $datas2=DB::table('refunds')->where('project_number','<>','项目编号')->select(DB::raw('count(DISTINCT project_number) as project_num,sum(construction_should_refund) as construction_should_refund_total,sum(thing_refund) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(direct_yes) as direct_yes_total,sum(direct_no) as direct_no_total,sum(unrefund_cost) as unrefund_cost_total,professional_room'))->groupBy('professional_room')->get();
 
-            //  dd($datas);
+
               return view('refunds.smsmail',['current_url'=>$this->request->url(),'datas'=>$datas,'datas2'=>$datas2]);
             }
 
@@ -225,6 +258,48 @@ class RefundsController extends Controller
                     $upload->download($refunds,'物资管理分表');
 
                 }
+
+
+              public function sendEmailReminderTo()
+            {
+
+
+                $emailinfo=$this->request->query();
+                $querytoarray=json_decode($emailinfo['emailinfo'],true);
+                //dd($emailinfo['email']);
+                // if($emailinfo['email']=='')
+                // {
+                //   session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
+                //   return redirect()->back();
+                //
+                // }
+
+
+                $filename=$querytoarray['project_manager'].'的物资退库情况表('.Carbon::now().')';
+                //dd($filename);
+                $refunds = Refund::where('project_number','项目编号')->orWhere('project_manager',$querytoarray['project_manager'])->get();
+                //dd($refunds);
+                $upload=new ExcelUploadHandler;
+                $upload->exporttoserver($refunds,$filename);
+
+                //dd($emailinfo);
+                $view = 'emails.refundsmail';
+                $data = compact('querytoarray');
+                $from = '253251551@qq.com';
+                $name = 'sample';
+
+                $subject = "请抓紧完成物资退库！";
+                $attach=storage_path('exports/'.$filename.'.xls');
+                foreach ($querytoarray['notification_information'] as $key => $value) {
+                  $to=$value;
+                  Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
+                      $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
+                  });
+                }
+
+                session()->flash('success', '发送成功！');
+                return redirect()->back();
+            }
 
 
 

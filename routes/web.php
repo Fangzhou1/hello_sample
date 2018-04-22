@@ -92,6 +92,7 @@ Route::get('refunds/refundsdetail/{refund}', 'RefundsController@refundsdetail')-
 Route::get('refunds/smsmail', 'RefundsController@smsmail')->name('refunds.smsmail');
 Route::get('refunds/smsmaildetail', 'RefundsController@smsmaildetail')->name('refunds.smsmaildetail');
 Route::get('refunds/exportbytype', 'RefundsController@exportbytype')->name('refunds.exportbytype');
+Route::get('refunds/sendemail/', 'RefundsController@sendEmailReminderTo')->name('refunds.sendemail');
 Route::resource('refunds', 'RefundsController',['except' => ['show', 'edit', 'update']]);
 
 
