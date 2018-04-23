@@ -106,6 +106,10 @@ Route::resource('refunddetails','RefunddetailsController',['except' => ['index',
 // Route::patch('/users/{user}', 'UsersController@update')->name('users.update');//
 // Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
+//微信处理
+Route::any('wexin','WeixinController@index')->name('weixin.index');
+
+
 
 // Route::get('test2', function () {
 //   DB::table('roles')->insert([['name'=>'游客',"guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],['name'=>'项目经理',"guard_name"=>"web","created_ti  me"=>Carbon::now(),"updated_at"=>Carbon::now()],['name'=>'高级管理员',"guard_name"=>"web","created_at"=>Carbon::now(),'updated_at'=>Carbon::now()],['name'=>'站长',"guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()]]);
