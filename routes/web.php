@@ -108,6 +108,7 @@ Route::resource('refunddetails','RefunddetailsController',['except' => ['index',
 
 //微信处理
 Route::any('wexin','WeixinController@index')->name('weixin.index');
+Route::get('wexin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
 
 
 

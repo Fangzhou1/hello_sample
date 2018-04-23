@@ -23,9 +23,9 @@
     <!-- <p>所涉及的项目数：{{$data->project_num or 0}}个</p><a class="pull-right btn btn-success" href="{{route('settlements.sendemail',[http_build_query($data),$key])}}" role="button">邮件通知</a> -->
     <p><b>所涉及的项目数：</b>{{$data->project_num or 0}}个</p>
     <hr>
-    <p><b>应退库总金额：</b></p><p>{{$data->construction_should_refund_total or 0}}元<a class="pull-right btn btn-success" data-whatever1="{{json_encode($data)}}" data-whatever2="{{json_encode($data->notification_information)}}"  data-toggle="modal" data-target="#myModal" href="javascript:;" role="button">邮件通知</a></p>
+    <p><b>应退库总金额：</b></p><p>{{$data->construction_should_refund_total or 0}}元<a class="pull-right btn btn-success" data-whatever1="{{json_encode($data)}}" data-whatever2="{{json_encode($data->notification_information)}}" data-whatever3="mail" data-toggle="modal" data-target="#myModal" href="javascript:;" role="button">邮件通知</a></p>
     <p><b>实物退库总金额：</b></p><p>{{$data->thing_refund_total or 0}}元<a class="pull-right btn btn-success" href="#" role="button">短信通知</a></p>
-    <p><b>现金退库总金额：</b></p><p>{{$data->cash_refund_total or 0}}元<a class="pull-right btn btn-success" href="#" role="button">微信通知</a></p>
+    <p><b>现金退库总金额：</b></p><p>{{$data->cash_refund_total or 0}}元<a class="pull-right btn btn-success" data-whatever1="{{json_encode($data)}}" data-whatever2="{{json_encode($data->notification_information)}}" data-whatever3="weixin" data-toggle="modal" data-target="#myModal" href="javascript:;" role="button">微信通知</a></p>
     <p><b>直接用于其他工程（有手续）：</b></p><p>{{$data->direct_yes_total or 0}}元</p>
     <p><b>直接用于其他工程（无手续）：</b></p><p>{{$data->direct_no_total or 0}}元</p>
     <p><b>未退库金额：</b></p><p>{{$data->unrefund_cost_total or 0}}元<a class="pull-right btn btn-success" href="{{route('refunds.smsmaildetail')}}?name={{$data->project_manager}}&type=1" role="button">查看详情</a></p>
@@ -69,15 +69,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">发送邮件</h4>
+        <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
         <div id="form_content" class="form-group">
-          <label for="exampleInputEmail1">请确认项目经理邮箱</label>
+          <label for="exampleInputEmail1"></label>
 
           <input type="hidden" name="emailinfo" value="" class="form-control" id="exampleInputEmail1">
         </div>
-        <p>你确定发送邮件吗？</p>
+        <p id="ask"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:">取消</button>
@@ -107,6 +107,20 @@ $(document).ready(function(){
 
     var recipient2 = button.data('whatever2');// Extract info from data-* attributes
     var recipient1 = button.data('whatever1');
+    var recipient3 = button.data('whatever3');
+    if(recipient3=='mail'){
+      $("#myModalLabel").text('发送邮件');
+      $("#form_content label").text('请确认项目经理邮件');
+      $("#ask").text('是否确认发送邮件?');
+      $road='/refunds/sendemail';
+    }
+    else if(recipient3=='weixin'){
+      $("#myModalLabel").text('发送微信');
+      $("#form_content label").text('请确认所通知的项目经理');
+      $("#ask").text('是否确认发送微信?');
+      $road='/weixin/sendweixin/物资退库';
+    }
+
     var form_content='<div id="form_content_wrap">';
     for(var key in recipient2)
       form_content+=key+':<input type="email" name="'+key+'" class="form-control" value="'+recipient2[key]+'" placeholder="Email"></br>';
@@ -114,8 +128,10 @@ $(document).ready(function(){
     $("#form_content").append(form_content);
 
     $(this).find('input[name="emailinfo"]').attr('value',JSON.stringify(recipient1));
-    $(this).find('#wrapiput').attr('action','/refunds/sendemail');
+    $(this).find('#wrapiput').attr('action',$road);
 });
+
+
 
   $('#myModal').on('hide.bs.modal', function (event) {
     $('#form_content_wrap').remove();
