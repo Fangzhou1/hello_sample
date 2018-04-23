@@ -16,27 +16,29 @@ class WeixinController extends Controller
       // $this->middleware('auth');
       // $this->middleware('check');
       // $this->request=$request;
-     $officialAccount = EasyWeChat::officialAccount();
+     $this->officialAccount = EasyWeChat::officialAccount();
   }
   public function index(){
   //  file_put_contents("test.txt","Hello World. Testing!");
 
 
-    $officialAccount->server->push(function ($message) {
+    $this->officialAccount->server->push(function ($message) {
       if($message['MsgType']=='event'&&$message['Event']=='subscribe')
         $msg='你好，谢谢你关注工程审计公众号';
       elseif($message['MsgType']=='text'&&$message['Content']=="进度")
         $msg = new Text('您好！蔡琪祺');
       return $msg;
 });
-     return $officialAccount->server->serve();
+     return $this->officialAccount->server->serve();
 
   }
 
   public function sendweixin(Request $request){
-    dd('1');
-    $users = $officialAccount->user->list();
-    dd($users);
+    $emailinfo=$request->query();
+    dd($emailinfo);
+    //dd('1');
+    $users = $this->officialAccount->user->list();
+    //dd($users);
     if($type='结算审计进度'){
 
     }
