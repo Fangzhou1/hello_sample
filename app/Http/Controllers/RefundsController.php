@@ -9,6 +9,7 @@ use App\Models\Refunddetail;
 use App\Handlers\ExcelUploadHandler;
 use App\Models\User;
 use Carbon\Carbon;
+use Mail;
 
 class RefundsController extends Controller
 {
