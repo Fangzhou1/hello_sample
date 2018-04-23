@@ -34,6 +34,7 @@ class WeixinController extends Controller
   }
 
   public function sendweixin(Request $request){
+    dd('1');
     $users = $officialAccount->user->list();
     dd($users);
     if($type='结算审计进度'){

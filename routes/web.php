@@ -107,8 +107,8 @@ Route::resource('refunddetails','RefunddetailsController',['except' => ['index',
 // Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
 //微信处理
-Route::any('wexin','WeixinController@index')->name('weixin.index');
-Route::get('wexin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
+Route::any('weixin','WeixinController@index')->name('weixin.index');
+Route::get('weixin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
 
 
 
