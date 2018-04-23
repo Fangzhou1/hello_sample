@@ -265,8 +265,8 @@ class RefundsController extends Controller
             {
 
 
-                $emailinfo=$this->request->query();
-                $querytoarray=json_decode($emailinfo['emailinfo'],true);
+                 $emailinfo=$this->request->query();
+                 $querytoarray=json_decode($emailinfo['emailinfo'],true);
                 //dd($emailinfo['email']);
                 // if($emailinfo['email']=='')
                 // {
@@ -276,7 +276,8 @@ class RefundsController extends Controller
                 // }
 
 
-                $filename=$querytoarray['project_manager'].'的物资退库情况表('.Carbon::now().')';
+                $filename=$querytoarray['project_manager'].'的物资退库情况表('.Carbon::now()->format('Y-m-d H_i_s').')';
+                //$filename='13:11:55';
                 //dd($filename);
                 $refunds = Refund::where('project_number','项目编号')->orWhere('project_manager',$querytoarray['project_manager'])->get();
                 //dd($refunds);

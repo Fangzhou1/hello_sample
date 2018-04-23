@@ -234,7 +234,7 @@ class SettlementController extends Controller
             }
             parse_str($emailinfo['emailinfo'],$querytoarray);
 
-            $filename=$querytoarray['manager'].'的结算审计表('.Carbon::now().')';
+            $filename=$querytoarray['manager'].'的结算审计表('.Carbon::now()->format('Y-m-d H_i_s').')';
             //dd($filename);
             $settlements = Settlement::where('order_number','订单编号')->orWhere('project_manager',$querytoarray['manager'])->get();
             $upload=new ExcelUploadHandler;

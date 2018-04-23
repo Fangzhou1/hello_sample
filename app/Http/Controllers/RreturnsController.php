@@ -227,7 +227,7 @@ class RreturnsController extends Controller
                 }
                 parse_str($emailinfo['emailinfo'],$querytoarray);
 
-                $filename=$querytoarray['manager'].'的决算审计表('.Carbon::now().')';
+                $filename=$querytoarray['manager'].'的决算审计表('.Carbon::now()->format('Y-m-d H_i_s').')';
                 //dd($filename);
                 $rreturns = Rreturn::where('project_number','项目编号')->orWhere('project_manager',$querytoarray['manager'])->get();
                 $upload=new ExcelUploadHandler;
