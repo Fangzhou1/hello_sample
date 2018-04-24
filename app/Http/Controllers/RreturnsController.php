@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Rreturn;
+use App\Models\User;
 use App\Handlers\ExcelUploadHandler;
 use App\Events\ChangeOrder;
 use App\Events\ModifyDates;
@@ -157,9 +158,40 @@ class RreturnsController extends Controller
               foreach ($data2 as $value) {
                 //$newdata2[$value->project_manager]['order_num']=  $value->order_num;
                 $newdata2[$value->project_manager]['project_num']=  $value->project_num;
+                $newdata2[$value->project_manager]['project_manager']= $value->project_manager;
               }
               foreach ($data as $value) {
                 $newdata[$value->project_manager][$value->audit_progress]=$value->num;
+                if(strpos($value->project_manager,'、'))
+                {
+                    $tems=explode("、",$value->project_manager);
+                    foreach($tems as $tem)
+                    {
+                        if($user=User::where('name',$tem)->first()){
+                          $newdata[$value->project_manager]['notification_information'][$tem]=$user->email;
+                          $newdata[$value->project_manager]['weixin_notification_information'][$tem]=$user->openid;
+                        }
+                        else{
+                          $newdata[$value->project_manager]['notification_information'][$tem]='';
+                          $newdata[$value->project_manager]['weixin_notification_information'][$tem]='';
+                        }
+                    }
+                }
+              else {
+                  $tem=$value->project_manager;
+                  if($user=User::where('name',$tem)->first()){
+                    $newdata[$value->project_manager]['notification_information'][$tem]=$user->email;
+                    $newdata[$value->project_manager]['weixin_notification_information'][$tem]=$user->openid;
+                  }
+
+                  else
+                  {
+                    $newdata[$value->project_manager]['notification_information'][$tem]='';
+                    $newdata[$value->project_manager]['weixin_notification_information'][$tem]='';
+                  }
+              }
+
+
               }
 
     //以审计单位和审计进度分组查询，带上审计单位的订单数信息
@@ -219,17 +251,17 @@ class RreturnsController extends Controller
 
                 $emailinfo=$this->request->query();
                 //dd($emailinfo['email']);
-                if($emailinfo['email']=='')
-                {
-                  session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
-                  return redirect()->back();
+                // if($emailinfo['email']=='')
+                // {
+                //   session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
+                //   return redirect()->back();
+                //
+                // }
+                $querytoarray=json_decode($emailinfo['emailinfo'],true);
 
-                }
-                parse_str($emailinfo['emailinfo'],$querytoarray);
-
-                $filename=$querytoarray['manager'].'的决算审计表('.Carbon::now()->format('Y-m-d H_i_s').')';
+                $filename=$querytoarray['project_manager'].'的决算审计表('.Carbon::now()->format('Y-m-d H_i_s').')';
                 //dd($filename);
-                $rreturns = Rreturn::where('project_number','项目编号')->orWhere('project_manager',$querytoarray['manager'])->get();
+                $rreturns = Rreturn::where('project_number','项目编号')->orWhere('project_manager',$querytoarray['project_manager'])->get();
                 $upload=new ExcelUploadHandler;
                 $upload->exporttoserver($rreturns,$filename);
 
@@ -239,13 +271,18 @@ class RreturnsController extends Controller
                 $data = compact('querytoarray');
                 $from = '253251551@qq.com';
                 $name = 'sample';
-                $to = $emailinfo['email'];
+                
                 $subject = "请抓紧完成决算审计！";
                 $attach=storage_path('exports/'.$filename.'.xls');
+                foreach ($emailinfo as $key => $value) {
+                  if($key!='emailinfo'){
+                    $to = $value;
+                    Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
+                        $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
+                    });
+                  }
+                }
 
-                Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
-                    $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
-                });
                 session()->flash('success', '发送成功！');
                 return redirect()->back();
             }

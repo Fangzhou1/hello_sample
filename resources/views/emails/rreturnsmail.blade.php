@@ -5,7 +5,7 @@
   <title>决算审计情况</title>
 </head>
 <body>
-  <h1>{{$querytoarray['manager']}},你好！您的决算审计情况如下：</h1>
+  <h1>{{$querytoarray['project_manager']}},你好！您的决算审计情况如下：</h1>
 
   <h3>你总共有{{$querytoarray['project_num']}}个项目：
 <p>未送审：{{$querytoarray['未送审'] or 0}}个，</p>

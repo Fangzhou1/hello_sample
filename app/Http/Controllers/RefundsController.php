@@ -169,7 +169,7 @@ class RefundsController extends Controller
         public function smsmail()
             {
 
-    //以项目经理和审计进度分组查询，带上项目经理的订单和项目数信息
+    //以项目经理分组查询，带上项目经理的物资退库信息
               $datas=DB::table('refunds')->where('project_number','<>','项目编号')->select(DB::raw('count(DISTINCT project_number) as project_num,sum(construction_should_refund) as construction_should_refund_total,sum(thing_refund) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(direct_yes) as direct_yes_total,sum(direct_no) as direct_no_total,sum(unrefund_cost) as unrefund_cost_total,project_manager'))->groupBy('project_manager')->get();
 
               if($datas->isEmpty())
@@ -186,18 +186,31 @@ class RefundsController extends Controller
                   $tems=explode("、",$data->project_manager);
                   foreach($tems as $tem)
                   {
-                    if($user=User::where('name',$tem)->first())
+                    if($user=User::where('name',$tem)->first()){
                       $data->notification_information[$tem]=$user->email;
-                    else
+                      $data->weixin_notification_information[$tem]=$user->openid;
+                    }
+
+                    else{
                       $data->notification_information[$tem]='';
+                      $data->weixin_notification_information[$tem]='';
+                    }
+
                   }
                 }
                 else {
                   $tem=$data->project_manager;
-                  if($user=User::where('name',$tem)->first())
+                  if($user=User::where('name',$tem)->first()){
                     $data->notification_information[$tem]=$user->email;
+                    $data->weixin_notification_information[$tem]=$user->openid;
+                  }
+
                   else
+                  {
                     $data->notification_information[$tem]='';
+                    $data->weixin_notification_information[$tem]='';
+                  }
+
                 }
               //dd(http_build_query($data));
               }
@@ -208,7 +221,7 @@ class RefundsController extends Controller
 
 
               $datas2=DB::table('refunds')->where('project_number','<>','项目编号')->select(DB::raw('count(DISTINCT project_number) as project_num,sum(construction_should_refund) as construction_should_refund_total,sum(thing_refund) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(direct_yes) as direct_yes_total,sum(direct_no) as direct_no_total,sum(unrefund_cost) as unrefund_cost_total,professional_room'))->groupBy('professional_room')->get();
-
+              //dd($datas2);
 
               return view('refunds.smsmail',['current_url'=>$this->request->url(),'datas'=>$datas,'datas2'=>$datas2]);
             }
@@ -267,7 +280,7 @@ class RefundsController extends Controller
 
                  $emailinfo=$this->request->query();
                  $querytoarray=json_decode($emailinfo['emailinfo'],true);
-                //dd($emailinfo['email']);
+                //dd($emailinfo);
                 // if($emailinfo['email']=='')
                 // {
                 //   session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
@@ -292,12 +305,14 @@ class RefundsController extends Controller
 
                 $subject = "请抓紧完成物资退库！";
                 $attach=storage_path('exports/'.$filename.'.xls');
-                foreach ($querytoarray['notification_information'] as $key => $value) {
+                foreach ($emailinfo as $key => $value) {
+                  if($key!='emailinfo'){
                   $to=$value;
                   Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
                       $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
                   });
                 }
+              }
 
                 session()->flash('success', '发送成功！');
                 return redirect()->back();

@@ -158,15 +158,47 @@ class SettlementController extends Controller
           {
             return view('settlements.smsmail',['current_url'=>$this->request->url(),'datas'=>[],'datas2'=>[]]);
           }
-
-          foreach ($data2 as $value) {
+          //dd($data2);
+          foreach ($data2 as $key=>$value) {
             $newdata2[$value->project_manager]['order_num']=  $value->order_num;
             $newdata2[$value->project_manager]['project_num']=  $value->project_num;
+            $newdata2[$value->project_manager]['project_manager']= $value->project_manager;
           }
           foreach ($data as $value) {
             $newdata[$value->project_manager][$value->audit_progress]=$value->num;
+            //加入项目经理的微信和邮箱信息
+            if(strpos($value->project_manager,'、'))
+            {
+                $tems=explode("、",$value->project_manager);
+                foreach($tems as $tem)
+                {
+                    if($user=User::where('name',$tem)->first()){
+                      $newdata[$value->project_manager]['notification_information'][$tem]=$user->email;
+                      $newdata[$value->project_manager]['weixin_notification_information'][$tem]=$user->openid;
+                    }
+                    else{
+                      $newdata[$value->project_manager]['notification_information'][$tem]='';
+                      $newdata[$value->project_manager]['weixin_notification_information'][$tem]='';
+                    }
+                }
+            }
+          else {
+              $tem=$value->project_manager;
+              if($user=User::where('name',$tem)->first()){
+                $newdata[$value->project_manager]['notification_information'][$tem]=$user->email;
+                $newdata[$value->project_manager]['weixin_notification_information'][$tem]=$user->openid;
+              }
+
+              else
+              {
+                $newdata[$value->project_manager]['notification_information'][$tem]='';
+                $newdata[$value->project_manager]['weixin_notification_information'][$tem]='';
+              }
           }
 
+
+          }
+          //dd($newdata);
 //以审计单位和审计进度分组查询，带上审计单位的订单数信息
           $data3=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as num,audit_company,audit_progress'))->groupBy('audit_company','audit_progress')->get();
           $data4=DB::table('settlements')->where('order_number','<>','订单编号')->select(DB::raw('count(*) as order_num,count(DISTINCT project_number) as project_num,audit_company'))->groupBy('audit_company')->get();
@@ -178,7 +210,7 @@ class SettlementController extends Controller
           foreach ($data3 as $value) {
             $newdata3[$value->audit_company][$value->audit_progress]=$value->num;
           }
-
+          //dd(array_merge_recursive($newdata,$newdata2));
           return view('settlements.smsmail',['current_url'=>$this->request->url(),'datas'=>array_merge_recursive($newdata,$newdata2),'datas2'=>array_merge_recursive($newdata3,$newdata4)]);
         }
 
@@ -226,17 +258,18 @@ class SettlementController extends Controller
             $emailinfo=$this->request->query();
             //dd($emailinfo);
             //dd($emailinfo['email']);
-            if($emailinfo['email']=='')
-            {
-              session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
-              return redirect()->back();
-
-            }
-            parse_str($emailinfo['emailinfo'],$querytoarray);
-
-            $filename=$querytoarray['manager'].'的结算审计表('.Carbon::now()->format('Y-m-d H_i_s').')';
+            // if($emailinfo['email']=='')
+            // {
+            //   session()->flash('danger', '发送失败 ！项目经理邮箱不能为空');
+            //   return redirect()->back();
+            //
+            // }
+            $querytoarray=json_decode($emailinfo['emailinfo'],true);
+            //dd($querytoarray);
+            $filename=$querytoarray['project_manager'].'的结算审计表('.Carbon::now()->format('Y-m-d H_i_s').')';
             //dd($filename);
-            $settlements = Settlement::where('order_number','订单编号')->orWhere('project_manager',$querytoarray['manager'])->get();
+            $settlements = Settlement::where('order_number','订单编号')->orWhere('project_manager',$querytoarray['project_manager'])->get();
+//dd($settlements);
             $upload=new ExcelUploadHandler;
             $upload->exporttoserver($settlements,$filename);
 
@@ -245,13 +278,18 @@ class SettlementController extends Controller
             $data = compact('querytoarray');
             $from = '253251551@qq.com';
             $name = 'sample';
-            $to = $emailinfo['email'];
+
             $subject = "请抓紧完成结算审计！";
             $attach=storage_path('exports/'.$filename.'.xls');
+            foreach ($emailinfo as $key => $value) {
+              if($key!='emailinfo'){
+                $to = $value;
+                Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
+                    $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
+                });
+              }
+            }
 
-            Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject,$attach) {
-                $message->from($from, $name)->to($to)->subject($subject)->attach($attach);
-            });
             session()->flash('success', '发送成功！');
             return redirect()->back();
         }
