@@ -120,6 +120,25 @@
 
 
 
+<div id="tab2" role="tabpane1" class="tab-pane">
+  @foreach ($traces as $key=>$data)
+<button style="width:50%;" class="btn btn-success btn-lg center-block superlong" type="button" data-toggle="collapse" data-target="#collapseExample{{$loop->iteration}}" aria-expanded="false" aria-controls="collapseExample">
+{{$key}}的痕迹
+</button>
+<div class="collapse" id="collapseExample{{$loop->iteration}}">
+  <div class="well">
+    @foreach ($data as $value)
+    <p>{{$value->content}}</p>
+    @endforeach
+  </div>
+</div>
+@if (!$loop->last)
+<div style="text-align: center;color:gray;"><span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></div>
+
+@endif
+@endforeach
+</div>
+
 
 
 
@@ -163,12 +182,12 @@ var tableeditanddelete= new tableeditanddelete(tem,'/refunds/rowupdate/',2);
 
 
 $(document).ready(function(){
-// window.Echo.channel('all')
-//     .listen('ChangeOrder', function(e){
-//
-//       $("#totalcontainer").prepend('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+e.name+e.mes+e.order_number+'的订单</div>');
-//
-//     });
+window.Echo.channel('all')
+    .listen('ChangeOrder', function(e){
+
+      $("#totalcontainer").prepend('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+e.name+e.mes+e.order_number+'</div>');
+
+    });
 
 
 //模态框显现时传递数据，改变form的action路由值

@@ -9,7 +9,11 @@ use App\Models\Refunddetail;
 use App\Handlers\ExcelUploadHandler;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Events\ModifyDates;
+use App\Events\ChangeOrder;
+use App\Models\Trace;
 use Mail;
+use Auth;
 
 class RefundsController extends Controller
 {
@@ -33,18 +37,18 @@ class RefundsController extends Controller
         // else
           $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->paginate($page);
 
-        //$tracesdata=Trace::where('type','结算')->orderBy('created_at','desc')->get();
-        // if($tracesdata->isEmpty()){
-        //   return view('settlements.index',['current_url'=>$this->request->url(),'settlements'=>$refunds,'traces'=>[]]);
-        // }
-        // //dd($traces);
-        // //dd($refunds);
-        // foreach ($tracesdata as $value) {
-        //   $traces[$value->year.'年'.$value->month.'月'][]=$value;
-        // }
+        $tracesdata=Trace::where('type','物资')->orWhere('type','物资详情')->orderBy('created_at','desc')->get();
+        if($tracesdata->isEmpty()){
+          return view('settlements.index',['current_url'=>$this->request->url(),'settlements'=>$refunds,'traces'=>[]]);
+        }
+        //dd($traces);
+        //dd($refunds);
+        foreach ($tracesdata as $value) {
+          $traces[$value->year.'年'.$value->month.'月'][]=$value;
+        }
 
         //dd($traces);
-        return view('refunds.index',['current_url'=>$this->request->url(),'refunds'=>$refunds]);
+        return view('refunds.index',['current_url'=>$this->request->url(),'refunds'=>$refunds,'traces'=>$traces]);
     }
 
 
@@ -93,14 +97,14 @@ class RefundsController extends Controller
           {
           $datarequest=$this->request->except('_token');
           $refund=Refund::create($datarequest);
-          // $data['name']=Auth::user()->name;
-          // $data['order_number']=$refund->order_number;
-          // $data['project_number']=$refund->project_number;
-          // $data['type']='结算';
-          // $mes='新建了';
-          // $mes2=event(new ModifyDates($data,$mes));
+          $data['name']=Auth::user()->name;
+          $data['project_number']=$refund->project_number;
+          $data['audit_document_number']=$refund->audit_document_number;
+          $data['type']='物资';
+          $mes='新增了';
+          $mes2=event(new ModifyDates($data,$mes));
+          broadcast(new ChangeOrder(Auth::user(),"项目编号为".$refund->project_number."且审计文号为".$refund->audit_document_number."的退库条目","刚刚新增了",$mes2));
           session()->flash('success', '恭喜你，添加数据成功！');
-          //broadcast(new ChangeOrder(Auth::user(),$refund->order_number,"刚刚新增了订单编号为",$mes2));
           return redirect()->route('refunds.index');
           }
 
@@ -131,15 +135,15 @@ class RefundsController extends Controller
           // if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
           // $this->authorize('updateanddestroy', $settlement);
            $refund->update($this->request->except('_token'));
+
+          $data['name']=Auth::user()->name;
+          $data['project_number']=$refund->project_number;
+          $data['audit_document_number']=$refund->audit_document_number;
+          $data['type']='物资';
+          $mes='修改了';
+          $mes2=event(new ModifyDates($data,$mes));
+          broadcast(new ChangeOrder(Auth::user(),"项目编号为".$refund->project_number."且审计文号为".$refund->audit_document_number."的退库条目","刚刚更新了",$mes2));
           session()->flash('success', '恭喜你，更新数据成功！');
-          // $data['name']=Auth::user()->name;
-          // $data['order_number']=$refund->order_number;
-          // $data['project_number']=$refund->project_number;
-          // $data['type']='结算';
-          // $mes='修改了';
-          // $mes2=event(new ModifyDates($data,$mes));
-          //dd($mes2);
-          //broadcast(new ChangeOrder(Auth::user(),$refund->order_number,"刚刚修改了订单编号为",$mes2));
           return redirect()->back();
         }
 
@@ -154,13 +158,13 @@ class RefundsController extends Controller
             return redirect()->route('refunds.index');
           }
           $refund->delete();
-          // $data['name']=Auth::user()->name;
-          // $data['audit_document_number']=$refunddetailadn;
-          // $data['project_number']=$refunddetailpn;
-          // $data['type']='物资详情';
-          // $mes='删除了';
-          //$mes2=event(new ModifyDates($data,$mes));
-          //broadcast(new ChangeOrder(Auth::user(),$Settlementodn,"刚刚删除了订单编号为",$mes2));
+          $data['name']=Auth::user()->name;
+          $data['project_number']=$refund->project_number;
+          $data['audit_document_number']=$refund->audit_document_number;
+          $data['type']='物资';
+          $mes='删除了';
+          $mes2=event(new ModifyDates($data,$mes));
+          broadcast(new ChangeOrder(Auth::user(),"项目编号为".$refund->project_number."且审计文号为".$refund->audit_document_number."的退库条目","刚刚删除了",$mes2));
           session()->flash('success', '恭喜你，删除成功！');
           return redirect()->route('refunds.index');
 

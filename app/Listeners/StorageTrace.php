@@ -37,6 +37,7 @@ class StorageTrace
       $trace->created_at=Carbon::now();
       $trace->year=$trace->created_at->year;
       $trace->month=$trace->created_at->month;
+      $trace->content='';
       $audit_progress_arr=['未送审','审计中','被退回'];
       $ret0=Settlement::where("project_number",$event->data['project_number'])->get();
       $ret=Settlement::where("project_number",$event->data['project_number'])->whereIn("audit_progress",$audit_progress_arr)->get();
@@ -152,7 +153,17 @@ class StorageTrace
             }
 
       }
+      elseif($trace->type=='物资')
+      {
+        $mes2=$event->data['name']."于".$trace->created_at.$event->mes."物资表里项目编号为".$event->data['project_number']."且审计文号为".$event->data['audit_document_number']."的条目。";
+        $trace->content=$trace->content.$mes2;
 
+      }
+      elseif($trace->type=='物资详情')
+      {
+        $mes2=$event->data['name']."于".$trace->created_at."为".$event->data['project_number']."的项目且审计文号为".$event->data['audit_document_number']."的退库条目下".$event->mes."物资名称为".$event->data['material_name']."的退库详情。";
+        $trace->content=$trace->content.$mes2;
+      }
       $trace->save();
       return $mes2;
 
