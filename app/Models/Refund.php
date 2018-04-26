@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Refund extends Model
 {
+  use Searchable;
   protected $guarded = [];
 
   protected $hidden = [
@@ -26,9 +28,20 @@ class Refund extends Model
 
              $kkk=$refund->project_number.'/'.$refund->audit_document_number;
                $refund->kkk = $kkk;
-               
+
 
            });
        }
+
+     public function searchableAs()
+     {
+         return 'refunds_index';
+     }
+
+     public function toSearchableArray()
+    {
+      $array = $this->toArray();
+      return $array;
+    }
 
 }
