@@ -95,4 +95,28 @@ class Kernel extends ConsoleKernel
 
       Rreturntime::create($newdata3);
     }
+
+    protected function readRefundProgressandcreate()
+    {
+    // //  ,sum("cash_refund") as cash_refund_total,sum("direct_yes") as direct_yes_total,sum("direct_no") as direct_no_total'),'
+  //      $data=DB::table('refunds')->where('project_manager','<>','项目经理')->select(DB::raw('sum("thing_refund") as thing_refund_total,sum("cash_refund") as cash_refund_total',sum("cash_refund") as cash_refund_total),sum("direct_yes") as direct_yes_total,sum("unrefund_cost") as unrefund_cost_total)->get();
+  // dd($data);
+    // $newdata3=[];
+    //   foreach ($data as $value) {
+    //     if($value->audit_progress=='未送审'&&$value->is_canaudit=='否')
+    //       $newdata3['不具备决算送审条件']=$value->projectnum;
+    //     elseif($value->audit_progress=='未送审'&&$value->is_canaudit=='是')
+    //       $newdata3['具备送审条件未送审']=$value->projectnum;
+    //     elseif($value->audit_progress=='审计中')
+    //       $newdata3['审计中']=$value->projectnum;
+    //     elseif($value->audit_progress=='被退回')
+    //       $newdata3['被退回']=$value->projectnum;
+    //     elseif($value->audit_progress=='已出报告')
+    //       $newdata3['已出报告']=$value->projectnum;
+    //
+    //   }
+    //
+    //   Rreturntime::create($newdata3);
+    }
+
 }

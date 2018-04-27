@@ -35,7 +35,7 @@ class RefundsController extends Controller
         // if($query)
         //   $refunds['data'] = Refund::search($query)->paginate($page);
         // else
-          $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->paginate($page);
+          $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->orderBy('id','asc')->paginate($page);
 
         $tracesdata=Trace::where('type','物资')->orWhere('type','物资详情')->orderBy('created_at','desc')->get();
         if($tracesdata->isEmpty()){
@@ -110,7 +110,10 @@ class RefundsController extends Controller
 
         public function export()
         {
-
+          $refunds=Refund::all()->toArray();
+          //dd($refunds);
+          $upload=new ExcelUploadHandler;
+          $upload->download($refunds,'物资退库总表');
         }
 
         public function refundsdetail(Refund $refund)
@@ -217,6 +220,14 @@ class RefundsController extends Controller
 
                 }
               //dd(http_build_query($data));
+                $float_construction_should_refund_total=floatval($data->construction_should_refund_total);
+                if($float_construction_should_refund_total!==0.0)
+                {
+                  $rate=1-$data->unrefund_cost_total/$data->construction_should_refund_total;
+                  $data->refund_rate=sprintf("%01.2f", $rate*100).'%';
+                }
+                else
+                  $data->refund_rate='未定义';
               }
 
 
@@ -271,6 +282,7 @@ class RefundsController extends Controller
               public function exportbytype()
                 {
                     $typeinfo=$this->request->query();
+                    //dd($typeinfo);
                     $refunds=Refund::where('project_number','项目编号')->orWhere($typeinfo)->get()->toArray();
                     $upload=new ExcelUploadHandler;
                     $upload->download($refunds,'物资管理分表');
@@ -321,6 +333,13 @@ class RefundsController extends Controller
                 session()->flash('success', '发送成功！');
                 return redirect()->back();
             }
+//
+            public function statistics()
+          {
+                 $data=DB::table('refunds')->where('project_manager','<>','项目经理')->select(DB::raw('sum(if(thing_refund") as thing_refund_total,sum("0+cash_refund") as cash_refund_total,sum("0+direct_yes") as direct_yes_total,sum("0+direct_no") as direct_no_total,sum("0+unrefund_cost") as unrefund_cost_total'))->get();
+            dd($data);
+            return view('refunds.statistics',['current_url'=>$this->request->url()]);
+          }
 
 
 

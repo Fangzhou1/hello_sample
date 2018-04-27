@@ -22,6 +22,7 @@
   <div class="panel-body">
     <!-- <p>所涉及的项目数：{{$data->project_num or 0}}个</p><a class="pull-right btn btn-success" href="{{route('settlements.sendemail',[http_build_query($data),$key])}}" role="button">邮件通知</a> -->
     <p><b>所涉及的项目数：</b>{{$data->project_num or 0}}个</p>
+    <p><b>退库率：</b>{{$data->refund_rate or ""}}</p>
     <hr>
     <p><b>应退库总金额：</b></p><p>{{$data->construction_should_refund_total or 0}}元<a class="pull-right btn btn-success" data-whatever1="{{json_encode($data)}}" data-whatever2="{{json_encode($data->notification_information)}}" data-whatever3="mail" data-toggle="modal" data-target="#myModal" href="javascript:;" role="button">邮件通知</a></p>
     <p><b>实物退库总金额：</b></p><p>{{$data->thing_refund_total or 0}}元<a class="pull-right btn btn-success" href="#" role="button">短信通知</a></p>
