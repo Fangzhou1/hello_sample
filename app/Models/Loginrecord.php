@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Refundtime extends Model
+class Loginrecord extends Model
 {
-    protected $guarded = [];
+    //
 }

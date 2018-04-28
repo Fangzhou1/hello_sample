@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Loginrecord;
 use Auth;
 class SessionsController extends Controller
 {
@@ -38,6 +39,9 @@ class SessionsController extends Controller
       if (Auth::attempt($credentials,$request->has('remember'))) {
 
         if(Auth::user()->activated) {
+              $loginrecord=new Loginrecord;
+              $loginrecord->name=Auth::user()->name;
+              $loginrecord->save();
                session()->flash('success', Auth::user()->name.',欢迎回来！您的角色是'.Auth::user()->getRoleNames()->first());
                return redirect()->intended(route('users.show', [Auth::user()]));
            } else {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Refund;
 use Illuminate\Support\Facades\DB;
 use App\Models\Refunddetail;
+use App\Models\Refundtime;
 use App\Handlers\ExcelUploadHandler;
 use App\Models\User;
 use Carbon\Carbon;
@@ -336,9 +337,23 @@ class RefundsController extends Controller
 //
             public function statistics()
           {
-                 $data=DB::table('refunds')->where('project_manager','<>','项目经理')->select(DB::raw('sum(if(thing_refund") as thing_refund_total,sum("0+cash_refund") as cash_refund_total,sum("0+direct_yes") as direct_yes_total,sum("0+direct_no") as direct_no_total,sum("0+unrefund_cost") as unrefund_cost_total'))->get();
-            dd($data);
-            return view('refunds.statistics',['current_url'=>$this->request->url()]);
+            $newdata=Refundtime::orderBy('created_at', 'asc')->take(7)->get()->toArray();
+            //dd($newdata);
+            if(!$newdata)
+            {
+              $data=json_encode([]);
+              return view('refunds.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
+            }
+            foreach ($newdata as $key => $value) {
+              $data['xaxis'][]=$value['created_at'];
+              $data['data']['实物退库'][]=$value['实物退库'];
+              $data['data']['现金退库'][]=$value['现金退库'];
+              $data['data']['施工单位直接用于其它工程（有退库领用手续）'][]=$value['施工单位直接用于其它工程（有退库领用手续）'];
+              $data['data']['施工单位直接用于其它工程（无退库领用手续）'][]=$value['施工单位直接用于其它工程（无退库领用手续）'];
+              $data['data']['未退库金额'][]=$value['未退库金额'];
+            }
+            $data=json_encode($data);
+            return view('refunds.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
           }
 
 

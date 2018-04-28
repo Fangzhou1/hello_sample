@@ -111,6 +111,10 @@ Route::resource('refunddetails','RefunddetailsController',['except' => ['index',
 Route::any('weixin','WeixinController@index')->name('weixin.index');
 Route::get('weixin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
 
+//基本信息
+Route::get('baseinformation/loginaction', 'BaseinformationController@loginaction')->name('baseinformation.loginaction');
+
+
 
 
 // Route::get('test2', function () {

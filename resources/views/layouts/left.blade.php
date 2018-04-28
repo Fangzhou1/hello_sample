@@ -1,5 +1,22 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingZero">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+          基本信息
+        </a>
+      </h4>
+    </div>
+    <div id="collapseZero" class="panel-collapse collapse {{(strpos($current_url,'baseinformation'))?"in":""}}" role="tabpanel" aria-labelledby="headingZero">
+      <div class="list-group">
+        <a class="list-group-item {{($current_url==route('baseinformation.loginaction'))?"active":""}}" href="{{route('baseinformation.loginaction')}}">登录及操作统计</a>
+        <a class="list-group-item {{($current_url==route('settlements.importpage'))?"active":""}}" href="{{route('settlements.importpage')}}">导入Excel表</a>
+        <a class="list-group-item {{($current_url==route('settlements.smsmail'))||($current_url==route('settlements.smsmaildetail'))?"active":""}}" href="{{route('settlements.smsmail')}}">邮件短信催办</a>
+        <a class="list-group-item {{($current_url==route('settlements.statistics'))?"active":""}}" href="{{route('settlements.statistics')}}">详细统计信息</a>
+      </div>
+    </div>
+  </div>
 
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
