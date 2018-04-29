@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Refund;
 use Illuminate\Support\Facades\DB;
 use App\Models\Refunddetail;
+use App\Models\Refundtime;
 use App\Handlers\ExcelUploadHandler;
 use App\Models\User;
 use Carbon\Carbon;
@@ -30,12 +31,21 @@ class RefundsController extends Controller
       //dd(parse_url('postgres://qkhdklcjrqaipc:df01a2f558215a0a7829c6aec0d4fc22e90a5def129294f53e08e42a3a97c911@ec2-54-235-66-81.compute-1.amazonaws.com:5432/d34bjielr59n77'));
         $page=10;
         $refunds['title'] = Refund::first();
+<<<<<<< HEAD
         $query=$this->request->input('query');
         //dd($query);
         if($query)
           $refunds['data'] = Refund::search($query)->paginate($page);
         else
           $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->paginate($page);
+=======
+        // $query=$this->request->input('query');
+        // //dd($query);
+        // if($query)
+        //   $refunds['data'] = Refund::search($query)->paginate($page);
+        // else
+          $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->orderBy('id','asc')->paginate($page);
+>>>>>>> 68c9f69b810be7655e232837b8f99054fa52e38f
 
         $tracesdata=Trace::where('type','物资')->orWhere('type','物资详情')->orderBy('created_at','desc')->get();
         if($tracesdata->isEmpty()){
@@ -110,7 +120,10 @@ class RefundsController extends Controller
 
         public function export()
         {
-
+          $refunds=Refund::all()->toArray();
+          //dd($refunds);
+          $upload=new ExcelUploadHandler;
+          $upload->download($refunds,'物资退库总表');
         }
 
         public function refundsdetail(Refund $refund)
@@ -217,6 +230,14 @@ class RefundsController extends Controller
 
                 }
               //dd(http_build_query($data));
+                $float_construction_should_refund_total=floatval($data->construction_should_refund_total);
+                if($float_construction_should_refund_total!==0.0)
+                {
+                  $rate=1-$data->unrefund_cost_total/$data->construction_should_refund_total;
+                  $data->refund_rate=sprintf("%01.2f", $rate*100).'%';
+                }
+                else
+                  $data->refund_rate='未定义';
               }
 
 
@@ -271,6 +292,7 @@ class RefundsController extends Controller
               public function exportbytype()
                 {
                     $typeinfo=$this->request->query();
+                    //dd($typeinfo);
                     $refunds=Refund::where('project_number','项目编号')->orWhere($typeinfo)->get()->toArray();
                     $upload=new ExcelUploadHandler;
                     $upload->download($refunds,'物资管理分表');
@@ -321,6 +343,27 @@ class RefundsController extends Controller
                 session()->flash('success', '发送成功！');
                 return redirect()->back();
             }
+//
+            public function statistics()
+          {
+            $newdata=Refundtime::orderBy('created_at', 'asc')->take(7)->get()->toArray();
+            //dd($newdata);
+            if(!$newdata)
+            {
+              $data=json_encode([]);
+              return view('refunds.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
+            }
+            foreach ($newdata as $key => $value) {
+              $data['xaxis'][]=$value['created_at'];
+              $data['data']['实物退库'][]=$value['实物退库'];
+              $data['data']['现金退库'][]=$value['现金退库'];
+              $data['data']['施工单位直接用于其它工程（有退库领用手续）'][]=$value['施工单位直接用于其它工程（有退库领用手续）'];
+              $data['data']['施工单位直接用于其它工程（无退库领用手续）'][]=$value['施工单位直接用于其它工程（无退库领用手续）'];
+              $data['data']['未退库金额'][]=$value['未退库金额'];
+            }
+            $data=json_encode($data);
+            return view('refunds.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
+          }
 
 
 

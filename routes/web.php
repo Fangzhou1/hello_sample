@@ -93,6 +93,7 @@ Route::get('refunds/smsmail', 'RefundsController@smsmail')->name('refunds.smsmai
 Route::get('refunds/smsmaildetail', 'RefundsController@smsmaildetail')->name('refunds.smsmaildetail');
 Route::get('refunds/exportbytype', 'RefundsController@exportbytype')->name('refunds.exportbytype');
 Route::get('refunds/sendemail/', 'RefundsController@sendEmailReminderTo')->name('refunds.sendemail');
+Route::get('refunds/statistics', 'RefundsController@statistics')->name('refunds.statistics');
 Route::resource('refunds', 'RefundsController',['except' => ['show', 'edit', 'update']]);
 
 
@@ -109,6 +110,10 @@ Route::resource('refunddetails','RefunddetailsController',['except' => ['index',
 //微信处理
 Route::any('weixin','WeixinController@index')->name('weixin.index');
 Route::get('weixin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
+
+//基本信息
+Route::get('baseinformation/loginaction', 'BaseinformationController@loginaction')->name('baseinformation.loginaction');
+
 
 
 

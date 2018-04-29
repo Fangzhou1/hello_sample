@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
           $data=$this->readSettlementProgress();
           Settlementtime::create($data);
           $this->readRreturnProgressandcreate();
-
+          $this->readRefundProgressandcreate();
         })->dailyAt('3:00');
     }
 
@@ -95,4 +95,12 @@ class Kernel extends ConsoleKernel
 
       Rreturntime::create($newdata3);
     }
+
+    protected function readRefundProgressandcreate()
+    {
+      $data=DB::table('refunds')->where('project_manager','<>','项目经理')->select(DB::raw('round(sum(thing_refund),2) as 实物退库,round(sum(cash_refund),2) as 现金退库,round(sum(direct_yes),2) as 施工单位直接用于其它工程（有退库领用手续）,round(sum(direct_no),2) as 施工单位直接用于其它工程（无退库领用手续）,round(sum(unrefund_cost),2) as 未退库金额'))->first();
+      $data=get_object_vars ($data);
+      Refundtime::create($data);
+    }
+
 }

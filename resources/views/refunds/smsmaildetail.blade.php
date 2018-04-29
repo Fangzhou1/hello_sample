@@ -22,7 +22,7 @@
   @if($querytoarray['type']==1)
   <a class="btn btn-primary" href="{{route('refunds.exportbytype')}}?project_manager={{$refunds['data']->first()->project_manager}}" role="button">导出EXCEL表格</a>
   @else
-  <a class="btn btn-primary" href="{{route('refunds.exportbytype')}}?audit_company={{$refunds['data']->first()->audit_company}}" role="button">导出EXCEL表格</a>
+  <a class="btn btn-primary" href="{{route('refunds.exportbytype')}}?professional_room={{$refunds['data']->first()->professional_room}}" role="button">导出EXCEL表格</a>
   @endif
 
   <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$refunds['data']->total()}} 行数据</span>

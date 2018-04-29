@@ -35,7 +35,7 @@ class SettlementController extends Controller
         if($query)
           $settlements['data'] = Settlement::search($query)->paginate($page);
         else
-          $settlements['data'] = Settlement::where('order_number','<>','订单编号')->paginate($page);
+          $settlements['data'] = Settlement::where('order_number','<>','订单编号')->orderBy('id','asc')->paginate($page);
 
         $tracesdata=Trace::where('type','结算')->orderBy('created_at','desc')->get();
         if($tracesdata->isEmpty()){

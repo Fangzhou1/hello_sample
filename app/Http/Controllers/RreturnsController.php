@@ -72,7 +72,7 @@ class RreturnsController extends Controller
             if($query)
               $rreturns['data'] = Rreturn::search($query)->paginate($page);
             else
-              $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->paginate($page);
+              $rreturns['data'] = Rreturn::where('project_number','<>','项目编号')->orderBy('id','asc')->paginate($page);
 
             $tracesdata=Trace::where('type','决算')->orderBy('created_at','desc')->get();
             if($tracesdata->isEmpty()){
@@ -271,7 +271,7 @@ class RreturnsController extends Controller
                 $data = compact('querytoarray');
                 $from = '253251551@qq.com';
                 $name = 'sample';
-                
+
                 $subject = "请抓紧完成决算审计！";
                 $attach=storage_path('exports/'.$filename.'.xls');
                 foreach ($emailinfo as $key => $value) {
