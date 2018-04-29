@@ -21,6 +21,7 @@ window.Echo.channel('all')
   });
 
 var data={!!$data!!};
+console.log(data);
 //  console.log(typeof data!='object');
 if(typeof data!='object'){
   document.getElementById("main1").innerHTML="数据不存在！";

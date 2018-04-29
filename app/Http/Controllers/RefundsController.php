@@ -31,21 +31,15 @@ class RefundsController extends Controller
       //dd(parse_url('postgres://qkhdklcjrqaipc:df01a2f558215a0a7829c6aec0d4fc22e90a5def129294f53e08e42a3a97c911@ec2-54-235-66-81.compute-1.amazonaws.com:5432/d34bjielr59n77'));
         $page=10;
         $refunds['title'] = Refund::first();
-<<<<<<< HEAD
+
         $query=$this->request->input('query');
         //dd($query);
         if($query)
           $refunds['data'] = Refund::search($query)->paginate($page);
         else
-          $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->paginate($page);
-=======
-        // $query=$this->request->input('query');
-        // //dd($query);
-        // if($query)
-        //   $refunds['data'] = Refund::search($query)->paginate($page);
-        // else
+
           $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->orderBy('id','asc')->paginate($page);
->>>>>>> 68c9f69b810be7655e232837b8f99054fa52e38f
+
 
         $tracesdata=Trace::where('type','物资')->orWhere('type','物资详情')->orderBy('created_at','desc')->get();
         if($tracesdata->isEmpty()){
