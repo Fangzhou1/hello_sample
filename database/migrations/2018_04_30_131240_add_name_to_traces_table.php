@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDateToLoginrecordssTable extends Migration
+class AddNameToTracesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDateToLoginrecordssTable extends Migration
      */
     public function up()
     {
-        Schema::table('loginrecords', function (Blueprint $table) {
-            $table->string('date');
+        Schema::table('traces', function (Blueprint $table) {
+            $table->string('name');
         });
     }
 
@@ -25,8 +25,8 @@ class AddDateToLoginrecordssTable extends Migration
      */
     public function down()
     {
-        Schema::table('loginrecords', function (Blueprint $table) {
-            $table->dropColumn('date');
+        Schema::table('traces', function (Blueprint $table) {
+            $table->dropColumn('name');
         });
     }
 }

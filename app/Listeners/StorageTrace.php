@@ -9,6 +9,7 @@ use App\Models\Settlement;
 use App\Models\Rreturn;
 use App\Models\Trace;
 use Carbon\Carbon;
+use Auth;
 
 
 class StorageTrace
@@ -164,6 +165,7 @@ class StorageTrace
         $mes2=$event->data['name']."于".$trace->created_at."为".$event->data['project_number']."的项目且审计文号为".$event->data['audit_document_number']."的退库条目下".$event->mes."物资名称为".$event->data['material_name']."的退库详情。";
         $trace->content=$trace->content.$mes2;
       }
+      $trace->name=Auth::user()->name;
       $trace->save();
       return $mes2;
 
