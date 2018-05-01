@@ -57,7 +57,7 @@ class BaseinformationController extends Controller
       $datas0=DB::table('loginrecords')->select(DB::raw('DATE_FORMAT(min(created_at),"%Y-%c") as mintime,DATE_FORMAT(max(created_at),"%Y-%c") as maxtime'))->first();
       $diff=date_diff(date_create($datas0->maxtime),date_create($datas0->mintime));
 //dd($diff);
-      $datas0=$diff->m;
+      $datas0=$diff->m+1;
       $datas0=$this->handledatas0($datas0,$currentyear_no0,$currentmonth_no0);
       //dd($tem_date0);
       $datas3=Loginrecord::whereBetween('created_at',[$start,$end])->orderBy('created_at','asc')->get();
@@ -73,13 +73,15 @@ class BaseinformationController extends Controller
 
       $datas2=DB::table('loginrecords')->whereBetween('created_at',[$start,$end])->select(DB::raw('count(*) as loginnums,DATE_FORMAT(created_at,"%Y-%c-%e") as ymd'))->groupBy('ymd')->get();
       $datas2=$this->handleDatas2OrDatas5($datas2,$month,$start,$time,$y,$m);
-
+      //dd($datas2);
       //$datas4=DB::table('traces')->whereBetween('created_at',[$start,$end])->orderBy('created_at','desc')->get();
       $datas4=DB::table('traces')->whereBetween('created_at',[$start,$end])->select(DB::raw('count(*) as actionnum,name'))->orderBy('actionnum','desc')->groupBy('name')->get();
       //dd($datas4);
       $datas6=Trace::whereBetween('created_at',[$start,$end])->orderBy('created_at','asc')->get();
       foreach($datas6 as $data6)
         $datas6_array[$data6->name]['actionrecords'][]=$data6->content;
+      if(!isset($datas6_array))
+        $datas6_array=[];
       //dd($datas6_array);
       $datas4=$this->handleDatas1OrDatas4($datas4,$datas6_array,$user_tem);
       $datas5=DB::table('traces')->whereBetween('created_at',[$start,$end])->select(DB::raw('count(*) as actionnums,DATE_FORMAT(created_at,"%Y-%c-%e") as ymd'))->groupBy('ymd')->get();
@@ -93,16 +95,25 @@ class BaseinformationController extends Controller
 
     protected function handleDatas1OrDatas4($datas1,$datas3_array,$user_tem)
     {
-
-      foreach($datas1 as $value)
+      $data1_tem=[];
+      $datas1_array['datas']=[];
+      if(!$datas1==[])
       {
-        $data1_tem[]=$value->name;
-        $datas1_array['datas'][$value->name]=$value;
-      }
+        foreach($datas1 as $value)
+          {
+            $data1_tem[]=$value->name;
+            $datas1_array['datas'][$value->name]=$value;
+          }
 
     //  dd(array_diff($user_tem,$data1_tem));
         $datas1_array['datas_supplements']=array_diff($user_tem,$data1_tem);
         $datas1_array['datas']=array_merge_recursive($datas1_array['datas'],$datas3_array);
+      }
+      else
+      {
+        $datas1_array['datas_supplements']=$user_tem;
+        $datas1_array['datas']=[];
+      }
         //dd($datas1_array);
     return $datas1_array;
     }
@@ -142,6 +153,9 @@ class BaseinformationController extends Controller
       }
       //dd($datas2);
       $datas_2=[];
+      $datas_2['x']=[];
+      $datas_2['y']=[];
+      $datas_2['title']=$y.'年'.$m.'月';;
       $datas2 = $datas2->sortBy(function ($value, $key)use($datas_2) {
         return $value->day;
     });
@@ -150,7 +164,7 @@ class BaseinformationController extends Controller
     {
       $datas_2['x'][]=$date->day;
       $datas_2['y'][]=isset($date->loginnums)?$date->loginnums:$date->actionnums;
-      $datas_2['title']=$date->year.'年'.$date->month.'月';
+    //  $datas_2['title']=$date->year.'年'.$date->month.'月';
     }
     $datas_2['x']=json_encode($datas_2['x']);
     $datas_2['y']=json_encode($datas_2['y']);

@@ -6,6 +6,11 @@ use Carbon\Carbon;
 
 
 
+//登陆、退出
+Route::get('login', 'SessionsController@create')->name('login');
+Route::post('login', 'SessionsController@store')->name('login');
+Route::delete('logout', 'SessionsController@destroy')->name('logout');
+
 
 
 /*
@@ -30,15 +35,15 @@ Route::get('signup', 'UsersController@create')->name('signup');
 Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
 
 
-Route::post('/users/rolestouser/{user}', 'UsersController@rolestouser')->name('users.rolestouser');
-Route::get('/users/rolestouserpage/{user}', 'UsersController@rolestouserpage')->name('users.rolestouserpage');
-Route::get('/users/usersactionindex', 'UsersController@usersactionindex')->name('users.usersactionindex');
-Route::resource('users', 'UsersController');
 
-//登陆、退出
-Route::get('login', 'SessionsController@create')->name('login');
-Route::post('login', 'SessionsController@store')->name('login');
-Route::delete('logout', 'SessionsController@destroy')->name('logout');
+
+
+
+
+
+
+Route::prefix('audit_navigation')->group(function () {
+
 
 //密码重设
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -107,12 +112,29 @@ Route::resource('refunddetails','RefunddetailsController',['except' => ['index',
 // Route::patch('/users/{user}', 'UsersController@update')->name('users.update');//
 // Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');
 
+Route::post('/users/rolestouser/{user}', 'UsersController@rolestouser')->name('users.rolestouser');
+Route::get('/users/rolestouserpage/{user}', 'UsersController@rolestouserpage')->name('users.rolestouserpage');
+Route::get('/users/usersactionindex', 'UsersController@usersactionindex')->name('users.usersactionindex');
+
+});
+Route::resource('users', 'UsersController');
+
+
+
+
+
+
 //微信处理
 Route::any('weixin','WeixinController@index')->name('weixin.index');
 Route::get('weixin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
 
+
+
+
+Route::prefix('baseinformation_navigation')->group(function () {
 //基本信息
 Route::get('baseinformation/loginaction', 'BaseinformationController@loginaction')->name('baseinformation.loginaction');
+});
 
 
 

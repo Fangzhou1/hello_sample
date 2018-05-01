@@ -23,21 +23,21 @@ class UsersController extends Controller
       $this->middleware('check',['except' => ['create', 'store','confirmEmail']]);
   }
 
-  public function index()
+  public function index(Request $request)
     {
         $page=10;
         $users = User::paginate($page);
-        return view('users.index', compact('users','page'));
+        return view('users.index', ['current_url'=>$request->url(),'users'=>$users,'page'=>$page]);
     }
 
-  public function create()
+  public function create(Request $request)
  {
-     return view('users.create');
+     return view('users.create',['current_url'=>$request->url()]);
  }
 
- public function show(User $user)
+ public function show(User $user,Request $request)
 {
-    return view('users.show', compact('user'));
+    return view('users.show', ['current_url'=>$request->url(),'user'=>$user]);
 }
 
  public function store(Request $request)
@@ -73,12 +73,12 @@ class UsersController extends Controller
   return redirect('/');
 }
 
-  public function edit(User $user)
+  public function edit(User $user,Request $request)
    {
 
 
        $this->authorize('update', $user);
-       return view('users.edit', compact('user'));
+       return view('users.edit', ['current_url'=>$request->url(),'user'=>$user]);
    }
 
    public function update(User $user, Request $request,ImageUploadHandler $uploader)

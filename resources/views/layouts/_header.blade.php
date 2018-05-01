@@ -14,23 +14,23 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-            <li class="dropdown active">
+            <li class='dropdown {{(strpos($current_url,'baseinformation_navigation'))?"active":""}}'>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">平台基本信息<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                <li><a class="active" href="{{route('baseinformation.loginaction')}}">登录及操作统计</a></li>
-                <li><a href="#">待开发</a></li>
+                  <li><a href="{{route('baseinformation.loginaction')}}">登录及操作统计</a></li>
+                  <li><a href="#">待开发</a></li>
                 </ul>
-              </li>
-            <li ><a href="{{route('settlements.index')}}">工程审计管理</a></li>
-            <li ><a href="#">待开发 </a></li>
+            </li>
+            <li class='{{(strpos($current_url,'audit_navigation'))?"active":""}}'><a href="{{route('settlements.index')}}">工程审计管理</a></li>
+            <li ><a href="#">待开发</a></li>
       </ul>
 
 
-    <ul class="nav navbar-nav navbar-right">
+    <ul class='nav navbar-nav navbar-right'>
       @if (Auth::check())
-      <li><a href="{{ route('users.index') }}">用户列表</a>
+      <li class='{{$current_url==route('users.index')?"active":""}}'><a href="{{route('users.index') }}">用户列表</a>
 
-      <li class="dropdown">
+      <li class='dropdown {{($current_url==route('users.show',Auth::id()))||($current_url==route('users.edit',Auth::id()))?"active":""}}'>
 
          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="user-avatar pull-left" style="margin-right:8px;">
          <img src="{{(Auth::user()->avatar)?(Auth::user()->avatar):'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2416237431,485618085&fm=11&gp=0.jpg'}}" class="img-responsive img-circle" width="30px" height="30px">

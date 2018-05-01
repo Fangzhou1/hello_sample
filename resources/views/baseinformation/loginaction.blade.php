@@ -44,7 +44,7 @@
         <tr>
           <td>{{$data1['name']}}</td>
           <td>{{$data1['loginnum']}}</td>
-          <td><button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#exampleModal" data-whatever1="{{json_encode($data1['loginrecords'])}}" data-whatever2={{$data1['name']}}>
+          <td><button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#exampleModal" data-whatever1="{{json_encode($data1['loginrecords'])}}" data-whatever2={{$data1['name']}} data-whatever3=1>
   <span title='详情' class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 </button></td>
         </tr>
@@ -96,7 +96,7 @@
               <tr>
                 <td>{{$data4['name']}}</td>
                 <td>{{$data4['actionnum']}}</td>
-                <td><button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#exampleModal" data-whatever1="{{json_encode($data4['actionrecords'])}}" data-whatever2={{$data4['name']}}>
+                <td><button type="button" class="btn btn-default" aria-label="Left Align" data-toggle="modal" data-target="#exampleModal" data-whatever1="{{json_encode($data4['actionrecords'])}}" data-whatever2={{$data4['name']}} data-whatever3=2>
         <span title='详情' class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
       </button></td>
               </tr>
@@ -160,9 +160,13 @@ window.Echo.channel('all')
   var button = $(event.relatedTarget); // Button that triggered the modal
   var recipient1 = button.data('whatever1'); // Extract info from data-* attributes
   var recipient2 = button.data('whatever2');
+  var recipient3 = button.data('whatever3');
   //alert(typeof(recipient1));
   var modal = $(this);
-  modal.find('.modal-title').text(recipient2+'的登录详情');
+  if(recipient3==1)
+    modal.find('.modal-title').text(recipient2+'的登录详情');
+  else if(recipient3==2)
+    modal.find('.modal-title').text(recipient2+'的操作数据详情');
   recipient1="<p>"+recipient1.join("</p><p>")+"</p>";
   //console.log(recipient1);
   modal.find('.modal-body').html(recipient1);
