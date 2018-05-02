@@ -19,10 +19,10 @@ class SessionsController extends Controller
 
 
   }
-    public function create()
+    public function create(Request $request)
   {
 
-    return view('sessions.create');
+    return view('sessions.create',['current_url'=>$request->url()]);
 
     }
 

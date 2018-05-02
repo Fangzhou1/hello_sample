@@ -1,4 +1,12 @@
 @extends('layouts.default')
+<style type="text/css">
+
+     @media screen and (min-width: 992px) {
+    .table-responsive {
+        height:400px;
+    }
+}
+ </style>
 <script type="text/javascript" src="/js/statistics.js"></script>
 @section('title','登录及操作')
 @section('content')
@@ -30,7 +38,7 @@
 
   <div class="row">
   <div class="col-md-6">
-    <div class="table-responsive" style="height:400px;">
+    <div class="table-responsive">
     <table class="table table-striped table-condensed">
       <thead>
         <tr>
@@ -82,7 +90,7 @@
 
         <div class="row">
         <div class="col-md-6">
-          <div class="table-responsive" style="height:400px;">
+          <div class="table-responsive">
           <table class="table table-striped table-condensed">
             <thead>
               <tr>
