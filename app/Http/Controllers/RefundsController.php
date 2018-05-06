@@ -238,7 +238,7 @@ class RefundsController extends Controller
 
 
 
-
+              //以专业室分组查询
               $datas2=DB::table('refunds')->where('project_number','<>','项目编号')->select(DB::raw('count(DISTINCT project_number) as project_num,sum(construction_should_refund) as construction_should_refund_total,sum(thing_refund) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(direct_yes) as direct_yes_total,sum(direct_no) as direct_no_total,sum(unrefund_cost) as unrefund_cost_total,professional_room'))->groupBy('professional_room')->get();
               //dd($datas2);
 

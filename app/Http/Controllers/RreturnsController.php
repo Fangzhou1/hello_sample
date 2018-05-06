@@ -147,9 +147,11 @@ class RreturnsController extends Controller
             {
 
     //以项目经理和审计进度分组查询，带上项目经理的订单和项目数信息
-              $data=DB::table('rreturns')->where('project_number','<>','项目编号')->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
+              $data=DB::table('rreturns')->where('project_number','<>','项目编号')->select(DB::raw('count(DISTINCT project_number) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
               $data2=DB::table('rreturns')->where('project_number','<>','项目编号')->select(DB::raw('count(DISTINCT project_number) as project_num,project_manager'))->groupBy('project_manager')->get();
     //如果没有数据返回空数组
+
+    //dd($data);
               if($data->isEmpty()||$data2->isEmpty())
               {
                 return view('rreturns.smsmail',['current_url'=>$this->request->url(),'datas'=>[],'datas2'=>[]]);

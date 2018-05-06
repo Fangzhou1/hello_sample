@@ -127,8 +127,15 @@ Route::resource('users', 'UsersController');
 //微信处理
 Route::any('weixin','WeixinController@index')->name('weixin.index');
 Route::get('weixin/sendweixin/{type}','WeixinController@sendweixin')->name('weixin.sendweixin');
-//Route::get('weixin/createmenu','WeixinController@createmenu')->name('weixin.createmenu');
+Route::get('weixin/createmenu','WeixinController@createmenu')->name('weixin.createmenu');
 Route::get('weixin/receiveAuditInfo','WeixinController@receiveAuditInfo')->name('weixin.receiveAuditInfo');
+
+
+
+Route::group(['middleware' => ['wechat.oauth:snsapi_userinfo']], function () {
+  Route::any('weixinlogin','WeixinController@weixinlogin')->name('weixin.weixinlogin');
+});
+
 
 
 
