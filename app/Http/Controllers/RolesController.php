@@ -62,7 +62,7 @@ class RolesController extends Controller
        $permission=Permission::all();
 
        //dd($permission);
-       return view('roles.permissionstorolepage',compact("role","permission"));
+       return view('roles.permissionstorolepage',['current_url'=>$this->request->url(),'role'=>$role,'permission'=>$permission]);
      }
 
      public function permissionstorole(Role $role)

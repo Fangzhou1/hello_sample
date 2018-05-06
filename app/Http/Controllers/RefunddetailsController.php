@@ -14,7 +14,7 @@ class RefunddetailsController extends Controller
   public function __construct(Request $request)
   {
       $this->middleware('auth');
-      //$this->middleware('check');
+      $this->middleware('check');
       $this->request=$request;
   }
 
@@ -23,6 +23,7 @@ class RefunddetailsController extends Controller
         // $page=10;
         // $settlements = Settlement::paginate($page);
       //dd($refunddetail);
+
         return view('refunddetails.edit',['refunddetail'=>$refunddetail,'unit_price'=>$this->request->input('unit_price')]);
     }
 
@@ -31,6 +32,7 @@ class RefunddetailsController extends Controller
 
           // $page=10;
           // $settlements = Settlement::paginate($page);
+
           $datas=$this->request->except(['_token','_method']);
             //dd($data);
           $refunddetail->update($datas);

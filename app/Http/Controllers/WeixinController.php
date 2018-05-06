@@ -17,9 +17,8 @@ class WeixinController extends Controller
   protected $officialAccount;
   public function __construct(Request $request)
   {
-      // $this->middleware('auth');
-      // $this->middleware('check');
-      // $this->request=$request;
+      $this->middleware('auth',['except' => ['index', 'bindWeChat','receiveAuditInfo']]);
+      $this->middleware('check',['except' => ['index', 'receiveAuditInfo']]);
      $this->officialAccount = EasyWeChat::officialAccount();
   }
   public function index(){
@@ -144,41 +143,41 @@ class WeixinController extends Controller
     return redirect()->route('refunds.smsmail');
 }
 
-  public function createmenu(){
-    $buttons = [
-      [
-          "name"       => "菜单",
-          "sub_button" => [
-              [
-                  "type" => "click",
-                  "name" => "获取您的结算审计进度",
-                  "key" => "V1_SETTLEMENT"
-              ],
-              [
-                  "type" => "click",
-                  "name" => "获取您的决算审计进度",
-                  "key" => "V1_RRETURN"
-              ],
-              [
-                  "type" => "click",
-                  "name" => "获取您的退库物资进度",
-                  "key" => "V1_REFUND"
-              ],
-          ],
-      ],
-      [
-          "type" => "view",
-          "name" => "登陆平台",
-          "url"  => "http://www.cmccgjb.cn/weixinlogin"
-      ],
-      [
-          "type" => "click",
-          "name" => "待开发",
-          "key"  => "v3"
-      ],
-    ];
-    $this->officialAccount->menu->create($buttons);
-  }
+  // public function createmenu(){
+  //   $buttons = [
+  //     [
+  //         "name"       => "菜单",
+  //         "sub_button" => [
+  //             [
+  //                 "type" => "click",
+  //                 "name" => "获取您的结算审计进度",
+  //                 "key" => "V1_SETTLEMENT"
+  //             ],
+  //             [
+  //                 "type" => "click",
+  //                 "name" => "获取您的决算审计进度",
+  //                 "key" => "V1_RRETURN"
+  //             ],
+  //             [
+  //                 "type" => "click",
+  //                 "name" => "获取您的退库物资进度",
+  //                 "key" => "V1_REFUND"
+  //             ],
+  //         ],
+  //     ],
+  //     [
+  //         "type" => "view",
+  //         "name" => "登陆平台",
+  //         "url"  => "http://www.cmccgjb.cn/weixinlogin"
+  //     ],
+  //     [
+  //         "type" => "click",
+  //         "name" => "待开发",
+  //         "key"  => "v3"
+  //     ],
+  //   ];
+  //   $this->officialAccount->menu->create($buttons);
+  // }
 
   protected function receiveAuditInfo($eventkey='v2_LOGINPLATFORM',$openid='oe4E3wIPCKs-iWGk_QHmQABUJThw')
   {

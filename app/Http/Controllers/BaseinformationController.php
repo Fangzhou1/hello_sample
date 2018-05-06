@@ -14,7 +14,7 @@ class BaseinformationController extends Controller
     public function __construct(Request $request)
     {
         $this->middleware('auth');
-        //$this->middleware('check');
+        $this->middleware('check');
         $this->request=$request;
     }
 

@@ -22,7 +22,7 @@ class RefundsController extends Controller
   public function __construct(Request $request)
   {
       $this->middleware('auth');
-      //$this->middleware('check');
+      $this->middleware('check');
       $this->request=$request;
   }
 
@@ -94,7 +94,7 @@ class RefundsController extends Controller
 
         public function create()
         {
-            return view('refunds.create');
+            return view('refunds.create',['current_url'=>$this->request->url()]);
         }
 
         public function store()
@@ -139,8 +139,8 @@ class RefundsController extends Controller
           // dd($refund);
           // dd($this->request->except('_token'));
           //dd(Auth::user()->hasAnyRole(['高级管理员','站长']));
-          // if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
-          // $this->authorize('updateanddestroy', $settlement);
+          if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+          $this->authorize('updateanddestroy', $refund);
            $refund->update($this->request->except('_token'));
 
           $data['name']=Auth::user()->name;
@@ -157,6 +157,8 @@ class RefundsController extends Controller
         public function destroy(Refund $refund)
         {
           //dd($refunddetail);
+          if(!Auth::user()->hasAnyRole(['高级管理员','站长']))
+          $this->authorize('updateanddestroy', $refund);
           $refundadn=$refund->audit_document_number;
           $refundpn=$refund->project_number;
           if($refund->refunddetails->isNotEmpty())
