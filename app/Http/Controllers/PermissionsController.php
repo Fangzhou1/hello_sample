@@ -59,7 +59,7 @@ class PermissionsController extends Controller
     public function create()
 
      {
-      return view('permissions.create');
+      return view('permissions.create',['current_url'=>$this->request->url()]);
      }
 
 

@@ -177,7 +177,7 @@
 <script type="text/javascript">
 
 var tem=["id","audit_report_name","professional_room","project_manager","project_number","publish_date","audit_document_number","audit_type","project_type","audit_company","submit_cost","validation_cost","subtraction_cost","subtraction_rate","mterials_audit","construction_should_refund","thing_refund","cash_refund","direct_yes","direct_no","unrefund_cost","reason","Remarks"];
-var tableeditanddelete= new tableeditanddelete(tem,'/refunds/rowupdate/',2);
+var tableeditanddelete= new tableeditanddelete(tem,'refunds/rowupdate/',2);
 // window.tem={};
 
 
@@ -194,7 +194,7 @@ window.Echo.channel('all')
     $('#myModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget); // Button that triggered the modal
       var recipient = button.data('whatever'); // Extract info from data-* attributes
-      $(this).find("#delete").attr('action','/refunds/'+recipient);
+      $(this).find("#delete").attr('action','/audit_navigation/refunds/'+recipient);
   });
 
 })

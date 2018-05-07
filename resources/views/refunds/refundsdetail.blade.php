@@ -133,7 +133,7 @@ window.Echo.channel('all')
 $('#myModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
   var recipient = button.data('whatever'); // Extract info from data-* attributes
-  $(this).find("#delete").attr('action','/refunddetails/'+recipient);
+  $(this).find("#delete").attr('action','/audit_navigation/refunddetails/'+recipient);
 
 });
 });

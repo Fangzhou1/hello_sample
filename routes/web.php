@@ -148,97 +148,97 @@ Route::get('baseinformation/loginaction', 'BaseinformationController@loginaction
 
 
 
-Route::get('test2', function () {
-  DB::table('roles')->insert([['name'=>'游客',"guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],['name'=>'项目经理',"guard_name"=>"web","created_ti  me"=>Carbon::now(),"updated_at"=>Carbon::now()],['name'=>'高级管理员',"guard_name"=>"web","created_at"=>Carbon::now(),'updated_at'=>Carbon::now()],['name'=>'站长',"guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()]]);
+// Route::get('test2', function () {
+//   DB::table('roles')->insert([['name'=>'游客',"guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],['name'=>'项目经理',"guard_name"=>"web","created_ti  me"=>Carbon::now(),"updated_at"=>Carbon::now()],['name'=>'高级管理员',"guard_name"=>"web","created_at"=>Carbon::now(),'updated_at'=>Carbon::now()],['name'=>'站长',"guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()]]);
+//
+// });
 
-});
-
-Route::get('test3', function () {
-
-  DB::table('permissions')->insert([
-  ['name'=>"结算审计更新","route"=>"settlements.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计分类页面","route"=>"settlements.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计详情","route"=>"settlements.smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计发邮件","route"=>"settlements.sendemail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计统计","route"=>"settlements.statistics","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计主页","route"=>"settlements.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计新增页","route"=>"settlements.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计新增","route"=>"settlements.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算审计删除","route"=>"settlements.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计更新","route"=>"rreturns.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计分类页面","route"=>"rreturns.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计详情","route"=>"rreturns.smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计发邮件","route"=>"rreturns.sendemail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计统计","route"=>"rreturns.statistics","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计主页","route"=>"rreturns.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计新增页","route"=>"rreturns.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计新增","route"=>"rreturns.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算审计删除","route"=>"rreturns.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算批量导入页","route"=>"settlements.importpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"结算批量导入","route"=>"settlements.import","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算批量导入页","route"=>"rreturns.importpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"决算批量导入","route"=>"rreturns.import","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"权限主页","route"=>"permissions.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"新增权限页","route"=>"permissions.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"新增权限","route"=>"permissions.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"删除权限","route"=>"permissions.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"更新权限","route"=>"permissions.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"角色主页","route"=>"roles.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"新增角色页","route"=>"roles.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"新增角色","route"=>"roles.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"删除角色","route"=>"roles.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"给角色赋予权限","route"=>"roles.permissionstorole","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"更新角色","route"=>"roles.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"用户列表页","route"=>"users.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"用户展示页","route"=>"users.show","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"用户更新页","route"=>"users.edit","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"更新用户","route"=>"users.update","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"用户处置列表页","route"=>"users.usersactionindex","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"给用户赋予角色页","route"=>"users.rolestouserpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"给用户赋予角色","route"=>"users.rolestouser","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"给角色赋予权限页","route"=>"roles.permissionstorolepage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"导出结算总表","route"=>"settlements.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"导出决算总表","route"=>"rreturns.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"按分类导出结算分表","route"=>"settlements.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"按分类导出决算分表","route"=>"rreturns.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-
-  ['name'=>"物资主页","route"=>"refunds.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资批量导入页","route"=>"refunds.importpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资批量导入","route"=>"refunds.importrefunds","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资详情批量导入","route"=>"refunds.importrefunddetails","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资导出","route"=>"refunds.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资更新","route"=>"refunds.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资详情主页","route"=>"refunds.refundsdetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资邮件短信页","route"=>"refunds/smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资邮件短信详情页","route"=>"RefundsController@smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资分类导出","route"=>"refunds.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资发送邮件通知","route"=>"refunds.sendemail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资统计页","route"=>"refunds.statistics","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资新增页","route"=>"refunds.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资新增","route"=>"refunds.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资删除","route"=>"refunds.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-
-  ['name'=>"物资详情新增页","route"=>"refunddetails.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资详情新增","route"=>"refunddetails.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资详情编辑页","route"=>"refunddetails.edit","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资详情编辑","route"=>"refunddetails.update","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-  ['name'=>"物资详情删除","route"=>"refunddetails.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-
-
-  ['name'=>"发送微信通知","route"=>"weixin.sendweixin","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-
-
-  ['name'=>"基础信息页","route"=>"baseinformation.loginaction","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
-
-
-
-
-
-
-]);
-
-});
+// Route::get('test3', function () {
+//
+//   DB::table('permissions')->insert([
+//   // ['name'=>"结算审计更新","route"=>"settlements.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计分类页面","route"=>"settlements.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计详情","route"=>"settlements.smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计发邮件","route"=>"settlements.sendemail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计统计","route"=>"settlements.statistics","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计主页","route"=>"settlements.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计新增页","route"=>"settlements.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计新增","route"=>"settlements.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算审计删除","route"=>"settlements.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计更新","route"=>"rreturns.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计分类页面","route"=>"rreturns.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计详情","route"=>"rreturns.smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计发邮件","route"=>"rreturns.sendemail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计统计","route"=>"rreturns.statistics","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计主页","route"=>"rreturns.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计新增页","route"=>"rreturns.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计新增","route"=>"rreturns.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算审计删除","route"=>"rreturns.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算批量导入页","route"=>"settlements.importpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"结算批量导入","route"=>"settlements.import","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算批量导入页","route"=>"rreturns.importpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"决算批量导入","route"=>"rreturns.import","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"权限主页","route"=>"permissions.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"新增权限页","route"=>"permissions.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"新增权限","route"=>"permissions.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"删除权限","route"=>"permissions.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"更新权限","route"=>"permissions.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"角色主页","route"=>"roles.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"新增角色页","route"=>"roles.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"新增角色","route"=>"roles.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"删除角色","route"=>"roles.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"给角色赋予权限","route"=>"roles.permissionstorole","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"更新角色","route"=>"roles.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"用户列表页","route"=>"users.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"用户展示页","route"=>"users.show","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"用户更新页","route"=>"users.edit","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"更新用户","route"=>"users.update","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"删除用户","route"=>"users.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"用户处置列表页","route"=>"users.usersactionindex","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"给用户赋予角色页","route"=>"users.rolestouserpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"给用户赋予角色","route"=>"users.rolestouser","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"给角色赋予权限页","route"=>"roles.permissionstorolepage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"导出结算总表","route"=>"settlements.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"导出决算总表","route"=>"rreturns.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"按分类导出结算分表","route"=>"settlements.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   // ['name'=>"按分类导出决算分表","route"=>"rreturns.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//
+//   ['name'=>"物资主页","route"=>"refunds.index","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资批量导入页","route"=>"refunds.importpage","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资批量导入","route"=>"refunds.importrefunds","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资详情批量导入","route"=>"refunds.importrefunddetails","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资导出","route"=>"refunds.export","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资更新","route"=>"refunds.rowupdate","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资详情主页","route"=>"refunds.refundsdetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资邮件短信页","route"=>"refunds.smsmail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资邮件短信详情页","route"=>"RefundsController@smsmaildetail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资分类导出","route"=>"refunds.exportbytype","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资发送邮件通知","route"=>"refunds.sendemail","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资统计页","route"=>"refunds.statistics","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资新增页","route"=>"refunds.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资新增","route"=>"refunds.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资删除","route"=>"refunds.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//
+//   ['name'=>"物资详情新增页","route"=>"refunddetails.create","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资详情新增","route"=>"refunddetails.store","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资详情编辑页","route"=>"refunddetails.edit","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资详情编辑","route"=>"refunddetails.update","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//   ['name'=>"物资详情删除","route"=>"refunddetails.destroy","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//
+//
+//   ['name'=>"发送微信通知","route"=>"weixin.sendweixin","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//
+//
+//   ['name'=>"基础信息页","route"=>"baseinformation.loginaction","guard_name"=>"web","created_at"=>Carbon::now(),"updated_at"=>Carbon::now()],
+//
+//
+//
+//
+//
+//
+// ]);
+//
+// });
 
 
 

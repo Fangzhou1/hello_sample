@@ -70,13 +70,13 @@
 
 <script type="text/javascript">
 var tem=["id","name","guard_name"];
-var tableeditanddelete= new tableeditanddelete(tem,'/roles/rowupdate/',1);
+var tableeditanddelete= new tableeditanddelete(tem,'roles/rowupdate/',1);
 
 $(document).ready(function(){
   $('#myModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var recipient = button.data('whatever'); // Extract info from data-* attributes
-    $(this).find("#delete").attr('action','/roles/'+recipient);
+    $(this).find("#delete").attr('action','roles/'+recipient);
 });
 })
 </script>

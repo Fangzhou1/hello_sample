@@ -107,7 +107,7 @@ $(document).ready(function(){
           $("#myModalLabel").text('发送邮件');
           $("#form_content label").text('请确认项目经理邮箱');
           $("#ask").text('是否确认发送邮件?');
-          $road='/rreturns/sendemail';
+          $road='sendemail';
         }
         else if(recipient3=='weixin'){
           $("#myModalLabel").text('发送微信');

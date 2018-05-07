@@ -166,7 +166,7 @@
 <script type="text/javascript">
 
 var tem=["id","order_number","vendor_name","material_name","material_type","project_number","project_name","project_manager","audit_progress","audit_document_number","audit_company","order_description","contract_number","audit_number","cost","paid_cost","mis_cost","submit_cost","validation_cost"];
-var tableeditanddelete= new tableeditanddelete(tem,'/settlements/rowupdate/');
+var tableeditanddelete= new tableeditanddelete(tem,'settlements/rowupdate/');
 //window.tem={};
 
 $(document).ready(function(){
@@ -181,7 +181,7 @@ $(document).ready(function(){
     $('#myModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget); // Button that triggered the modal
       var recipient = button.data('whatever'); // Extract info from data-* attributes
-      $(this).find("#delete").attr('action','/settlements/'+recipient);
+      $(this).find("#delete").attr('action','settlements/'+recipient);
 
 });
 

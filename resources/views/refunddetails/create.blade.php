@@ -109,7 +109,7 @@
           <tr>
             <td scope="row"><input name="scm_receive_number" type="text" class="form-control"></td>
             <td scope="row"><input name="scm_receive_amount" id="scm_receive_amount" type="text" class="form-control"></td>
-            <td scope="row"><input name="refund_cost" id="refund_cost" type="text" class="form-control" oninput="txtChange(this)" onpropertychange="txtChange(this)" disabled></td>
+            <td scope="row"><input name="refund_cost" id="refund_cost" type="text" class="form-control" readonly></td>
 
           </tr>
         </tbody>
@@ -208,10 +208,10 @@
 </form>
 <script type="text/javascript">
 
-function txtChange(el)
-{
-  document.getElementById('unrefund_cost').value=document.getElementById('subtraction_cost').value-document.getElementById('cash_refund').value-this.value;
-}
+// function txtChange(el)
+// {
+//   document.getElementById('unrefund_cost').value=document.getElementById('subtraction_cost').value-document.getElementById('cash_refund').value-this.value;
+// }
 
 
 $(document).ready(function(){
@@ -239,8 +239,8 @@ $(document).ready(function(){
     });
 
     $("#scm_receive_amount").blur(function(){
-
       $("#refund_cost").val(1*$("#scm_receive_amount").val());
+      $("#unrefund_cost").val($("#subtraction_cost").val()*1-$("#cash_refund").val()*1-$("#refund_cost").val()*1);
     });
 
 
