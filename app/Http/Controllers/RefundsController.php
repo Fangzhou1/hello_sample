@@ -29,7 +29,7 @@ class RefundsController extends Controller
   public function index()
     {
       //dd(parse_url('postgres://qkhdklcjrqaipc:df01a2f558215a0a7829c6aec0d4fc22e90a5def129294f53e08e42a3a97c911@ec2-54-235-66-81.compute-1.amazonaws.com:5432/d34bjielr59n77'));
-        $page=10;
+        $page=8;
         $refunds['title'] = Refund::first();
 
         $query=$this->request->input('query');
@@ -260,7 +260,7 @@ class RefundsController extends Controller
 
 
 
-                    $page=10;
+                    $page=8;
                     $refunds['title'] = Refund::first();
                     if($querytoarray['type']==1)
                     {
