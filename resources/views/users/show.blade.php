@@ -35,6 +35,7 @@
   <li class="list-group-item">角色：{{$user->getRoleNames()->first()}}</li>
   <li class="list-group-item">最近更新主页时间：{{$user->updated_at->diffForHumans()}}</li>
   <li class="list-group-item">账户状态：{{$user->activated}}</li>
+  <li class="list-group-item">微信绑定：{{$user->openid?"已绑定":"未绑定"}}</li>
 </ul>
 </div>
         <hr>

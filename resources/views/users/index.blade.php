@@ -12,7 +12,9 @@
 
 
       <div class="pull-right">
-
+        @if($user->openid)
+          <span class="label label-success pull-right" style="height:39px;line-height:39px">已微信绑定</span>
+        @endif
         <span class="label label-info pull-right" style="height:39px;line-height:39px">{{$user->getRoleNames()->first()}}</span>
 
       </div>

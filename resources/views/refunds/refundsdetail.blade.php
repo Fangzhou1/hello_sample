@@ -20,7 +20,7 @@
 <span  class="pull-right" style="font-size: 18px;">总共查询到{{$refundsdetails['data']->total()}}行数据</span>
 
 <div class="table-responsive">
-  <table class="table table-hover table-striped">
+  <table class="table table-hover table-striped table-bordered">
         <thead>
           <tr>
             <th>id</th>

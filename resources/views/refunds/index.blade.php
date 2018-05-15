@@ -33,7 +33,7 @@
 <span  class="pull-right" style="font-size: 18px;">总共查询到 {{$refunds['data']->total()}} 行数据</span>
 
 <div class="table-responsive">
-  <table class="table table-hover table-striped">
+  <table class="table table-hover table-striped table-bordered">
         <thead>
           <tr>
             <th>id</th>
@@ -54,8 +54,8 @@
             <th>{{ $refunds['title']->construction_should_refund or ""}}</th>
             <th>{{ $refunds['title']->thing_refund or ""}}</th>
             <th>{{ $refunds['title']->cash_refund or ""}}</th>
-            <th>{{ $refunds['title']->direct_yes or ""}}</th>
-            <th>{{ $refunds['title']->direct_no or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->direct_yes or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->direct_no or ""}}</th>
             <th>{{ $refunds['title']->unrefund_cost or ""}}</th>
             <th style="min-width:300px">{{ $refunds['title']->reason or ""}}</th>
             <th>{{ $refunds['title']->Remarks or ""}}</th>
