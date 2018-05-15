@@ -89,7 +89,7 @@
             <td class="direct_yes">{{$data->direct_yes or ""}}</td>
             <td class="direct_no">{{$data->direct_no or ""}}</td>
             <td class="unrefund_cost">{{$data->unrefund_cost or ""}}</td>
-            <td class="reason">{{$data->reason or ""}}</td>
+            <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" class="reason" title="{{$data->reason or ""}}">{{$data->reason or ""}}</td>
             <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" class="Remarks" title="{{$data->Remarks or ""}}">{{$data->Remarks or ""}}</td>
 
 

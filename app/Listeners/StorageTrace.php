@@ -7,6 +7,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Settlement;
 use App\Models\Rreturn;
+use App\Models\Refund;
+use App\Models\Refunddetail;
+use Illuminate\Support\Facades\DB;
 use App\Models\Trace;
 use Carbon\Carbon;
 use Auth;
@@ -157,12 +160,29 @@ class StorageTrace
       elseif($trace->type=='物资')
       {
         $mes2=$event->data['name']."于".$trace->created_at.$event->mes."物资表里项目编号为".$event->data['project_number']."且审计文号为".$event->data['audit_document_number']."的条目。";
+        $audit_document_number=$event->data['audit_document_number'];
+        $project_number=$event->data['project_number'];
+        $refunddetails = DB::table('refunddetails')->where('audit_document_number',$audit_document_number)->where('project_number',$project_number)->select(DB::raw('sum(subtraction_cost) as construction_should_refund_total,sum(refund_cost) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(unrefund_cost) as unrefund_cost_total'))->first();
+        //dd($refunddetails);
+        $refunds=Refund::where('audit_document_number',$audit_document_number)->where('project_number',$project_number)->select('construction_should_refund','thing_refund','cash_refund','unrefund_cost')->first();
+        //dd($refunds);
+        if(round($refunddetails->construction_should_refund_total)!==round($refunds->construction_should_refund)||round($refunddetails->thing_refund_total)!==round($refunds->thing_refund)||round($refunddetails->cash_refund_total)!==round($refunds->thing_refund)||round($refunddetails->cash_refund)!==round($refunds->unrefund_cost))
+          $mes2.="但是退库物资和物资详情的数据不一致，请核实后修改。";
         $trace->content=$trace->content.$mes2;
 
       }
       elseif($trace->type=='物资详情')
       {
         $mes2=$event->data['name']."于".$trace->created_at."为".$event->data['project_number']."的项目且审计文号为".$event->data['audit_document_number']."的退库条目下".$event->mes."物资名称为".$event->data['material_name']."的退库详情。";
+        //dd($event->data);
+        $audit_document_number=$event->data['audit_document_number'];
+        $project_number=$event->data['project_number'];
+        $refunddetails = DB::table('refunddetails')->where('audit_document_number',$audit_document_number)->where('project_number',$project_number)->select(DB::raw('sum(subtraction_cost) as construction_should_refund_total,sum(refund_cost) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(unrefund_cost) as unrefund_cost_total'))->first();
+        //dd($refunddetails);
+        $refunds=Refund::where('audit_document_number',$audit_document_number)->where('project_number',$project_number)->select('construction_should_refund','thing_refund','cash_refund','unrefund_cost')->first();
+        //dd($refunds);
+        if(round($refunddetails->construction_should_refund_total)!==round($refunds->construction_should_refund)||round($refunddetails->thing_refund_total)!==round($refunds->thing_refund)||round($refunddetails->cash_refund_total)!==round($refunds->thing_refund)||round($refunddetails->cash_refund)!==round($refunds->unrefund_cost))
+          $mes2.="但是退库物资和物资详情的数据不一致，请核实后修改。";
         $trace->content=$trace->content.$mes2;
       }
       $trace->name=Auth::user()->name;
