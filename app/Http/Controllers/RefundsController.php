@@ -124,8 +124,7 @@ class RefundsController extends Controller
         {
 
           $refundsdetails['title']=Refunddetail::first();
-
-          $refundsdetails['data']=$refund->refunddetails()->paginate(15);
+          $refundsdetails['data']=$refund->refunddetails()->orderBy('construction_enterprise')->paginate(10);
           $refundsdetails['data']->refund=$refund;
           //dd($refundsdetails);
 //           $refundsdetails['data']=$refund->load(['refunddetails' => function ($query) {
@@ -291,6 +290,7 @@ class RefundsController extends Controller
                     $typeinfo=$this->request->query();
                     //dd($typeinfo);
                     $refunds=Refund::where('project_number','项目编号')->orWhere($typeinfo)->get()->toArray();
+                    dd($refunds);
                     $upload=new ExcelUploadHandler;
                     $upload->download($refunds,'物资管理分表');
 

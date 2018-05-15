@@ -61,6 +61,7 @@
     <div class="panel-heading"><big>SCM及ERP申请退库情况</big></div>
 
     <!-- Table -->
+    <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
@@ -82,6 +83,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
     </div>
 </div>
 

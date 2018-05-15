@@ -9,13 +9,8 @@
 
   @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('refunddetails.create')}}?project_number={{$refundsdetails['data']->refund->project_number or ''}}&audit_document_number={{$refundsdetails['data']->refund->audit_document_number or ''}}&refundid={{$refundsdetails['data']->refund->id}}" role="button">添加新的物资&nbsp;<b>+</b></a>
-<a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
-<form action='' method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
-  <div class="form-group">
-    <input type="text" name="query" class="form-control" placeholder="Search" value="">
-  </div>
-  <button type="submit" class="btn btn-default">搜索</button>
-</form>
+
+
 @endhasanyrole
 <span  class="pull-right" style="font-size: 18px;">总共查询到{{$refundsdetails['data']->total()}}行数据</span>
 
@@ -79,8 +74,8 @@
 
 
             <td class="action">
-<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}?refundid={{$refundsdetails['data']->refund->id}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}?refundid={{$refundsdetails['data']->refund->id}}" role="button"><span class="glyphicon glyphicon-pencil"></span></a>
+&nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove"></span></a>
             </td>
 
 
@@ -91,7 +86,7 @@
         </tbody>
       </table>
 </div>
-
+{!! $refundsdetails['data']->links() !!}
 </div>
 
 
