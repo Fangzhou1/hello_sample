@@ -3,7 +3,7 @@
 @section('title','物资新增页')
 @section('content')
 <div class="col-md-1 page-header" style="margin-top: 0px;">
-<a class="btn btn-primary" href="#" role="button">返回</a>
+<a class="btn btn-primary" href="{{route('refunds.refundsdetail',$_GET['refundid'])}}" role="button">返回</a>
 </div>
 <div class="col-md-11 page-header" style="margin: 0px;">
 <h1>物资详情新增页</h1>
@@ -98,7 +98,7 @@
         <thead>
           <tr>
             <th>SCM收货单号</th>
-            <th>SCM收货数量</th>
+            <th id='up'>SCM收货数量</th>
             <th>退库金额</th>
 
 
@@ -217,6 +217,7 @@
 $(document).ready(function(){
 
     $("#unit_price").blur(function(){
+      $("#up").text('SCM收货数量(单价为：'+$("#unit_price").val()+')');
       $("#subtraction_cost").val($("#unit_price").val()*$("#reduction_quantity").val());
       // alert(typeof($("#refund_cost").val()));
       $("#unrefund_cost").val($("#subtraction_cost").val()*1-$("#cash_refund").val()*1-$("#refund_cost").val()*1);
@@ -239,7 +240,7 @@ $(document).ready(function(){
     });
 
     $("#scm_receive_amount").blur(function(){
-      $("#refund_cost").val(1*$("#scm_receive_amount").val());
+      $("#refund_cost").val($("#unit_price").val()*$("#scm_receive_amount").val());
       $("#unrefund_cost").val($("#subtraction_cost").val()*1-$("#cash_refund").val()*1-$("#refund_cost").val()*1);
     });
 

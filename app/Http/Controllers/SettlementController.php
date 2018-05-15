@@ -332,7 +332,7 @@ class SettlementController extends Controller
         if($newdata_tem==[])
         $newdata2=[];
         else {
-          $newdata_tem=$this->my_sort($newdata_tem,'created_at',SORT_ASC,SORT_REGULAR );
+          $newdata_tem=my_sort($newdata_tem,'created_at',SORT_ASC,SORT_REGULAR );
           //dd($newdata_tem);
           foreach ($newdata_tem as $value) {
 
@@ -351,21 +351,21 @@ class SettlementController extends Controller
 
 
 
-      protected function my_sort($arrays,$sort_key,$sort_order=SORT_ASC,$sort_type=SORT_NUMERIC ){
-        if(is_array($arrays)){
-            foreach ($arrays as $array){
-                if(is_array($array)){
-                    $key_arrays[] = $array[$sort_key];
-                }else{
-                    return false;
-                }
-            }
-        }else{
-            return false;
-        }
-        array_multisort($key_arrays,$sort_order,$sort_type,$arrays);
-        return $arrays;
-    }
+    //   protected function my_sort($arrays,$sort_key,$sort_order=SORT_ASC,$sort_type=SORT_NUMERIC ){
+    //     if(is_array($arrays)){
+    //         foreach ($arrays as $array){
+    //             if(is_array($array)){
+    //                 $key_arrays[] = $array[$sort_key];
+    //             }else{
+    //                 return false;
+    //             }
+    //         }
+    //     }else{
+    //         return false;
+    //     }
+    //     array_multisort($key_arrays,$sort_order,$sort_type,$arrays);
+    //     return $arrays;
+    // }
 
     public function search()
       {

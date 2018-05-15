@@ -127,6 +127,7 @@ class RefundsController extends Controller
 
           $refundsdetails['data']=$refund->refunddetails()->paginate(15);
           $refundsdetails['data']->refund=$refund;
+          //dd($refundsdetails);
 //           $refundsdetails['data']=$refund->load(['refunddetails' => function ($query) {
 //     $query->get()->toArray();
 // }]);
@@ -342,8 +343,9 @@ class RefundsController extends Controller
 //
             public function statistics()
           {
-            $newdata=Refundtime::orderBy('created_at', 'asc')->take(7)->get()->toArray();
+            $newdata=Refundtime::orderBy('created_at', 'desc')->take(7)->get()->toArray();
             //dd($newdata);
+            $newdata=my_sort($newdata,'created_at',SORT_ASC,SORT_REGULAR );
             if(!$newdata)
             {
               $data=json_encode([]);
@@ -357,6 +359,8 @@ class RefundsController extends Controller
               $data['data']['施工单位直接用于其它工程（无退库领用手续）'][]=$value['施工单位直接用于其它工程（无退库领用手续）'];
               $data['data']['未退库金额'][]=$value['未退库金额'];
             }
+            //dd($data);
+
             $data=json_encode($data);
             return view('refunds.statistics',['current_url'=>$this->request->url(),'data'=>$data]);
           }

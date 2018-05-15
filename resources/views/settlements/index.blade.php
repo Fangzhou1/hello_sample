@@ -44,13 +44,13 @@
             <th>{{ $settlements['title']->material_type or ""}}</th>
             <th>{{ $settlements['title']->project_number or ""}}</th>
             <th style="min-width:200px">{{ $settlements['title']->project_name or ""}}</th>
-            <th style="min-width:300px">{{ $settlements['title']->project_manager or ""}}</th>
+            <th style="min-width:150px">{{ $settlements['title']->project_manager or ""}}</th>
             <th>{{ $settlements['title']->audit_progress or ""}}</th>
             <th style="min-width:300px">{{ $settlements['title']->audit_document_number or ""}}</th>
-            <th>{{ $settlements['title']->audit_company or ""}}</th>
+            <th style="min-width:300px">{{ $settlements['title']->audit_company or ""}}</th>
             <th style="min-width:350px">{{ $settlements['title']->order_description or ""}}</th>
             <th style="min-width:300px">{{ $settlements['title']->contract_number or ""}}</th>
-            <th>{{ $settlements['title']->audit_number or ""}}</th>
+            <th style="min-width:300px">{{ $settlements['title']->audit_number or ""}}</th>
             <th>{{ $settlements['title']->cost or ""}}</th>
             <th>{{ $settlements['title']->paid_cost or ""}}</th>
             <th>{{ $settlements['title']->mis_cost or ""}}</th>

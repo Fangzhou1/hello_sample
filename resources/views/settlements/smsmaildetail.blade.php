@@ -46,7 +46,7 @@
             <th>{{ $settlements['title']->audit_company }}</th>
             <th style="min-width:350px">{{ $settlements['title']->order_description }}</th>
             <th style="min-width:300px">{{ $settlements['title']->contract_number }}</th>
-            <th>{{ $settlements['title']->audit_number }}</th>
+            <th style="min-width:300px">{{ $settlements['title']->audit_number }}</th>
             <th>{{ $settlements['title']->cost }}</th>
             <th>{{ $settlements['title']->paid_cost }}</th>
             <th>{{ $settlements['title']->mis_cost }}</th>

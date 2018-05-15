@@ -24,7 +24,7 @@ class RefunddetailsController extends Controller
         // $settlements = Settlement::paginate($page);
       //dd($refunddetail);
 
-        return view('refunddetails.edit',['current_url'=>$this->request->url(),'refunddetail'=>$refunddetail,'unit_price'=>$this->request->input('unit_price')]);
+        return view('refunddetails.edit',['current_url'=>$this->request->url(),'refunddetail'=>$refunddetail]);
     }
 
     public function update(Refunddetail $refunddetail)

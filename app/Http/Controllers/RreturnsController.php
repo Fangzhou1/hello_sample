@@ -295,6 +295,7 @@ class RreturnsController extends Controller
           {
             $newdata=Rreturntime::orderBy('created_at', 'desc')->take(7)->get()->toArray();
           //  dd($newdata);
+          $newdata=my_sort($newdata,'created_at',SORT_ASC,SORT_REGULAR );
             if(!$newdata)
             {
               $data=json_encode([]);

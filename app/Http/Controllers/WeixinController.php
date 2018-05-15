@@ -17,8 +17,8 @@ class WeixinController extends Controller
   protected $officialAccount;
   public function __construct(Request $request)
   {
-      $this->middleware('auth',['except' => ['index', 'bindWeChat','receiveAuditInfo']]);
-      $this->middleware('check',['except' => ['index', 'receiveAuditInfo']]);
+      $this->middleware('auth',['except' => ['index', 'bindWeChat','receiveAuditInfo','createmenu','weixinlogin']]);
+      $this->middleware('check',['except' => ['index', 'receiveAuditInfo','createmenu']]);
      $this->officialAccount = EasyWeChat::officialAccount();
   }
   public function index(){
@@ -143,43 +143,43 @@ class WeixinController extends Controller
     return redirect()->route('refunds.smsmail');
 }
 
-  // public function createmenu(){
-  //   $buttons = [
-  //     [
-  //         "name"       => "菜单",
-  //         "sub_button" => [
-  //             [
-  //                 "type" => "click",
-  //                 "name" => "获取您的结算审计进度",
-  //                 "key" => "V1_SETTLEMENT"
-  //             ],
-  //             [
-  //                 "type" => "click",
-  //                 "name" => "获取您的决算审计进度",
-  //                 "key" => "V1_RRETURN"
-  //             ],
-  //             [
-  //                 "type" => "click",
-  //                 "name" => "获取您的退库物资进度",
-  //                 "key" => "V1_REFUND"
-  //             ],
-  //         ],
-  //     ],
-  //     [
-  //         "type" => "view",
-  //         "name" => "登陆平台",
-  //         "url"  => "http://www.cmccgjb.cn/weixinlogin"
-  //     ],
-  //     [
-  //         "type" => "click",
-  //         "name" => "待开发",
-  //         "key"  => "v3"
-  //     ],
-  //   ];
-  //   $this->officialAccount->menu->create($buttons);
-  // }
+  public function createmenu(){
+    $buttons = [
+      [
+          "name"       => "获取进度",
+          "sub_button" => [
+              [
+                  "type" => "click",
+                  "name" => "获取您的结算审计进度",
+                  "key" => "V1_SETTLEMENT"
+              ],
+              [
+                  "type" => "click",
+                  "name" => "获取您的决算审计进度",
+                  "key" => "V1_RRETURN"
+              ],
+              [
+                  "type" => "click",
+                  "name" => "获取您的退库物资进度",
+                  "key" => "V1_REFUND"
+              ],
+          ],
+      ],
+      [
+          "type" => "view",
+          "name" => "登陆平台",
+          "url"  => "http://www.cmccgjb.cn"
+      ],
+      [
+          "type" => "click",
+          "name" => "待开发",
+          "key"  => "v3"
+      ],
+    ];
+    $this->officialAccount->menu->create($buttons);
+  }
 
-  protected function receiveAuditInfo($eventkey='v2_LOGINPLATFORM',$openid='oe4E3wIPCKs-iWGk_QHmQABUJThw')
+  protected function receiveAuditInfo($eventkey,$openid)
   {
     $user=User::where('openid',$openid)->first();
     $data_tem=[];
@@ -188,7 +188,37 @@ class WeixinController extends Controller
     {
       $data=DB::table('settlements')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('audit_progress','project_manager')->get();
       $data2=DB::table('settlements')->where('project_manager',$user->name)->select(DB::raw('count(*) as order_num,count(DISTINCT project_number) as project_num,project_manager'))->first();
+        if($data->isEmpty())
+          $text="没有您的数据，请核实情况！";
 
+        else{
+        foreach($data as $value)
+        {
+          if(in_array($value->audit_progress, $data_tem))
+            $data_array[$value->audit_progress]+=$value->num;
+          else
+            $data_array[$value->audit_progress]=$value->num;
+          $data_tem[]=$value->audit_progress;
+        }
+        //dd($data_array);
+        $project_manager=$user->name;
+        $project_num=$data2->project_num;
+        $order_num=$data2->order_num;
+        $nosend=$data_array["未送审"];
+        $sending=$data_array["审计中"];
+        $sended=$data_array["被退回"];
+        $finish=$data_array["已出报告"];
+        $text=$project_manager.'，您好！您的结算审计情况如下：你总共有'.$project_num.'个项目，涉及到'.$order_num.'个订单：未送审：'.$nosend.'个，被退回：'.$sended.'个，审计中：'.$sending.'个，已出报告：'.$finish.'个。具体请上平台查阅。';
+        }
+  }
+    elseif($eventkey=='V1_RRETURN')
+    {
+      $data=DB::table('rreturns')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
+      $data2=DB::table('rreturns')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(DISTINCT project_number) as project_num'))->first();
+      //dd($data2);
+      if($data->isEmpty())
+        $text="没有您的数据，请核实情况！";
+      else{
       foreach($data as $value)
       {
         if(in_array($value->audit_progress, $data_tem))
@@ -200,74 +230,43 @@ class WeixinController extends Controller
       //dd($data_array);
       $project_manager=$user->name;
       $project_num=$data2->project_num;
-      $order_num=$data2->order_num;
-      $nosend=$data_array["未送审"];
-      $sending=$data_array["审计中"];
-      $sended=$data_array["被退回"];
-      $finish=$data_array["已出报告"];
-      $text=$project_manager.'，您好！您的结算审计情况如下：你总共有'.$project_num.'个项目，涉及到'.$order_num.'个订单：未送审：'.$nosend.'个，被退回：'.$sended.'个，审计中：'.$sending.'个，已出报告：'.$finish.'个。具体请上平台查阅。';
-
-  }
-  elseif($eventkey=='V1_RRETURN')
-  {
-    $data=DB::table('rreturns')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(*) as num,project_manager,audit_progress'))->groupBy('project_manager','audit_progress')->get();
-    $data2=DB::table('rreturns')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(DISTINCT project_number) as project_num'))->first();
-    //dd($data2);
-    foreach($data as $value)
-    {
-      if(in_array($value->audit_progress, $data_tem))
-        $data_array[$value->audit_progress]+=$value->num;
-      else
-        $data_array[$value->audit_progress]=$value->num;
-      $data_tem[]=$value->audit_progress;
+      $nosend=isset($data_array['未送审'])?$data_array['未送审']:0;
+      $sending=isset($data_array['审计中'])?$data_array['审计中']:0;
+      $sended=isset($data_array['被退回'])?$data_array['被退回']:0;
+      $finish=isset($data_array['已出报告'])?$data_array['已出报告']:0;
+      $text=$project_manager.',你好！您的决算审计情况如下：你总共有'.$project_num.'个项目：未送审：'.$nosend.'个，被退回：'.$sended.'个，审计中：'.$sending.'个，已出报告：'.$finish.'个。具体请上平台查阅。';
+      //dd($text);
+      }
     }
-    //dd($data_array);
-    $project_manager=$user->name;
-    $project_num=$data2->project_num;
-    $nosend=isset($data_array['未送审'])?$data_array['未送审']:0;
-    $sending=isset($data_array['审计中'])?$data_array['审计中']:0;
-    $sended=isset($data_array['被退回'])?$data_array['被退回']:0;
-    $finish=isset($data_array['已出报告'])?$data_array['已出报告']:0;
-    $text=$project_manager.',你好！您的决算审计情况如下：你总共有'.$project_num.'个项目：未送审：'.$nosend.'个，被退回：'.$sended.'个，审计中：'.$sending.'个，已出报告：'.$finish.'个。具体请上平台查阅。';
-    //dd($text);
-  }
-  elseif($eventkey=='V1_REFUND')
-  {
-    $data_tem['project_num']=0;
-    $data_tem['construction_should_refund_total']=0;
-    $data_tem['thing_refund_total']=0;
-    $data_tem['cash_refund_total']=0;
-    $data_tem['direct_yes_total']=0;
-    $data_tem['direct_no_total']=0;
-    $data_tem['unrefund_cost_total']=0;
-    $datas=DB::table('refunds')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(DISTINCT kkk) as project_num,sum(construction_should_refund) as construction_should_refund_total,sum(thing_refund) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(direct_yes) as direct_yes_total,sum(direct_no) as direct_no_total,sum(unrefund_cost) as unrefund_cost_total,project_manager'))->groupBy('project_manager')->get();
-    foreach($datas as $value)
+    elseif($eventkey=='V1_REFUND')
     {
+      $data_tem['project_num']=0;
+      $data_tem['construction_should_refund_total']=0;
+      $data_tem['thing_refund_total']=0;
+      $data_tem['cash_refund_total']=0;
+      $data_tem['direct_yes_total']=0;
+      $data_tem['direct_no_total']=0;
+      $data_tem['unrefund_cost_total']=0;
+      $datas=DB::table('refunds')->where('project_manager',$user->name)->orWhere('project_manager','like',$user->name.'、%')->orWhere('project_manager','like','%、'.$user->name)->select(DB::raw('count(DISTINCT kkk) as project_num,sum(construction_should_refund) as construction_should_refund_total,sum(thing_refund) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(direct_yes) as direct_yes_total,sum(direct_no) as direct_no_total,sum(unrefund_cost) as unrefund_cost_total,project_manager'))->groupBy('project_manager')->get();
+      if($datas->isEmpty())
+        $text="没有您的数据，请核实情况！";
+      else {
+      foreach($datas as $value)
+      {
 
-        $data_tem['project_num']+=$value->project_num;
-        $data_tem['construction_should_refund_total']+=$value->construction_should_refund_total;
-        $data_tem['thing_refund_total']+=$value->thing_refund_total;
-        $data_tem['cash_refund_total']+=$value->cash_refund_total;
-        $data_tem['direct_yes_total']+=$value->direct_yes_total;
-        $data_tem['direct_no_total']+=$value->direct_no_total;
-        $data_tem['unrefund_cost_total']+=$value->unrefund_cost_total;
-        $text=$user->name.',你好！您的物资退库情况如下：你总共有'.$data_tem['project_num'].'项目：应退库：'.$data_tem['construction_should_refund_total'].'元，实物已退库：'.$data_tem['thing_refund_total'].'元，现金已退库：'.$data_tem['cash_refund_total'].'元，直接用于其他工程（有登记）：'.$data_tem['direct_yes_total'].'元，直接用于其他工程（未登记）：'.$data_tem['direct_no_total'].'元，未退库：'.$data_tem['unrefund_cost_total'].'元。具体请上平台查阅。';
+          $data_tem['project_num']+=$value->project_num;
+          $data_tem['construction_should_refund_total']+=$value->construction_should_refund_total;
+          $data_tem['thing_refund_total']+=$value->thing_refund_total;
+          $data_tem['cash_refund_total']+=$value->cash_refund_total;
+          $data_tem['direct_yes_total']+=$value->direct_yes_total;
+          $data_tem['direct_no_total']+=$value->direct_no_total;
+          $data_tem['unrefund_cost_total']+=$value->unrefund_cost_total;
+          $text=$user->name.',你好！您的物资退库情况如下：你总共有'.$data_tem['project_num'].'项目：应退库：'.$data_tem['construction_should_refund_total'].'元，实物已退库：'.$data_tem['thing_refund_total'].'元，现金已退库：'.$data_tem['cash_refund_total'].'元，直接用于其他工程（有登记）：'.$data_tem['direct_yes_total'].'元，直接用于其他工程（未登记）：'.$data_tem['direct_no_total'].'元，未退库：'.$data_tem['unrefund_cost_total'].'元。具体请上平台查阅。';
+      }
+      //dd($text);
+      }
     }
-    //dd($text);
-  }
-  elseif($eventkey=='v2_LOGINPLATFORM')
-  {
-    // header("location:helloworld.php")route('users.show', $user->id);
-    // header("location:helloworld.php");
-    Auth::login($user);
-    session()->flash('success', '恭喜你，登陆成功！');
-    $loginrecord=new Loginrecord;
-    $loginrecord->name=Auth::user()->name;
-    $loginrecord->save();
-    session()->flash('success', $user->name.',欢迎回来！您的角色是'.Auth::user()->getRoleNames()->first());
-    return view('users.show',['current_url'=>$request->url(),'user'=>$user]);
-    $text='已登录成功！';
-  }
+
   return $text;
   }
 
@@ -285,6 +284,9 @@ class WeixinController extends Controller
       {
         Auth::login($user);
         session()->flash('success', Auth::user()->name.',欢迎回来！您的角色是'.Auth::user()->getRoleNames()->first());
+        $loginrecord=new Loginrecord;
+        $loginrecord->name=Auth::user()->name;
+        $loginrecord->save();
         return redirect()->route('users.show',$user->id);
       }
       else

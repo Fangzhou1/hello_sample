@@ -12,13 +12,13 @@ class StaticPagesController extends Controller
       return view('static_pages/home',['current_url'=>$request->url()]);
   }
 
-  public function help()
+  public function help(Request $request)
   {
-      return view('static_pages/help');
+      return view('static_pages/help',['current_url'=>$request->url()]);
   }
 
-  public function about()
+  public function about(Request $request)
   {
-      return view('static_pages/about');
+      return view('static_pages/about',['current_url'=>$request->url()]);
   }
 }

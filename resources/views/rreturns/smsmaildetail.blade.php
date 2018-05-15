@@ -53,17 +53,17 @@
           @foreach ($rreturns['data'] as $data)
           <tr>
             <th class="id" scope="row">{{$data->id or ""}}</th>
-            <td class="project_duration">{{$data->project_duration or ""}}</td>
-            <td class="project_name">{{$data->project_name or ""}}</td>
-            <td class="project_number">{{$data->project_number or ""}}</td>
-            <td class="project_manager">{{$data->project_manager or ""}}</td>
-            <td class="audit_progress">{{$data->audit_progress or ""}}</td>
+            <td style="min-width:200px" class="project_duration">{{$data->project_duration or ""}}</td>
+            <td style="min-width:320px" class="project_name">{{$data->project_name or ""}}</td>
+            <td style="min-width:150px" class="project_number">{{$data->project_number or ""}}</td>
+            <td style="min-width:150px" class="project_manager">{{$data->project_manager or ""}}</td>
+            <td style="min-width:150px" class="audit_progress">{{$data->audit_progress or ""}}</td>
             <td class="audit_document_number">{{$data->audit_document_number or ""}}</td>
             <td class="audit_company">{{$data->audit_company or ""}}</td>
             <td class="is_needsaudit">{{$data->is_needsaudit or ""}}</td>
             <td class="is_canaudit">{{$data->is_canaudit or ""}}</td>
             <td class="audit_number">{{$data->audit_number or ""}}</td>
-            <td class="remarks">{{$data->remarks or ""}}</td>
+            <td style="min-width:320px" class="remarks">{{$data->remarks or ""}}</td>
 
 
             <td class="action">

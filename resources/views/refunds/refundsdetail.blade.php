@@ -3,12 +3,12 @@
 @section('title','物资详情')
 @section('content')
 <div class="col-md-12 page-header" style="margin-top: 0px;">
-<a class="btn btn-primary" href="javascript:history.back();" role="button">返回</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
+<a class="btn btn-primary" href="{{route('refunds.index')}}" role="button">返回</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
 </div>
 <div class="col-md-12">
 
   @hasanyrole('项目经理|高级管理员|站长')
-<a class="btn btn-success" href="{{route('refunddetails.create')}}?project_number={{$refundsdetails['data']->refund->project_number or ''}}&audit_document_number={{$refundsdetails['data']->refund->audit_document_number or ''}}" role="button">添加新的物资&nbsp;<b>+</b></a>
+<a class="btn btn-success" href="{{route('refunddetails.create')}}?project_number={{$refundsdetails['data']->refund->project_number or ''}}&audit_document_number={{$refundsdetails['data']->refund->audit_document_number or ''}}&refundid={{$refundsdetails['data']->refund->id}}" role="button">添加新的物资&nbsp;<b>+</b></a>
 <a class="btn btn-primary" href="#" role="button">导出EXCEL表格</a>
 <form action='' method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
   <div class="form-group">
@@ -79,7 +79,7 @@
 
 
             <td class="action">
-<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}?unit_price={{$data->unit_price}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+<a class="update" title="编辑"  href="{{route('refunddetails.edit',$data->id)}}?refundid={{$refundsdetails['data']->refund->id}}" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 &nbsp;<a data-whatever="{{$data->id}}" data-toggle="modal" data-target="#myModal" title="删除" id="delete" href="javascript:;" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
             </td>
 

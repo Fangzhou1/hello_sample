@@ -29,6 +29,7 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 // });
 //静态页
 Route::get('/', 'StaticPagesController@home')->name('home');
+Route::post('/', 'StaticPagesController@home')->name('home');
 Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('signup', 'UsersController@create')->name('signup');

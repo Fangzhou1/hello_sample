@@ -37,7 +37,7 @@
         <thead>
           <tr>
             <th>id</th>
-            <th style="min-width:200px">{{ $refunds['title']->audit_report_name or ""}}</th>
+            <th>{{ $refunds['title']->audit_report_name or ""}}</th>
             <th>{{ $refunds['title']->professional_room or ""}}</th>
             <th>{{ $refunds['title']->project_manager or ""}}</th>
             <th style="min-width:150px">{{ $refunds['title']->project_number or ""}}</th>
@@ -69,7 +69,7 @@
           @foreach ($refunds['data'] as $data)
           <tr>
             <th class="id" scope="row">{{$data->id or ""}}</th>
-            <td class="audit_report_name">{{$data->audit_report_name or ""}}</td>
+            <td title="{{$data->audit_report_name or ""}}" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"class="audit_report_name">{{$data->audit_report_name or ""}}</td>
             <td class="professional_room">{{$data->professional_room or ""}}</td>
             <td class="project_manager">{{$data->project_manager or ""}}</td>
             <td class="project_number">{{$data->project_number or ""}}</td>
@@ -90,7 +90,7 @@
             <td class="direct_no">{{$data->direct_no or ""}}</td>
             <td class="unrefund_cost">{{$data->unrefund_cost or ""}}</td>
             <td class="reason">{{$data->reason or ""}}</td>
-            <td class="Remarks">{{$data->Remarks or ""}}</td>
+            <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" class="Remarks" title="{{$data->Remarks or ""}}">{{$data->Remarks or ""}}</td>
 
 
             <td class="action">
