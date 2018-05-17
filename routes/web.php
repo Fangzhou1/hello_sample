@@ -105,6 +105,7 @@ Route::resource('refunds', 'RefundsController',['except' => ['show', 'edit', 'up
 
 
 //物资详情退库管理
+Route::post('refunddetails/importrefunddetailsbymanager', 'RefunddetailsController@importrefunddetailsbymanager')->name('refunddetails.importrefunddetailsbymanager');
 Route::resource('refunddetails','RefunddetailsController',['except' => ['index','show']]);
 // Route::get('/users', 'UsersController@index')->name('users.index');
 // Route::get('/users/{user}', 'UsersController@show')->name('users.show');//
@@ -337,3 +338,8 @@ Route::get('/download/jusmb', function () {
   return response()
         ->download(storage_path('app/jusmb.xlsx'));
 })->name('download.jusmb');
+
+Route::get('/download/refunddetailmb', function () {
+  return response()
+        ->download(storage_path('app/refunddetailmb.xlsx'));
+})->name('download.refunddetailmb');

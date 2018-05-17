@@ -3,17 +3,25 @@
 @section('title','物资详情')
 @section('content')
 <div class="col-md-12 page-header" style="margin-top: 0px;">
-<a class="btn btn-primary" href="{{route('refunds.index')}}" role="button">返回</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
+<a class="btn btn-primary" href="{{route('refunds.index')}}" role="button">返回</a>&nbsp;&nbsp;<a class="btn btn-primary" href="{{route('download.refunddetailmb')}}" role="button">导出物资详情模板</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
+
 </div>
 <div class="col-md-12">
 
   @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('refunddetails.create')}}?project_number={{$refundsdetails['data']->refund->project_number or ''}}&audit_document_number={{$refundsdetails['data']->refund->audit_document_number or ''}}&refundid={{$refundsdetails['data']->refund->id}}" role="button">添加新的物资&nbsp;<b>+</b></a>
-
+&nbsp;|&nbsp;
+<form method="post" action="{{route('refunddetails.importrefunddetailsbymanager')}}" enctype="multipart/form-data" style="display:inline-block">
+  {{ csrf_field() }}
+  <input class="btn btn-success" type="submit" value="批量添加你的物资详情" style="display:inline-block">
+  <input type="file" name='excel_d_bym' id="exampleInputFile2" style="display:inline-block">
+  <input type="hidden" name='kkk' value="{{$refundsdetails['data']->refund->kkk}}">
+</form>
 
 @endhasanyrole
 <span  class="pull-right" style="font-size: 18px;">总共查询到{{$refundsdetails['data']->total()}}行数据</span>
-
+</div>
+<div class="col-md-12">
 <div class="table-responsive">
   <table class="table table-hover table-striped table-bordered">
         <thead>
@@ -21,9 +29,9 @@
             <th>id</th>
             <th style="min-width:200px">{{ $refundsdetails['title']->audit_document_number or ""}}</th>
             <th>{{ $refundsdetails['title']->project_number or ""}}</th>
-            <th>{{ $refundsdetails['title']->project_name or ""}}</th>
+            <th style="min-width:250px">{{ $refundsdetails['title']->project_name or ""}}</th>
             <th style="min-width:150px">{{ $refundsdetails['title']->construction_enterprise or ""}}</th>
-            <th style="min-width:150px">{{ $refundsdetails['title']->material_name or ""}}</th>
+            <th style="min-width:300px">{{ $refundsdetails['title']->material_name or ""}}</th>
             <th style="min-width:150px">{{ $refundsdetails['title']->unit_price or ""}}</th>
             <th>{{ $refundsdetails['title']->reduction_quantity or ""}}</th>
             <th>{{ $refundsdetails['title']->subtraction_cost or ""}}</th>
@@ -85,6 +93,7 @@
 
         </tbody>
       </table>
+</div>
 </div>
 {!! $refundsdetails['data']->links() !!}
 </div>

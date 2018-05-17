@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Handlers\ExcelUploadHandler;
+use Illuminate\Support\Facades\DB;
 use App\Models\Refunddetail;
 use App\Models\Refund;
 use Illuminate\Http\Request;
@@ -17,6 +19,38 @@ class RefunddetailsController extends Controller
       $this->middleware('check');
       $this->request=$request;
   }
+
+  public function importrefunddetailsbymanager(Refunddetail $refunddetail)
+    {
+      //Settlement::truncate();
+      $kkk=$this->request->input('kkk');
+      $file=$this->request->file('excel_d_bym');
+      $upload=new ExcelUploadHandler;
+      $data=$upload->save($file);
+
+      //dd($data);
+      if($data=='error1')
+        return redirect()->back();
+      elseif($data=='error2')
+        return redirect()->back();
+      unset($data[0]);
+      foreach($data as &$value)
+      {
+        //dd($value['project_number'].'/'.$value['audit_document_number']);
+        if($value['project_number'].'/'.$value['audit_document_number']!==$kkk){
+          session()->flash('danger', '上传失败！上传文件的项目编号或审计文号与当前物资下的不一致，请修改excel表格后重新上传！');
+          return redirect()->back();
+        }
+        $value['kkk2']=$kkk;
+      }
+
+      //dd($data);
+      DB::table('refunddetails')->where('kkk2', $kkk)->delete();
+      DB::table('refunddetails')->insert($data);
+      session()->flash('success', '恭喜你，导入数据成功！');
+
+      return redirect()->back();
+    }
 
   public function edit(Refunddetail $refunddetail)
     {
