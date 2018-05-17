@@ -93,6 +93,7 @@ Route::get('refunds/importpage', 'RefundsController@importpage')->name('refunds.
 Route::post('refunds/importrefunds', 'RefundsController@importrefunds')->name('refunds.importrefunds');
 Route::post('refunds/importrefunddetails', 'RefundsController@importrefunddetails')->name('refunds.importrefunddetails');
 Route::get('refunds/export', 'RefundsController@export')->name('refunds.export');
+Route::get('refunds/exportdetails', 'RefundsController@exportdetails')->name('refunds.exportdetails');
 Route::post('refunds/rowupdate/{refund}', 'RefundsController@rowupdate')->name('refunds.rowupdate');
 Route::get('refunds/refundsdetail/{refund}', 'RefundsController@refundsdetail')->name('refunds.refundsdetail');
 Route::get('refunds/smsmail', 'RefundsController@smsmail')->name('refunds.smsmail');

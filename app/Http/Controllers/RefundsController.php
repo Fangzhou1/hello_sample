@@ -99,6 +99,15 @@ class RefundsController extends Controller
 
         public function store()
           {
+
+          // $datarequest=$this->request->except('_token');
+          // dd($datarequest);
+          $this->validate($this->request, [
+             'project_number' => 'required',
+             'audit_document_number' => 'required',
+         ],['project_number.required' => '“项目编号”不能不填！',
+            'audit_document_number.required' => '“文号（文件字号）”不能不填！',
+               ]);
           $datarequest=$this->request->except('_token');
           $refund=Refund::create($datarequest);
           $data['name']=Auth::user()->name;
@@ -118,6 +127,14 @@ class RefundsController extends Controller
           //dd($refunds);
           $upload=new ExcelUploadHandler;
           $upload->download($refunds,'物资退库总表');
+        }
+
+        public function exportdetails()
+        {
+          $refunddetails=Refunddetail::all()->toArray();
+          //dd($refunds);
+          $upload=new ExcelUploadHandler;
+          $upload->download($refunddetails,'退库物资详情总表');
         }
 
         public function refundsdetail(Refund $refund)

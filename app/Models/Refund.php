@@ -28,7 +28,13 @@ class Refund extends Model
 
              $kkk=$refund->project_number.'/'.$refund->audit_document_number;
                $refund->kkk = $kkk;
+               $refund->project_number=strtoupper( $refund->project_number);
 
+           });
+
+           static::updating(function ($refund) {
+
+               $refund->project_number=strtoupper( $refund->project_number);
 
            });
        }

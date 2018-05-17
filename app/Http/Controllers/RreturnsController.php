@@ -124,7 +124,7 @@ class RreturnsController extends Controller
         public function create()
           {
 
-              return view('rreturns.create');
+              return view('rreturns.create',['current_url'=>$this->request->url()]);
           }
 
         public function store()

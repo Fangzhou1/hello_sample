@@ -22,8 +22,9 @@
 <div id="tab1" role="tabpanel" class="tab-pane active">
   @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('refunds.create')}}" role="button">添加&nbsp;<b>+</b></a>
-<a class="btn btn-primary" href="{{route('refunds.export')}}" role="button">导出EXCEL表格</a>
-<form action={{route('refunds.index')}} method="get" class="form-inline" style='display:inline-block;margin-left:20%;'>
+<a class="btn btn-primary" href="{{route('refunds.export')}}" role="button">导出退库物资EXCEL表格</a>
+<a class="btn btn-primary" href="{{route('refunds.exportdetails')}}" role="button">导出退库物资详情EXCEL表格</a>
+<form action={{route('refunds.index')}} method="get" class="form-inline" style='display:inline-block;margin-left:5%;'>
   <div class="form-group">
     <input type="text" name="query" class="form-control" placeholder="Search" value="<?php echo isset($_GET['query'])?$_GET['query']:''; ?>">
   </div>
@@ -39,13 +40,13 @@
             <th>id</th>
             <th>{{ $refunds['title']->audit_report_name or ""}}</th>
             <th>{{ $refunds['title']->professional_room or ""}}</th>
-            <th>{{ $refunds['title']->project_manager or ""}}</th>
-            <th style="min-width:150px">{{ $refunds['title']->project_number or ""}}</th>
-            <th style="min-width:150px">{{ $refunds['title']->publish_date or ""}}</th>
-            <th style="min-width:150px">{{ $refunds['title']->audit_document_number or ""}}</th>
-            <th>{{ $refunds['title']->audit_type or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->project_manager or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->project_number or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->publish_date or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->audit_document_number or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->audit_type or ""}}</th>
             <th>{{ $refunds['title']->project_type or ""}}</th>
-            <th>{{ $refunds['title']->audit_company or ""}}</th>
+            <th style="min-width:200px">{{ $refunds['title']->audit_company or ""}}</th>
             <th>{{ $refunds['title']->submit_cost or ""}}</th>
             <th>{{ $refunds['title']->validation_cost or ""}}</th>
             <th>{{ $refunds['title']->subtraction_cost or ""}}</th>

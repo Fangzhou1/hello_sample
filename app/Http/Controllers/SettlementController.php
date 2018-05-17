@@ -130,7 +130,7 @@ class SettlementController extends Controller
       public function create()
         {
 
-            return view('settlements.create');
+            return view('settlements.create',['current_url'=>$this->request->url()]);
         }
 
       public function store()
