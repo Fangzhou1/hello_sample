@@ -3,10 +3,10 @@
 @section('title','物资详情')
 @section('content')
 <div class="col-md-12 page-header" style="margin-top: 0px;">
-<a class="btn btn-primary" href="{{route('refunds.index')}}" role="button">返回</a>&nbsp;&nbsp;<a class="btn btn-primary" href="{{route('download.refunddetailmb')}}" role="button">导出物资详情模板</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
-
+<a class="btn btn-primary" href="{{route('refunds.index')}}" role="button">返回</a>&nbsp;&nbsp;<a class="btn btn-primary" href="{{route('download.refunddetailmb')}}" role="button">导出物资详情模板</a><h1><small><b>项目编号：{{$refundsdetails['data']->refund->project_number or ''}}，审计报告为：《{{$refundsdetails['data']->refund->audit_report_name}}》（文号：{{$refundsdetails['data']->refund->audit_document_number}}）<p>物资详情如下：</p></b></small></h1>
+<h2 style="width:55%;margin:5px auto">总计:施工单位应退库：{{$refunddetails_total->construction_should_refund_total}}元，实物退库：{{$refunddetails_total->thing_refund_total}}元，现金退库金额：{{$refunddetails_total->cash_refund_total}}元，未退库金额：{{$refunddetails_total->unrefund_cost_total}}元</h2>
 </div>
-<div class="col-md-12">
+
 
   @hasanyrole('项目经理|高级管理员|站长')
 <a class="btn btn-success" href="{{route('refunddetails.create')}}?project_number={{$refundsdetails['data']->refund->project_number or ''}}&audit_document_number={{$refundsdetails['data']->refund->audit_document_number or ''}}&refundid={{$refundsdetails['data']->refund->id}}" role="button">添加新的物资&nbsp;<b>+</b></a>
@@ -47,7 +47,7 @@
             <th>{{ $refundsdetails['title']->unrefund_cost or ""}}</th>
             <th>{{ $refundsdetails['title']->iscomplete_refund or ""}}</th>
             <th>{{ $refundsdetails['title']->unrefund_reason or ""}}</th>
-            <th style="min-width:300px">{{ $refundsdetails['title']->reason or ""}}</th>
+            <th style="min-width:300px">{{ $refundsdetails['title']->remarks or ""}}</th>
 
             <th>操作</th>
 

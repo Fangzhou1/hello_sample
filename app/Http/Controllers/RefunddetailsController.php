@@ -26,15 +26,16 @@ class RefunddetailsController extends Controller
       $kkk=$this->request->input('kkk');
       $file=$this->request->file('excel_d_bym');
       $upload=new ExcelUploadHandler;
-      $data=$upload->save($file);
+      $data_excel=$upload->save($file);
 
-      //dd($data);
-      if($data=='error1')
+      //dd($data_excel);
+      if($data_excel=='error1')
         return redirect()->back();
-      elseif($data=='error2')
+      elseif($data_excel=='error2')
         return redirect()->back();
-      unset($data[0]);
-      foreach($data as &$value)
+      unset($data_excel[0]);
+      //dd(count($data_excel));
+      foreach($data_excel as &$value)
       {
         //dd($value['project_number'].'/'.$value['audit_document_number']);
         if($value['project_number'].'/'.$value['audit_document_number']!==$kkk){
@@ -44,11 +45,20 @@ class RefunddetailsController extends Controller
         $value['kkk2']=$kkk;
       }
 
-      //dd($data);
+      //dd($data_excel);
       DB::table('refunddetails')->where('kkk2', $kkk)->delete();
-      DB::table('refunddetails')->insert($data);
-      session()->flash('success', '恭喜你，导入数据成功！');
+      DB::table('refunddetails')->insert($data_excel);
 
+      $data['name']=Auth::user()->name;
+      $data['panumber']=$kkk;
+      $data['amount']=count($data);
+      $data['type']='项目经理物资详情导入';
+      $mes='导入了';
+      $mes2=event(new ModifyDates($data,$mes));
+      //dd($mes2);
+      broadcast(new ChangeOrder(Auth::user(),$data['panumber']."下的".$data['panumber']."条物资详情","刚刚导入了项目编号及审计文号为",$mes2));
+
+      session()->flash('success', '恭喜你，导入数据成功！');
       return redirect()->back();
     }
 

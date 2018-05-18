@@ -25,7 +25,7 @@
   </div>
   <div class="form-group">
     <label for="project_manager">项目经理</label>
-    <input name="project_manager" type="text" class="form-control">
+    <input name="project_manager" type="text" class="form-control" placeholder="多个项目经理请用“、”号隔开，否则系统无法识别！">
   </div>
   <div class="form-group">
     <label for="project_number">项目编号</label>
@@ -38,10 +38,6 @@
   <div class="form-group">
     <label for="audit_document_number">文号（文件字号）</label>
     <input name="audit_document_number" type="text" class="form-control" placeholder="注意！此字段一旦填写将不可修改，请慎重！">
-  </div>
-  <div class="form-group">
-    <label for="project_manager">项目经理</label>
-    <input name="project_manager" type="text" class="form-control" placeholder="多个项目经理请用“、”号隔开，否则系统无法识别！">
   </div>
   <div class="form-group">
     <label for="audit_type">审计分类</label>

@@ -41,7 +41,7 @@ class RefundsController extends Controller
           $refunds['data'] = Refund::where('audit_report_name','<>','审计报告名称')->orderBy('id','asc')->paginate($page);
 
 
-        $tracesdata=Trace::where('type','物资')->orWhere('type','物资详情')->orderBy('created_at','desc')->get();
+        $tracesdata=Trace::where('type','物资')->orWhere('type','物资详情')->orWhere('type','项目经理物资详情导入')->orderBy('created_at','desc')->get();
         if($tracesdata->isEmpty()){
           return view('refunds.index',['current_url'=>$this->request->url(),'refunds'=>$refunds,'traces'=>[]]);
         }
@@ -139,16 +139,19 @@ class RefundsController extends Controller
 
         public function refundsdetail(Refund $refund)
         {
-
+          //dd($refund);
+          $audit_document_number=$refund->audit_document_number;
+          $project_number=$refund->project_number;
           $refundsdetails['title']=Refunddetail::first();
           $refundsdetails['data']=$refund->refunddetails()->orderBy('construction_enterprise')->paginate(10);
           $refundsdetails['data']->refund=$refund;
-          //dd($refundsdetails);
+          $refunddetails_total = DB::table('refunddetails')->where('audit_document_number',$audit_document_number)->where('project_number',$project_number)->select(DB::raw('sum(subtraction_cost) as construction_should_refund_total,sum(refund_cost) as thing_refund_total,sum(cash_refund) as cash_refund_total,sum(unrefund_cost) as unrefund_cost_total'))->first();
+          //dd($refunddetails_total);
 //           $refundsdetails['data']=$refund->load(['refunddetails' => function ($query) {
 //     $query->get()->toArray();
 // }]);
         //  dd($refundsdetails['data']);
-          return view('refunds.refundsdetail',['refundsdetails'=>$refundsdetails,'current_url'=>$this->request->url()]);
+          return view('refunds.refundsdetail',['refunddetails_total'=>$refunddetails_total,'refundsdetails'=>$refundsdetails,'current_url'=>$this->request->url()]);
         }
 
         public function rowupdate(Refund $refund)

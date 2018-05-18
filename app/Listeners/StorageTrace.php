@@ -43,9 +43,12 @@ class StorageTrace
       $trace->month=$trace->created_at->month;
       $trace->content='';
       $audit_progress_arr=['未送审','审计中','被退回'];
-      $ret0=Settlement::where("project_number",$event->data['project_number'])->get();
-      $ret=Settlement::where("project_number",$event->data['project_number'])->whereIn("audit_progress",$audit_progress_arr)->get();
-      $rreturn=Rreturn::where('project_number',$event->data['project_number'])->first();
+      if(isset($event->data['project_number']))
+      {
+        $ret0=Settlement::where("project_number",$event->data['project_number'])->get();
+        $ret=Settlement::where("project_number",$event->data['project_number'])->whereIn("audit_progress",$audit_progress_arr)->get();
+        $rreturn=Rreturn::where('project_number',$event->data['project_number'])->first();
+      }
       if($trace->type=='结算')
         {
         $trace->content=$event->data['name']."于".$trace->created_at.$event->mes."结算表里订单编号为".$event->data['order_number']."的订单。";
@@ -184,6 +187,12 @@ class StorageTrace
         if(round($refunddetails->construction_should_refund_total)!==round($refunds->construction_should_refund)||round($refunddetails->thing_refund_total)!==round($refunds->thing_refund)||round($refunddetails->cash_refund_total)!==round($refunds->thing_refund)||round($refunddetails->cash_refund)!==round($refunds->unrefund_cost))
           $mes2.="但是退库物资和物资详情的数据不一致，请核实后修改。";
         $trace->content=$trace->content.$mes2;
+      }
+      elseif($trace->type=='项目经理物资详情导入')
+      {
+        $mes2=$event->data['name']."于".$trace->created_at."在".$event->data['panumber']."的项目编号及文号下导入了".$event->data['amount']."条详细退库物资。";
+        $trace->content=$trace->content.$mes2;
+        //dd($mes2);
       }
       $trace->name=Auth::user()->name;
       $trace->save();
